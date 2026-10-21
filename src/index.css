@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Dancing+Script:wght@700&display=swap');
+@import "tailwindcss";
+
+/* ── Tailwind v4: custom fonts ──────────────────────────────────── */
+@theme {
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans:  "DM Sans", system-ui, sans-serif;
+}
+
+/* ── Tailwind v4: class-based dark mode ─────────────────────────── */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Design tokens ──────────────────────────────────────────────── */
+:root {
+  --bg:           #f2ecdf;
+  --surface:      #ffffff;
+  --text:         #1a3a50;
+  --text-muted:   rgba(26, 58, 80, 0.6);
+  --text-dim:     rgba(26, 58, 80, 0.28);
+  --border:       rgba(45, 100, 144, 0.14);
+  --nav-bg:       rgba(242, 236, 223, 0.92);
+  --shadow:       0 2px 16px rgba(45, 100, 144, 0.09);
+
+  /* Palette tokens */
+  --color-bg:        #f2ecdf;
+  --color-primary:   #2d6490;
+  --color-secondary: #5a8ab0;
+  --color-accent:    #c8960c;
+  --color-text:      #1a3a50;
+  --color-card:      #ffffff;
+
+  /* Hero halo — desactivado (fondo claro ya da contraste suficiente) */
+  --hero-halo: transparent;
+}
+
+.dark {
+  --bg:          #0e0b1a;
+  --surface:     rgba(255, 255, 255, 0.025);
+  --text:        #ffffff;
+  --text-muted:  rgba(255, 255, 255, 0.45);
+  --text-dim:    rgba(255, 255, 255, 0.2);
+  --border:      rgba(255, 255, 255, 0.06);
+  --nav-bg:      rgba(14, 11, 26, 0.88);
+  --shadow:      0 2px 16px rgba(0, 0, 0, 0.4);
+
+  --hero-halo: rgba(14, 11, 26, 0.88);
+}
+
+/* ── Lenis smooth scroll ────────────────────────────────────────── */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+
+/* ── Reset ──────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Keyframes ──────────────────────────────────────────────────── */
+@keyframes pencilFall {
+  0%   { transform: translateY(-320px); opacity: 0; }
+  8%   { opacity: 0.9; }
+  92%  { opacity: 0.9; }
+  100% { transform: translateY(110vh); opacity: 0; }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.1; transform: scale(1); }
+  50%       { opacity: 0.8; transform: scale(1.6); }
+}
+
+@keyframes floatGlow {
+  0%, 100% { box-shadow: 0 0 24px rgba(232, 160, 32, 0.08); }
+  50%       { box-shadow: 0 0 44px rgba(232, 160, 32, 0.22); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(6px); }
+}

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" fill="none">
+  <circle cx="22" cy="22" r="22" fill="#2d6490"/>
+  <circle cx="22" cy="22" r="20.5" stroke="#c8960c" stroke-width="0.9"/>
+  <text
+    x="22" y="10.5"
+    text-anchor="middle"
+    fill="rgba(255,255,255,0.5)"
+    font-size="4.2"
+    font-family="Arial, sans-serif"
+    letter-spacing="0.8"
+  >LIBRERÍA</text>
+  <text
+    x="22" y="27"
+    text-anchor="middle"
+    fill="#ffffff"
+    font-size="19"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-weight="700"
+    font-style="italic"
+  >eS</text>
+  <line x1="13" y1="30.5" x2="31" y2="30.5" stroke="#c8960c" stroke-width="0.5" opacity="0.6"/>
+  <text
+    x="22" y="37.5"
+    text-anchor="middle"
+    fill="rgba(255,255,255,0.4)"
+    font-size="4"
+    font-family="Arial, sans-serif"
+    letter-spacing="1"
+  >EL SELLO</text>
+</svg>
