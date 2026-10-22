@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Dancing+Script:wght@700&display=swap');
 @import "tailwindcss";
+@import "./styles/tokens.css";
 
 /* ── Tailwind v4: custom fonts ──────────────────────────────────── */
 @theme {
@@ -15,19 +16,11 @@
   --bg:           #f2ecdf;
   --surface:      #ffffff;
   --text:         #1a3a50;
-  --text-muted:   rgba(26, 58, 80, 0.6);
+  --text-muted:   rgba(26, 58, 80, 0.75);
   --text-dim:     rgba(26, 58, 80, 0.28);
   --border:       rgba(45, 100, 144, 0.14);
   --nav-bg:       rgba(242, 236, 223, 0.92);
   --shadow:       0 2px 16px rgba(45, 100, 144, 0.09);
-
-  /* Palette tokens */
-  --color-bg:        #f2ecdf;
-  --color-primary:   #2d6490;
-  --color-secondary: #5a8ab0;
-  --color-accent:    #c8960c;
-  --color-text:      #1a3a50;
-  --color-card:      #ffffff;
 
   /* Hero halo — desactivado (fondo claro ya da contraste suficiente) */
   --hero-halo: transparent;
@@ -53,10 +46,15 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 
 /* ── Reset ──────────────────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* @layer base (no reglas sueltas): sin capa, este reset le gana a CUALQUIER
+   utilidad de Tailwind (@layer utilities) sin importar especificidad —
+   así es como p-3/md:p-5 de ProductCard quedaban en 0. */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 html, body, #root {
@@ -64,7 +62,10 @@ html, body, #root {
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
+  /* clip (no hidden): hidden en un solo eje fuerza al otro eje "visible" a
+     resolver como "auto" por spec, lo que crea un contenedor de scroll
+     propio en #root y aparece como una franja de scrollbar fantasma. */
+  overflow-x: clip;
 }
 
 body {
@@ -119,4 +120,14 @@ body {
 }
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/* ── CartDrawer: ancho completo por debajo de 480px ───────────────── */
+.cart-drawer-panel {
+  width: min(400px, 95vw);
+}
+@media (max-width: 479px) {
+  .cart-drawer-panel {
+    width: 100%;
+  }
 }

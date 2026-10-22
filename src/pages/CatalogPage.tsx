@@ -7,15 +7,9 @@ import PageBackground from '../components/PageBackground'
 import MagneticText from '../components/MagneticText'
 import { getProducts, getCategories } from '../services/products'
 import type { ProductoSupabase, CategoriaSupabase } from '../types/producto'
+import { CATEGORIA_BY_SLUG, type CategoriaSlug } from '../constants/categories'
 
 const PRIMARY = '#2d6490'
-
-const SLUG_COLOR: Record<string, string> = {
-  artistico: '#FF6B35',
-  escolar:   '#3B82F6',
-  libreria:  '#22C55E',
-  papeleria: '#A855F7',
-}
 
 type SortKey = 'titulo' | 'precio-asc' | 'precio-desc'
 
@@ -37,7 +31,9 @@ export default function CatalogPage() {
       : 'todo'
   }, [slugParam, categorias])
 
-  const accentColor    = activeCat !== 'todo' ? (SLUG_COLOR[activeCat] ?? PRIMARY) : PRIMARY
+  const activeCatMeta  = activeCat !== 'todo' ? CATEGORIA_BY_SLUG[activeCat as CategoriaSlug] : undefined
+  const accentColor    = activeCatMeta?.color ?? PRIMARY
+  const accentText      = activeCatMeta?.textColor ?? PRIMARY
   const activeCatLabel = activeCat === 'todo'
     ? 'Catálogo'
     : (categorias.find(c => c.slug === activeCat)?.nombre ?? activeCat)
@@ -100,10 +96,9 @@ export default function CatalogPage() {
               fontFamily: "'DM Sans', sans-serif",
               fontSize: '0.75rem',
               letterSpacing: '0.22em',
-              color: '#1a3a50',
+              color: 'var(--text-muted)',
               textTransform: 'uppercase',
               marginBottom: '1.25rem',
-              opacity: 0.7,
             }}>
               · Librería El Sello · Quilmes Centro ·
             </p>
@@ -122,7 +117,7 @@ export default function CatalogPage() {
                   fontFamily: "'Playfair Display', serif",
                   fontSize: 'clamp(2.4rem, 6vw, 4.5rem)',
                   fontWeight: 700,
-                  color: activeCat !== 'todo' ? accentColor : 'var(--text)',
+                  color: activeCat !== 'todo' ? accentText : 'var(--text)',
                   letterSpacing: '0.01em',
                   lineHeight: 0.95,
                   transition: 'color 0.4s ease',
@@ -190,7 +185,9 @@ export default function CatalogPage() {
                 {(['todo', ...categorias.map(c => c.slug)]).map(slug => {
                   const cat    = categorias.find(c => c.slug === slug)
                   const active = slug === activeCat
-                  const color  = SLUG_COLOR[slug] ?? PRIMARY
+                  const meta   = slug !== 'todo' ? CATEGORIA_BY_SLUG[slug as CategoriaSlug] : undefined
+                  const color     = meta?.color ?? PRIMARY
+                  const textColor = meta?.textColor ?? PRIMARY
                   const label  = slug === 'todo' ? 'Todo' : (cat?.nombre ?? slug)
                   return (
                     <button
@@ -207,8 +204,8 @@ export default function CatalogPage() {
                         fontWeight: active ? 600 : 400,
                         letterSpacing: '0.18em',
                         textTransform: 'uppercase',
-                        color: active ? color : 'rgba(26,58,80,0.55)',
-                        padding: '1rem 1.25rem',
+                        color: active ? textColor : 'var(--text-muted)',
+                        padding: '1rem 1rem',
                         transition: 'all 0.2s',
                         marginBottom: '-2px',
                         flexShrink: 0,
@@ -256,7 +253,7 @@ export default function CatalogPage() {
               <p style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: '0.9rem',
-                color: 'rgba(26,58,80,0.6)',
+                color: 'var(--text-muted)',
                 marginBottom: '1.25rem',
               }}>
                 {error}
@@ -284,7 +281,7 @@ export default function CatalogPage() {
               <p style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: '0.9rem',
-                color: 'rgba(26,58,80,0.6)',
+                color: 'var(--text-muted)',
               }}>
                 Pronto cargamos más productos.
               </p>

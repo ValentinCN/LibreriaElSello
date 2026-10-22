@@ -1,25 +1,19 @@
 import { useState, useRef, useEffect } from 'react'
-import { Plus, Check, Palette, Backpack, BookOpen, Scissors } from '@phosphor-icons/react'
+import { Plus, Check, BookOpen } from '@phosphor-icons/react'
 import type { ElementType } from 'react'
 import type { ProductoSupabase } from '../types/producto'
 import { useCartStore } from '../store/cartStore'
 import { WA_URL } from '../config'
+import { CATEGORIA_BY_SLUG, type CategoriaSlug } from '../constants/categories'
 
-const CARD_META: Record<string, { color: string; icon: ElementType; nombre: string }> = {
-  artistico: { color: '#FF6B35', icon: Palette,   nombre: 'Artístico' },
-  escolar:   { color: '#3B82F6', icon: Backpack,  nombre: 'Escolar'   },
-  libreria:  { color: '#22C55E', icon: BookOpen,  nombre: 'Librería'  },
-  papeleria: { color: '#A855F7', icon: Scissors,  nombre: 'Papelería' },
-}
-
-const DEFAULT_META = { color: '#2d6490', icon: BookOpen as ElementType, nombre: '' }
+const DEFAULT_META = { color: '#2d6490', textColor: '#1a3a50', icon: BookOpen as ElementType, label: '' }
 
 export default function ProductCard({ producto }: { producto: ProductoSupabase }) {
   const [hover, setHover]   = useState(false)
   const [added, setAdded]   = useState(false)
   const { addItem }         = useCartStore()
   const timerRef            = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const meta                = CARD_META[producto.categoria] ?? DEFAULT_META
+  const meta                = CATEGORIA_BY_SLUG[producto.categoria as CategoriaSlug] ?? DEFAULT_META
   const Icon                = meta.icon
   const waText              = encodeURIComponent(`Hola! Me interesa: ${producto.nombre}`)
   const waLink              = `${WA_URL}?text=${waText}`
@@ -81,12 +75,12 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
         ) : (
           <Icon size={54} weight="thin" color={meta.color} style={{ opacity: 0.65 }} />
         )}
-        {producto.destacado && (
+        {producto.destacado && !agotado && (
           <span style={{
             position: 'absolute',
             top: '0.6rem',
             right: '0.6rem',
-            background: '#c8960c',
+            background: '#8a6b09',
             color: '#ffffff',
             fontFamily: "'DM Sans', sans-serif",
             fontSize: '0.75rem',
@@ -118,8 +112,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
       </div>
 
       {/* Info */}
-      <div style={{
-        padding: '1.1rem 1.25rem 1.25rem',
+      <div className="p-3 md:p-5" style={{
         display: 'flex',
         flexDirection: 'column',
         flex: 1,
@@ -129,11 +122,10 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
           fontSize: '0.75rem',
           letterSpacing: '0.2em',
           textTransform: 'uppercase',
-          color: meta.color,
+          color: meta.textColor,
           marginBottom: '0.4rem',
-          opacity: 0.8,
         }}>
-          {meta.nombre || producto.categoria}
+          {meta.label || producto.categoria}
         </span>
 
         <h3 className="line-clamp-2 md:line-clamp-none" style={{
@@ -171,15 +163,16 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
               : 'Consultar'}
           </span>
 
-          <div className="flex flex-wrap" style={{ gap: '0.4rem', alignItems: 'center' }}>
+          <div className="flex w-full md:w-auto" style={{ gap: '0.5rem', alignItems: 'center' }}>
             <button
               onClick={handleAdd}
               title={agotado ? 'Sin stock' : 'Agregar a mi lista'}
+              aria-label={agotado ? `${producto.nombre}: sin stock` : `Agregar ${producto.nombre} a mi lista`}
               disabled={agotado}
               style={{
-                background: added ? meta.color : 'transparent',
-                border: `1px solid ${added ? meta.color : 'var(--border)'}`,
-                color: added ? '#ffffff' : 'var(--text-dim)',
+                background: 'var(--color-primary)',
+                border: '1px solid var(--color-primary)',
+                color: '#ffffff',
                 width: 44,
                 height: 44,
                 display: 'flex',
@@ -192,8 +185,8 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
               }}
             >
               {added
-                ? <Check size={13} weight="bold" />
-                : <Plus size={13} weight="regular" />
+                ? <Check size={14} weight="bold" />
+                : <Plus size={14} weight="bold" />
               }
             </button>
 
@@ -202,22 +195,24 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
               target="_blank"
               rel="noopener noreferrer"
               onClick={e => e.stopPropagation()}
+              className="flex-1 text-center"
               style={{
-                padding: '0.45rem 0.9rem',
-                background: hover ? '#25D366' : 'rgba(45,100,144,0.06)',
-                border: `1px solid ${hover ? '#25D366' : '#2d6490'}`,
-                color: hover ? '#fff' : '#2d6490',
+                padding: '0.6rem 0.6rem',
+                background: hover ? '#25D366' : 'transparent',
+                border: `1px solid ${hover ? '#25D366' : 'var(--color-primary)'}`,
+                color: hover ? '#1a3a50' : 'var(--color-primary)',
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: '0.75rem',
+                fontSize: '0.72rem',
                 fontWeight: 500,
-                letterSpacing: '0.1em',
+                letterSpacing: '0.06em',
                 textTransform: 'uppercase',
                 textDecoration: 'none',
                 transition: 'all 0.25s ease',
                 whiteSpace: 'nowrap',
               }}
             >
-              {agotado ? 'Consultar disponibilidad' : 'Consultar'}
+              <span className="md:hidden">{agotado ? 'Avisame' : 'Consultar'}</span>
+              <span className="hidden md:inline">{agotado ? 'Consultar disponibilidad' : 'Consultar'}</span>
             </a>
           </div>
         </div>

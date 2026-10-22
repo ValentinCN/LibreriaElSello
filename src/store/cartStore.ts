@@ -43,9 +43,17 @@ export const useCartStore = create<CartState>()(
       clear: () => set({ items: [] }),
       setOpen: (v) => set({ isOpen: v }),
     }),
-    { name: 'cart-el-sello' }
+    { name: 'cart-el-sello', partialize: (s) => ({ items: s.items }) }
   )
 )
+
+// Fuera del estado reactivo: capturado de forma síncrona en el onClick del
+// botón que abre la lista, ANTES de que React vuelva a renderizar y marque
+// `inert` al resto de la app (eso le quita el foco al botón). Si se capturara
+// en un useEffect de CartDrawer, ya sería tarde: inert ya habría corrido.
+let cartTrigger: HTMLElement | null = null
+export const setCartTrigger = (el: HTMLElement | null) => { cartTrigger = el }
+export const getCartTrigger = () => cartTrigger
 
 export const selectTotalItems = (s: CartState) =>
   s.items.reduce((n, i) => n + i.cantidad, 0)

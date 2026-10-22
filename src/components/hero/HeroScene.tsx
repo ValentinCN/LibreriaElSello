@@ -245,7 +245,7 @@ export function HeroScene() {
             maxWidth: "672px",
             fontSize: "clamp(0.95rem, 2.2vw, 1.15rem)",
             lineHeight: 1.65,
-            color: "#5a8ab0",
+            color: "var(--color-primary)",
             textWrap: "balance",
           }}
         >

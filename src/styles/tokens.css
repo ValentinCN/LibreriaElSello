@@ -1,0 +1,16 @@
+/* ── Paleta de marca (no cambia con el tema) ──────────────────────
+   Registrados en @theme para que Tailwind v4 genere utilidades
+   (bg-primary, text-gold-text, etc.) y a la vez queden disponibles
+   como var(--color-*) en cualquier style inline. */
+@theme {
+  --color-beige:     #e8e4de;
+  --color-bg:         #f2ecdf;
+  --color-primary:   #2d6490;
+  --color-sky:       #5a8ab0;
+  --color-gold:      #c8960c;
+  --color-text:      #1a3a50;
+  --color-whatsapp:  #25d366;
+
+  /* Variante oscura del dorado: sobre --color-bg da >= 4.5:1 (AA) */
+  --color-gold-text: #806008;
+}

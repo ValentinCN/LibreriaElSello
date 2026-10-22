@@ -1,8 +1,9 @@
-import { useCartStore, selectTotalPrice, buildWhatsAppMessage } from '../store/cartStore'
+import { useEffect, useRef } from 'react'
+import { useCartStore, selectTotalPrice, buildWhatsAppMessage, getCartTrigger } from '../store/cartStore'
 import { WA_URL } from '../config'
 
-const GOLD = '#e8a020'
 const WA   = '#25D366'
+const TITLE_ID = 'cart-drawer-title'
 
 export default function CartDrawer() {
   const { items, isOpen, setOpen, removeItem, updateQty, clear } = useCartStore()
@@ -10,6 +11,31 @@ export default function CartDrawer() {
   const waLink = items.length
     ? `${WA_URL}?text=${encodeURIComponent(buildWhatsAppMessage(items))}`
     : '#'
+
+  const panelRef    = useRef<HTMLDivElement>(null)
+  const closeBtnRef = useRef<HTMLButtonElement>(null)
+
+  // Foco al botón cerrar al abrir; vuelve al disparador (capturado en el
+  // onClick de la Navbar, antes de que inert le quitara el foco) al cerrar.
+  useEffect(() => {
+    if (isOpen) {
+      closeBtnRef.current?.focus()
+    } else {
+      getCartTrigger()?.focus()
+    }
+  }, [isOpen])
+
+  // Escape cierra. El resto de la app queda `inert` (ver App.tsx) mientras
+  // isOpen=true, así que Tab/Shift+Tab ya no tienen a dónde escaparse —
+  // el orden nativo del navegador queda confinado al panel sin cálculos manuales.
+  useEffect(() => {
+    if (!isOpen) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [isOpen, setOpen])
 
   return (
     <>
@@ -29,11 +55,15 @@ export default function CartDrawer() {
 
       {/* Drawer panel */}
       <aside
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={TITLE_ID}
         inert={!isOpen}
+        className="cart-drawer-panel"
         style={{
           position: 'fixed',
           top: 0, right: 0, bottom: 0,
-          width: 'min(400px, 95vw)',
           background: 'var(--bg)',
           borderLeft: '1px solid var(--border)',
           zIndex: 201,
@@ -61,13 +91,13 @@ export default function CartDrawer() {
               fontFamily: "'DM Sans', sans-serif",
               fontSize: '0.75rem',
               letterSpacing: '0.3em',
-              color: `${GOLD}80`,
+              color: 'var(--color-gold-text)',
               textTransform: 'uppercase',
               marginBottom: '0.25rem',
             }}>
               Mi consulta
             </p>
-            <h2 style={{
+            <h2 id={TITLE_ID} style={{
               fontFamily: "'Playfair Display', serif",
               fontSize: '1.35rem',
               fontWeight: 700,
@@ -78,11 +108,13 @@ export default function CartDrawer() {
             </h2>
           </div>
           <button
+            ref={closeBtnRef}
             onClick={() => setOpen(false)}
+            aria-label="Cerrar lista de productos"
             style={{
               background: 'none', border: '1px solid var(--border)',
               color: 'var(--text-muted)',
-              width: 34, height: 34,
+              width: 40, height: 40,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               cursor: 'pointer',
               fontSize: '1rem',
@@ -132,23 +164,20 @@ export default function CartDrawer() {
                 }}>
                   {/* Name + price */}
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{
+                    <p className="line-clamp-2" style={{
                       fontFamily: "'DM Sans', sans-serif",
                       fontSize: '0.82rem',
                       fontWeight: 500,
                       color: 'var(--text)',
                       lineHeight: 1.3,
                       marginBottom: '0.2rem',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
                     }}>
                       {item.nombre}
                     </p>
                     <p style={{
                       fontFamily: "'Playfair Display', serif",
                       fontSize: '0.85rem',
-                      color: GOLD,
+                      color: 'var(--color-text)',
                       fontWeight: 700,
                     }}>
                       ${(item.precio * item.cantidad).toLocaleString('es-AR')}
@@ -163,44 +192,68 @@ export default function CartDrawer() {
                     border: '1px solid var(--border)',
                     flexShrink: 0,
                   }}>
-                    {[
-                      { label: '−', action: () => updateQty(item.id, item.cantidad - 1) },
-                      { label: `${item.cantidad}`, action: undefined },
-                      { label: '+', action: () => updateQty(item.id, item.cantidad + 1) },
-                    ].map(({ label, action }) => (
-                      <button
-                        key={label}
-                        onClick={action}
-                        style={{
-                          background: 'none',
-                          border: 'none',
-                          width: 28, height: 28,
-                          display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          fontFamily: "'DM Sans', sans-serif",
-                          fontSize: action ? '1rem' : '0.78rem',
-                          color: action ? 'var(--text-muted)' : 'var(--text)',
-                          cursor: action ? 'pointer' : 'default',
-                          transition: 'color 0.15s',
-                        }}
-                      >
-                        {label}
-                      </button>
-                    ))}
+                    <button
+                      onClick={() => updateQty(item.id, item.cantidad - 1)}
+                      aria-label={`Restar una unidad de ${item.nombre}`}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        width: 40, height: 40,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: '1rem',
+                        color: 'var(--text-muted)',
+                        cursor: 'pointer',
+                        transition: 'color 0.15s',
+                      }}
+                    >
+                      −
+                    </button>
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        width: 28, height: 28,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: '0.78rem',
+                        color: 'var(--text)',
+                      }}
+                    >
+                      {item.cantidad}
+                    </span>
+                    <button
+                      onClick={() => updateQty(item.id, item.cantidad + 1)}
+                      aria-label={`Sumar una unidad de ${item.nombre}`}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        width: 40, height: 40,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: '1rem',
+                        color: 'var(--text-muted)',
+                        cursor: 'pointer',
+                        transition: 'color 0.15s',
+                      }}
+                    >
+                      +
+                    </button>
                   </div>
 
                   {/* Remove */}
                   <button
                     onClick={() => removeItem(item.id)}
+                    aria-label={`Quitar ${item.nombre}`}
                     style={{
                       background: 'none', border: 'none',
-                      color: 'var(--text-dim)',
+                      color: 'var(--text-muted)',
                       cursor: 'pointer',
                       fontSize: '0.9rem',
-                      padding: '0.2rem',
+                      width: 40, height: 40,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
                       transition: 'color 0.15s',
                       flexShrink: 0,
                     }}
-                    title="Quitar"
                   >
                     ×
                   </button>
@@ -238,7 +291,7 @@ export default function CartDrawer() {
                 fontFamily: "'Playfair Display', serif",
                 fontSize: '1.4rem',
                 fontWeight: 700,
-                color: GOLD,
+                color: 'var(--color-text)',
               }}>
                 ${total.toLocaleString('es-AR')}
               </span>
@@ -253,7 +306,7 @@ export default function CartDrawer() {
                 textAlign: 'center',
                 padding: '0.85rem',
                 background: WA,
-                color: '#fff',
+                color: 'var(--color-text)',
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: '0.65rem',
                 fontWeight: 500,
@@ -278,13 +331,13 @@ export default function CartDrawer() {
                 fontSize: '0.75rem',
                 letterSpacing: '0.14em',
                 textTransform: 'uppercase',
-                color: 'var(--text-dim)',
+                color: 'var(--text-muted)',
                 textAlign: 'center',
                 padding: '0.2rem',
                 transition: 'color 0.2s',
               }}
-              onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-muted)')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-dim)')}
+              onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-text)')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
             >
               Limpiar lista
             </button>

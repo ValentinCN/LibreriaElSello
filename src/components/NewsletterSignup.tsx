@@ -36,17 +36,17 @@ export default function NewsletterSignup() {
         <p style={{
           fontFamily: "'DM Sans', sans-serif",
           fontSize: '0.78rem',
-          color: 'rgba(255,255,255,0.55)',
+          color: 'rgba(255,255,255,0.85)',
           margin: '0 0 0.9rem',
         }}>
           Enteráte de descuentos y lanzamientos antes que nadie.
         </p>
 
         {done ? (
-          <p style={{
+          <p role="status" aria-live="polite" style={{
             fontFamily: "'DM Sans', sans-serif",
             fontSize: '0.875rem',
-            color: uiState === 'ok' ? '#c8960c' : 'rgba(255,255,255,0.75)',
+            color: '#ffffff',
             margin: 0,
           }}>
             {uiState === 'ok'
@@ -56,12 +56,15 @@ export default function NewsletterSignup() {
         ) : (
           <form onSubmit={handleSubmit} noValidate>
             <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.65rem' }}>
+              <label htmlFor="newsletter-email" className="sr-only">Email para novedades y promos</label>
               <input
+                id="newsletter-email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="tu@email.com"
                 required
+                autoComplete="email"
                 style={{
                   flex: '1 1 180px',
                   background: '#fff',
@@ -105,7 +108,7 @@ export default function NewsletterSignup() {
               <span style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: '0.72rem',
-                color: 'rgba(255,255,255,0.5)',
+                color: 'rgba(255,255,255,0.85)',
                 lineHeight: 1.45,
               }}>
                 Acepto recibir novedades y promos de Librería el Sello.
@@ -114,10 +117,10 @@ export default function NewsletterSignup() {
             </label>
 
             {uiState === 'error' && (
-              <p style={{
+              <p role="alert" aria-live="polite" style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: '0.78rem',
-                color: '#ffaaaa',
+                color: '#ffd7d7',
                 margin: '0.5rem 0 0',
               }}>
                 Algo salió mal. Intentá de nuevo.

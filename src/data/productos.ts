@@ -1,4 +1,6 @@
-export type Categoria = 'Artístico' | 'Escolar' | 'Librería' | 'Papelería'
+import type { Categoria } from '../constants/categories'
+
+export type { Categoria }
 
 export interface Producto {
   id: string
@@ -8,45 +10,6 @@ export interface Producto {
   descripcion: string
   imagen: string | null
   destacado?: boolean
-}
-
-export const CATEGORIAS: Categoria[] = ['Artístico', 'Escolar', 'Librería', 'Papelería']
-
-export const CATEGORIA_META: Record<Categoria, {
-  color: string
-  glow: string
-  icon: string
-  slug: string
-  desc: string
-}> = {
-  'Artístico': {
-    color: '#FF6B35',
-    glow:  'rgba(255,107,53,0.12)',
-    icon:  '',
-    slug:  'artistico',
-    desc:  'Marcadores, lápices, acrílicos, pinceles y más',
-  },
-  'Escolar': {
-    color: '#3B82F6',
-    glow:  'rgba(59,130,246,0.12)',
-    icon:  '',
-    slug:  'escolar',
-    desc:  'Cuadernos, cartucheras, mochilas y útiles',
-  },
-  'Librería': {
-    color: '#22C55E',
-    glow:  'rgba(34,197,94,0.12)',
-    icon:  '',
-    slug:  'libreria',
-    desc:  'Agendas Hello Kitty, Pusheen, Mickey y más',
-  },
-  'Papelería': {
-    color: '#A855F7',
-    glow:  'rgba(168,85,247,0.12)',
-    icon:  '',
-    slug:  'papeleria',
-    desc:  'Resmas, tijeras, bisturí, cintas y compases',
-  },
 }
 
 export const PRODUCTOS: Producto[] = [

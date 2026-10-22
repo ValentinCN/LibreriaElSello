@@ -3,7 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import { ShoppingBag, List, X, WhatsappLogo } from '@phosphor-icons/react'
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
 import { useLenis } from 'lenis/react'
-import { useCartStore, selectTotalItems } from '../store/cartStore'
+import { useCartStore, selectTotalItems, setCartTrigger } from '../store/cartStore'
 import { LogoMark } from './LogoMark'
 import MagneticText from './MagneticText'
 import { WA_CONSULTA } from '../config'
@@ -27,6 +27,8 @@ export default function Navbar() {
   const [lastPathname, setLastPathname] = useState(pathname)
   const panelRef          = useRef<HTMLDivElement>(null)
   const toggleRef         = useRef<HTMLButtonElement>(null)
+  const navRef             = useRef<HTMLElement>(null)
+  const backdropRef        = useRef<HTMLDivElement>(null)
   const reduce             = useReducedMotion()
   const lenis               = useLenis()
 
@@ -74,9 +76,24 @@ export default function Navbar() {
     }
   }, [mobileOpen, lenis])
 
+  // Mientras el menú mobile está abierto, todo lo que no es de la Navbar
+  // (el resto de la página, sea cual sea su estructura) queda inert: Tab no
+  // puede escaparse del nav+panel sin necesidad de calcular límites a mano.
+  useEffect(() => {
+    const navEl = navRef.current
+    const parent = navEl?.parentElement
+    if (!navEl || !parent) return
+    const owned = [navEl, backdropRef.current, panelRef.current].filter(Boolean) as HTMLElement[]
+    const others = Array.from(parent.children).filter(
+      (el): el is HTMLElement => el instanceof HTMLElement && !owned.includes(el)
+    )
+    others.forEach(el => { el.inert = mobileOpen })
+    return () => { others.forEach(el => { el.inert = false }) }
+  }, [mobileOpen])
+
   return (
     <>
-      <nav style={{
+      <nav ref={navRef} style={{
         position: 'fixed',
         top: 0, left: 0, right: 0,
         zIndex: 100,
@@ -165,8 +182,9 @@ export default function Navbar() {
         {/* Right: Cart + mobile toggle */}
         <div style={{ display: 'flex', gap: '0.2rem', alignItems: 'center' }}>
           <button
-            onClick={() => setOpen(true)}
+            onClick={e => { setCartTrigger(e.currentTarget); setOpen(true) }}
             title="Ver lista de consulta"
+            aria-label={`Abrir lista (${totalItems} producto${totalItems === 1 ? '' : 's'})`}
             style={{
               background: 'none', border: 'none', cursor: 'pointer',
               color: TEXT,
@@ -219,6 +237,7 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
+            ref={backdropRef}
             key="mobile-nav-backdrop"
             onClick={() => setMobileOpen(false)}
             initial={reduce ? { opacity: 1 } : { opacity: 0 }}

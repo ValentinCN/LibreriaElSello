@@ -10,15 +10,15 @@ import {
 } from '../config'
 import NewsletterSignup from './NewsletterSignup'
 
-const PRIMARY = '#2d6490'
-const ACCENT  = '#c8960c'
+const PRIMARY = 'var(--color-primary)'
+const ACCENT  = 'var(--color-gold)'
 
 const linkStyle: CSSProperties = {
   fontFamily: "'DM Sans', sans-serif",
   fontSize: '0.72rem',
   letterSpacing: '0.18em',
   textTransform: 'uppercase',
-  color: 'rgba(255,255,255,0.7)',
+  color: 'rgba(255,255,255,0.85)',
   textDecoration: 'none',
   transition: 'color 0.2s',
 }
@@ -53,7 +53,7 @@ export default function Footer() {
           <span style={{
             fontFamily: "'DM Sans', sans-serif",
             fontSize: '0.72rem',
-            color: 'rgba(255,255,255,0.55)',
+            color: 'rgba(255,255,255,0.85)',
             letterSpacing: '0.06em',
           }}>
             {DIRECCION} · {HORARIO}
@@ -66,7 +66,7 @@ export default function Footer() {
             to="/conocenos"
             style={linkStyle}
             onMouseEnter={e => (e.currentTarget.style.color = '#ffffff')}
-            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.7)')}
+            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.85)')}
           >
             Conócenos
           </Link>
@@ -77,7 +77,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             style={linkStyle}
             onMouseEnter={e => (e.currentTarget.style.color = '#ffffff')}
-            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.7)')}
+            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.85)')}
           >
             {INSTAGRAM_HANDLE}
           </a>
@@ -88,7 +88,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             style={linkStyle}
             onMouseEnter={e => (e.currentTarget.style.color = '#ffffff')}
-            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.7)')}
+            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.85)')}
           >
             {HORARIO_TEL}
           </a>
@@ -98,7 +98,7 @@ export default function Footer() {
             fontSize: '0.68rem',
             letterSpacing: '0.24em',
             textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.4)',
+            color: 'rgba(255,255,255,0.85)',
           }}>
             © 2026
           </span>

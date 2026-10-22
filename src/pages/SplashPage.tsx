@@ -33,8 +33,8 @@ import RelojAtencion from "../components/illustrations/RelojAtencion"
 import ConsultaChat from "../components/illustrations/ConsultaChat"
 import Reveal from "../components/Reveal"
 import { HeroScene } from "../components/hero/HeroScene"
-import { CATEGORIAS, CATEGORIA_META } from "../data/productos"
-import type { Categoria } from "../data/productos"
+import { CATEGORIAS, type CategoriaMeta } from "../constants/categories"
+import type { Categoria } from "../constants/categories"
 import {
   DIRECCION,
   HORARIO,
@@ -92,10 +92,10 @@ const TRUST_ITEMS = [
 ]
 
 // ── Category tile with hover state ──────────────────────────────────
-function CategoryTile({ cat }: { cat: Categoria }) {
+function CategoryTile({ meta }: { meta: CategoriaMeta }) {
   const [hovered, setHovered] = useState(false)
   const reduce  = useReducedMotion()
-  const meta    = CATEGORIA_META[cat]
+  const cat     = meta.label
   const Icon    = CATEGORY_ICONS[cat]
   const lineArt = CATEGORY_LINE_ART[cat]
 
@@ -164,7 +164,7 @@ function CategoryTile({ cat }: { cat: Categoria }) {
           fontFamily: "'Playfair Display', serif",
           fontSize: "1.1rem",
           fontWeight: 700,
-          color: hovered ? meta.color : "var(--text)",
+          color: hovered ? meta.textColor : "var(--text)",
           marginBottom: "0.35rem",
           transition: "color 0.22s",
         }}>
@@ -186,7 +186,7 @@ function CategoryTile({ cat }: { cat: Categoria }) {
         fontSize: "0.75rem",
         letterSpacing: "0.2em",
         textTransform: "uppercase",
-        color: hovered ? meta.color : "var(--text-dim)",
+        color: hovered ? meta.textColor : "var(--text-dim)",
         transition: "color 0.22s",
         marginTop: "auto",
         position: "relative",
@@ -220,7 +220,7 @@ export default function SplashPage() {
             fontWeight: 600,
             letterSpacing: "0.18em",
             textTransform: "uppercase",
-            color: ACCENT,
+            color: "var(--color-gold-text)",
             marginBottom: "0.65rem",
           }}>
             · NUESTRAS CATEGORÍAS ·
@@ -240,9 +240,9 @@ export default function SplashPage() {
           gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
           gap: "1.1rem",
         }}>
-          {CATEGORIAS.map((cat, i) => (
-            <Reveal key={cat} delay={0.06 + i * 0.07}>
-              <CategoryTile cat={cat} />
+          {CATEGORIAS.map((meta, i) => (
+            <Reveal key={meta.slug} delay={0.06 + i * 0.07}>
+              <CategoryTile meta={meta} />
             </Reveal>
           ))}
         </div>
@@ -298,7 +298,7 @@ export default function SplashPage() {
                     fontSize: "0.65rem",
                     letterSpacing: "0.22em",
                     textTransform: "uppercase",
-                    color: "rgba(26,58,80,0.55)",
+                    color: "var(--text-muted)",
                     marginBottom: "0.2rem",
                   }}>
                     {label}
