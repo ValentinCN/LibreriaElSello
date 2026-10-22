@@ -11,6 +11,8 @@ const DEFAULT_META = { color: '#2d6490', textColor: '#1a3a50', icon: BookOpen as
 export default function ProductCard({ producto }: { producto: ProductoSupabase }) {
   const [hover, setHover]   = useState(false)
   const [added, setAdded]   = useState(false)
+  // Se guarda la URL que falló (no un boolean): si la foto cambia, se vuelve a intentar sola.
+  const [failedImg, setFailedImg] = useState<string | null>(null)
   const { addItem }         = useCartStore()
   const timerRef            = useRef<ReturnType<typeof setTimeout> | null>(null)
   const meta                = CATEGORIA_BY_SLUG[producto.categoria as CategoriaSlug] ?? DEFAULT_META
@@ -59,11 +61,12 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-        {producto.imagen_url ? (
+        {producto.imagen_url && failedImg !== producto.imagen_url ? (
           <img
             src={producto.imagen_url}
             alt={producto.nombre}
             loading="lazy"
+            onError={() => setFailedImg(producto.imagen_url)}
             style={{
               position: 'absolute',
               inset: 0,

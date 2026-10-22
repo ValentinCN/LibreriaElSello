@@ -76,11 +76,24 @@ export async function toggleDisponible(id: number, nuevoValor: boolean) {
   return { data, error }
 }
 
+export async function setProductActivo(id: number, activo: boolean) {
+  const { data, error } = await supabase
+    .from('products')
+    .update({ activo })
+    .eq('id', id)
+    .select('id, activo')
+    .single()
+
+  return { data, error }
+}
+
 export type ProductoEditable = {
   nombre: string
   descripcion: string | null
   precio: number
   categoriaId: number
+  /** undefined = no tocar la foto; null = quitarla. */
+  imagenUrl?: string | null
 }
 
 export async function updateProduct(id: number, campos: ProductoEditable) {
@@ -91,9 +104,44 @@ export async function updateProduct(id: number, campos: ProductoEditable) {
       descripcion: campos.descripcion,
       precio: campos.precio,
       categoria_id: campos.categoriaId,
+      ...(campos.imagenUrl !== undefined && { imagen_url: campos.imagenUrl }),
     })
     .eq('id', id)
     .select('id')
+    .single()
+
+  return { data, error }
+}
+
+export async function setProductImage(id: number, imagenUrl: string | null) {
+  const { data, error } = await supabase
+    .from('products')
+    .update({ imagen_url: imagenUrl })
+    .eq('id', id)
+    .select('id')
+    .single()
+
+  return { data, error }
+}
+
+export type ProductoNuevo = Omit<ProductoEditable, 'imagenUrl'> & {
+  destacado: boolean
+  disponible: boolean
+}
+
+export async function createProduct(campos: ProductoNuevo) {
+  const { data, error } = await supabase
+    .from('products')
+    .insert({
+      nombre: campos.nombre,
+      descripcion: campos.descripcion,
+      precio: campos.precio,
+      categoria_id: campos.categoriaId,
+      destacado: campos.destacado,
+      disponible: campos.disponible,
+      activo: true,
+    })
+    .select('id, orden')
     .single()
 
   return { data, error }

@@ -1,58 +1,57 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { updateProduct } from '../../services/products'
+import { uploadProductImage, deleteProductImage, storageErrorMessage } from '../../services/productImages'
 import type { ProductoSupabase, CategoriaSupabase } from '../../types/producto'
+import AdminModal from './AdminModal'
+import ImageField, { type ImageSelection } from './ImageField'
+import {
+  labelStyle, inputStyle, primaryButton, secondaryButton, errorBox,
+  PERMISOS_MSG, esErrorDePermisos, parsePrecio,
+} from './shared'
+
+export type CambiosProducto = {
+  nombre: string
+  descripcion: string | null
+  precio: number
+  categoria: string
+  imagen_url: string | null
+}
 
 type Props = {
   producto: ProductoSupabase
   categorias: CategoriaSupabase[]
-  onSaved: (id: number, cambios: { nombre: string; descripcion: string | null; precio: number; categoria: string }) => void
+  onSaved: (id: number, cambios: CambiosProducto) => void
   onCancel: () => void
-}
-
-const labelStyle: React.CSSProperties = {
-  display: 'block',
-  color: '#1a3a50',
-  fontSize: '0.8rem',
-  fontWeight: 600,
-  marginBottom: '0.3rem',
-}
-
-const inputStyle: React.CSSProperties = {
-  width: '100%',
-  boxSizing: 'border-box',
-  padding: '0.55rem 0.7rem',
-  border: '1.5px solid #cfe0ee',
-  borderRadius: 6,
-  fontFamily: 'DM Sans, sans-serif',
-  fontSize: '0.9rem',
-  color: '#1a3a50',
 }
 
 export default function ProductEditForm({ producto, categorias, onSaved, onCancel }: Props) {
   const categoriaActual = categorias.find((c) => c.slug === producto.categoria)
 
   const [nombre, setNombre] = useState(producto.nombre)
-  const [precio, setPrecio] = useState(producto.precio != null ? String(producto.precio) : '')
+  const [precio, setPrecio] = useState(producto.precio != null ? String(producto.precio).replace('.', ',') : '')
   const [descripcion, setDescripcion] = useState(producto.descripcion ?? '')
   const [categoriaId, setCategoriaId] = useState<number | ''>(categoriaActual?.id ?? '')
-  const [status, setStatus] = useState<'idle' | 'saving' | 'error'>('idle')
+  const [imagen, setImagen] = useState<ImageSelection>({ kind: 'keep' })
+  const [step, setStep] = useState<'idle' | 'uploading' | 'saving'>('idle')
   const [validationError, setValidationError] = useState<string | null>(null)
   const [saveError, setSaveError] = useState<string | null>(null)
+
+  const busy = step !== 'idle'
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     setValidationError(null)
+    setSaveError(null)
 
     const nombreTrim = nombre.trim()
-    const precioTrim = precio.trim()
-    const precioNum = Number(precioTrim)
+    const precioNum = parsePrecio(precio)
 
     if (!nombreTrim) {
       setValidationError('El nombre no puede estar vacío.')
       return
     }
-    if (precioTrim === '' || Number.isNaN(precioNum) || precioNum < 0) {
+    if (Number.isNaN(precioNum) || precioNum < 0) {
       setValidationError('El precio debe ser un número válido, mayor o igual a 0.')
       return
     }
@@ -61,180 +60,140 @@ export default function ProductEditForm({ producto, categorias, onSaved, onCance
       return
     }
 
-    setStatus('saving')
+    // 1) Subir la foto nueva (si hay).
+    let uploaded: { path: string; publicUrl: string } | null = null
+    if (imagen.kind === 'new') {
+      setStep('uploading')
+      try {
+        uploaded = await uploadProductImage(producto.id, imagen.image)
+      } catch (err) {
+        setSaveError(storageErrorMessage(err))
+        setStep('idle')
+        return
+      }
+    }
+
+    // 2) Un solo update con todos los campos, foto incluida.
+    setStep('saving')
     const descripcionFinal = descripcion.trim() ? descripcion.trim() : null
+    const imagenUrl =
+      uploaded ? uploaded.publicUrl
+      : imagen.kind === 'remove' ? null
+      : undefined
 
     const { error } = await updateProduct(producto.id, {
       nombre: nombreTrim,
       descripcion: descripcionFinal,
       precio: precioNum,
       categoriaId,
+      imagenUrl,
     })
 
     if (error) {
-      setSaveError(error.code === 'PGRST116'
-        ? 'No tenés permisos para modificar productos.'
-        : 'No se pudo guardar el producto. Probá de nuevo.')
-      setStatus('error')
+      // El producto sigue apuntando a la foto vieja: la recién subida quedaría huérfana.
+      if (uploaded) void deleteProductImage(uploaded.path)
+      setSaveError(esErrorDePermisos(error.code) ? PERMISOS_MSG : 'No se pudo guardar el producto. Probá de nuevo.')
+      setStep('idle')
       return
     }
 
+    // 3) Recién con el update confirmado se borra la foto anterior.
+    if (imagen.kind !== 'keep' && producto.imagen_url) void deleteProductImage(producto.imagen_url)
+
     const categoriaSlug = categorias.find((c) => c.id === categoriaId)?.slug ?? producto.categoria
-    onSaved(producto.id, { nombre: nombreTrim, descripcion: descripcionFinal, precio: precioNum, categoria: categoriaSlug })
+    onSaved(producto.id, {
+      nombre: nombreTrim,
+      descripcion: descripcionFinal,
+      precio: precioNum,
+      categoria: categoriaSlug,
+      imagen_url: imagenUrl === undefined ? producto.imagen_url : imagenUrl,
+    })
   }
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        inset: 0,
-        background: 'rgba(26,58,80,0.35)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: 100,
-        padding: '1rem',
-      }}
-      onClick={onCancel}
-    >
-      <form
-        onSubmit={handleSubmit}
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          background: '#fff',
-          borderRadius: 10,
-          padding: '1.5rem',
-          width: '100%',
-          maxWidth: 420,
-          boxShadow: '0 8px 30px rgba(26,58,80,0.25)',
-          fontFamily: 'DM Sans, sans-serif',
-        }}
-      >
-        <h3 style={{ color: '#1a3a50', fontSize: '1.05rem', fontWeight: 700, margin: '0 0 1.1rem' }}>
-          Editar producto
-        </h3>
+    <AdminModal title="Editar producto" busy={busy} onClose={onCancel} onSubmit={handleSubmit}>
+      <ImageField
+        id="edit-foto"
+        currentUrl={producto.imagen_url}
+        value={imagen}
+        onChange={setImagen}
+        disabled={busy}
+      />
 
-        <div style={{ marginBottom: '0.9rem' }}>
-          <label style={labelStyle} htmlFor="edit-nombre">Nombre</label>
-          <input
-            id="edit-nombre"
-            type="text"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
-            style={inputStyle}
-            disabled={status === 'saving'}
-          />
-        </div>
+      <div style={{ marginBottom: '0.9rem' }}>
+        <label style={labelStyle} htmlFor="edit-nombre">Nombre</label>
+        <input
+          id="edit-nombre"
+          type="text"
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
+          style={inputStyle}
+          disabled={busy}
+        />
+      </div>
 
-        <div style={{ marginBottom: '0.9rem' }}>
-          <label style={labelStyle} htmlFor="edit-precio">Precio</label>
-          <input
-            id="edit-precio"
-            type="number"
-            step="0.01"
-            min="0"
-            value={precio}
-            onChange={(e) => setPrecio(e.target.value)}
-            style={inputStyle}
-            disabled={status === 'saving'}
-          />
-        </div>
+      <div style={{ marginBottom: '0.9rem' }}>
+        <label style={labelStyle} htmlFor="edit-precio">Precio</label>
+        <input
+          id="edit-precio"
+          type="text"
+          inputMode="decimal"
+          autoComplete="off"
+          value={precio}
+          onChange={(e) => setPrecio(e.target.value)}
+          style={inputStyle}
+          disabled={busy}
+        />
+      </div>
 
-        <div style={{ marginBottom: '0.9rem' }}>
-          <label style={labelStyle} htmlFor="edit-categoria">Categoría</label>
-          <select
-            id="edit-categoria"
-            value={categoriaId}
-            onChange={(e) => setCategoriaId(e.target.value ? Number(e.target.value) : '')}
-            style={inputStyle}
-            disabled={status === 'saving'}
-          >
-            <option value="">Elegí una categoría</option>
-            {categorias.map((c) => (
-              <option key={c.id} value={c.id}>{c.nombre}</option>
-            ))}
-          </select>
-        </div>
+      <div style={{ marginBottom: '0.9rem' }}>
+        <label style={labelStyle} htmlFor="edit-categoria">Categoría</label>
+        <select
+          id="edit-categoria"
+          value={categoriaId}
+          onChange={(e) => setCategoriaId(e.target.value ? Number(e.target.value) : '')}
+          style={inputStyle}
+          disabled={busy}
+        >
+          <option value="">Elegí una categoría</option>
+          {categorias.map((c) => (
+            <option key={c.id} value={c.id}>{c.nombre}</option>
+          ))}
+        </select>
+      </div>
 
-        <div style={{ marginBottom: '1.1rem' }}>
-          <label style={labelStyle} htmlFor="edit-descripcion">Descripción</label>
-          <textarea
-            id="edit-descripcion"
-            value={descripcion}
-            onChange={(e) => setDescripcion(e.target.value)}
-            rows={3}
-            style={{ ...inputStyle, resize: 'vertical', fontFamily: 'DM Sans, sans-serif' }}
-            disabled={status === 'saving'}
-          />
-        </div>
+      <div style={{ marginBottom: '1.1rem' }}>
+        <label style={labelStyle} htmlFor="edit-descripcion">Descripción</label>
+        <textarea
+          id="edit-descripcion"
+          value={descripcion}
+          onChange={(e) => setDescripcion(e.target.value)}
+          rows={3}
+          style={{ ...inputStyle, resize: 'vertical' }}
+          disabled={busy}
+        />
+      </div>
 
-        {validationError && (
-          <p style={{
-            color: '#c0392b',
-            background: '#fdf2f2',
-            border: '1px solid #f5c6c6',
-            borderRadius: 6,
-            padding: '0.6rem 0.8rem',
-            margin: '0 0 1rem',
-            fontSize: '0.82rem',
-          }}>
-            {validationError}
-          </p>
-        )}
+      {validationError && <p role="alert" style={errorBox}>{validationError}</p>}
+      {saveError && <p role="alert" style={errorBox}>{saveError}</p>}
 
-        {status === 'error' && saveError && (
-          <p style={{
-            color: '#c0392b',
-            background: '#fdf2f2',
-            border: '1px solid #f5c6c6',
-            borderRadius: 6,
-            padding: '0.6rem 0.8rem',
-            margin: '0 0 1rem',
-            fontSize: '0.82rem',
-          }}>
-            {saveError}
-          </p>
-        )}
-
-        <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'flex-end' }}>
-          <button
-            type="button"
-            onClick={onCancel}
-            disabled={status === 'saving'}
-            style={{
-              background: 'transparent',
-              border: '1.5px solid #5a8ab0',
-              borderRadius: 8,
-              color: '#5a8ab0',
-              fontFamily: 'DM Sans, sans-serif',
-              fontSize: '0.85rem',
-              fontWeight: 600,
-              padding: '0.5rem 1.1rem',
-              cursor: status === 'saving' ? 'default' : 'pointer',
-            }}
-          >
-            Cancelar
-          </button>
-          <button
-            type="submit"
-            disabled={status === 'saving'}
-            style={{
-              background: '#2d6490',
-              border: 'none',
-              borderRadius: 8,
-              color: '#fff',
-              fontFamily: 'DM Sans, sans-serif',
-              fontSize: '0.85rem',
-              fontWeight: 600,
-              padding: '0.5rem 1.1rem',
-              cursor: status === 'saving' ? 'default' : 'pointer',
-              opacity: status === 'saving' ? 0.7 : 1,
-            }}
-          >
-            {status === 'saving' ? 'Guardando...' : 'Guardar cambios'}
-          </button>
-        </div>
-      </form>
-    </div>
+      <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'flex-end', flexWrap: 'wrap' }}>
+        <button
+          type="button"
+          onClick={onCancel}
+          disabled={busy}
+          style={{ ...secondaryButton, cursor: busy ? 'default' : 'pointer' }}
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          disabled={busy}
+          style={{ ...primaryButton, cursor: busy ? 'default' : 'pointer', opacity: busy ? 0.7 : 1 }}
+        >
+          {step === 'uploading' ? 'Subiendo foto…' : step === 'saving' ? 'Guardando…' : 'Guardar cambios'}
+        </button>
+      </div>
+    </AdminModal>
   )
 }
