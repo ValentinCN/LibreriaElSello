@@ -38,6 +38,7 @@ export default function ProductEditForm({ producto, categorias, onSaved, onCance
   const [categoriaId, setCategoriaId] = useState<number | ''>(categoriaActual?.id ?? '')
   const [status, setStatus] = useState<'idle' | 'saving' | 'error'>('idle')
   const [validationError, setValidationError] = useState<string | null>(null)
+  const [saveError, setSaveError] = useState<string | null>(null)
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
@@ -71,6 +72,9 @@ export default function ProductEditForm({ producto, categorias, onSaved, onCance
     })
 
     if (error) {
+      setSaveError(error.code === 'PGRST116'
+        ? 'No tenés permisos para modificar productos.'
+        : 'No se pudo guardar el producto. Probá de nuevo.')
       setStatus('error')
       return
     }
@@ -178,7 +182,7 @@ export default function ProductEditForm({ producto, categorias, onSaved, onCance
           </p>
         )}
 
-        {status === 'error' && (
+        {status === 'error' && saveError && (
           <p style={{
             color: '#c0392b',
             background: '#fdf2f2',
@@ -188,7 +192,7 @@ export default function ProductEditForm({ producto, categorias, onSaved, onCance
             margin: '0 0 1rem',
             fontSize: '0.82rem',
           }}>
-            No se pudo guardar el producto. Probá de nuevo.
+            {saveError}
           </p>
         )}
 

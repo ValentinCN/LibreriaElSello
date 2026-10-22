@@ -14,11 +14,16 @@ type ProductRow = {
   categories: { slug: string } | null
 }
 
-export async function getProducts(): Promise<ProductoSupabase[]> {
-  const { data, error } = await supabase
+export async function getProducts(opts?: { includeInactive?: boolean }): Promise<ProductoSupabase[]> {
+  let query = supabase
     .from('products')
     .select('id, nombre, descripcion, precio, imagen_url, activo, destacado, disponible, orden, categories(slug)')
-    .eq('activo', true)
+
+  if (!opts?.includeInactive) {
+    query = query.eq('activo', true)
+  }
+
+  const { data, error } = await query
     .order('orden', { ascending: true })
     .order('nombre', { ascending: true })
 

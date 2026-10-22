@@ -29,7 +29,7 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     let dead = false
-    Promise.all([getProducts(), getCategories()])
+    Promise.all([getProducts({ includeInactive: true }), getCategories()])
       .then(([productsData, categoriasData]) => {
         if (!dead) {
           setProducts(productsData)
@@ -52,7 +52,9 @@ export default function AdminDashboardPage() {
     const nuevoValor = !producto.destacado
     const { error } = await toggleDestacado(producto.id, nuevoValor)
     if (error) {
-      setToggleError(`No se pudo actualizar "${producto.nombre}"`)
+      setToggleError(error.code === 'PGRST116'
+        ? 'No tenés permisos para modificar productos.'
+        : `No se pudo actualizar "${producto.nombre}"`)
     } else {
       setProducts((prev) => prev.map((p) => p.id === producto.id ? { ...p, destacado: nuevoValor } : p))
     }
@@ -65,7 +67,9 @@ export default function AdminDashboardPage() {
     const nuevoValor = !producto.disponible
     const { error } = await toggleDisponible(producto.id, nuevoValor)
     if (error) {
-      setToggleError(`No se pudo actualizar "${producto.nombre}"`)
+      setToggleError(error.code === 'PGRST116'
+        ? 'No tenés permisos para modificar productos.'
+        : `No se pudo actualizar "${producto.nombre}"`)
     } else {
       setProducts((prev) => prev.map((p) => p.id === producto.id ? { ...p, disponible: nuevoValor } : p))
     }
