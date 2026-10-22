@@ -28,19 +28,25 @@ export default function CartDrawer() {
       )}
 
       {/* Drawer panel */}
-      <aside style={{
-        position: 'fixed',
-        top: 0, right: 0, bottom: 0,
-        width: 'min(400px, 95vw)',
-        background: 'var(--bg)',
-        borderLeft: '1px solid var(--border)',
-        zIndex: 201,
-        display: 'flex',
-        flexDirection: 'column',
-        transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
-        transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-        boxShadow: '-8px 0 40px rgba(0,0,0,0.4)',
-      }}>
+      <aside
+        inert={!isOpen}
+        style={{
+          position: 'fixed',
+          top: 0, right: 0, bottom: 0,
+          width: 'min(400px, 95vw)',
+          background: 'var(--bg)',
+          borderLeft: '1px solid var(--border)',
+          zIndex: 201,
+          display: 'flex',
+          flexDirection: 'column',
+          transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
+          visibility: isOpen ? 'visible' : 'hidden',
+          transition: isOpen
+            ? 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0s'
+            : 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.3s',
+          boxShadow: isOpen ? '-8px 0 40px rgba(0,0,0,0.4)' : 'none',
+        }}
+      >
         {/* Header */}
         <header style={{
           display: 'flex',
@@ -53,7 +59,7 @@ export default function CartDrawer() {
           <div>
             <p style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: '0.56rem',
+              fontSize: '0.75rem',
               letterSpacing: '0.3em',
               color: `${GOLD}80`,
               textTransform: 'uppercase',
@@ -221,7 +227,7 @@ export default function CartDrawer() {
             }}>
               <span style={{
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: '0.6rem',
+                fontSize: '0.75rem',
                 letterSpacing: '0.2em',
                 textTransform: 'uppercase',
                 color: 'var(--text-muted)',
@@ -269,7 +275,7 @@ export default function CartDrawer() {
                 border: 'none',
                 cursor: 'pointer',
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: '0.58rem',
+                fontSize: '0.75rem',
                 letterSpacing: '0.14em',
                 textTransform: 'uppercase',
                 color: 'var(--text-dim)',

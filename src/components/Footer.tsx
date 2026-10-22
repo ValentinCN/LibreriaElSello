@@ -33,7 +33,7 @@ export default function Footer() {
       <NewsletterSignup />
 
       <div style={{
-        padding: '1.75rem 3rem',
+        padding: '1.75rem clamp(1rem, 4vw, 3rem)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -70,7 +70,7 @@ export default function Footer() {
           >
             Conócenos
           </Link>
-          <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.6rem' }}>·</span>
+          <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.75rem' }}>·</span>
           <a
             href={INSTAGRAM_URL}
             target="_blank"
@@ -81,7 +81,7 @@ export default function Footer() {
           >
             {INSTAGRAM_HANDLE}
           </a>
-          <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.6rem' }}>·</span>
+          <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.75rem' }}>·</span>
           <a
             href={WA_URL}
             target="_blank"
@@ -92,7 +92,7 @@ export default function Footer() {
           >
             {HORARIO_TEL}
           </a>
-          <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.6rem' }}>·</span>
+          <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.75rem' }}>·</span>
           <span style={{
             fontFamily: "'DM Sans', sans-serif",
             fontSize: '0.68rem',

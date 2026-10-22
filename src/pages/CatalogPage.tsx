@@ -92,7 +92,7 @@ export default function CatalogPage() {
 
         {/* ── Header ───────────────────────────────────────────── */}
         <header style={{
-          padding: '3.5rem 3rem 0',
+          padding: '3.5rem clamp(1rem, 4vw, 3rem) 0',
           borderBottom: '1px solid var(--border)',
         }}>
           <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
@@ -174,7 +174,7 @@ export default function CatalogPage() {
                     right: '0.6rem', top: '50%',
                     transform: 'translateY(-50%)',
                     color: '#1a3a50',
-                    fontSize: '0.6rem',
+                    fontSize: '0.75rem',
                     pointerEvents: 'none',
                   }}>▾</span>
                 </div>
@@ -182,49 +182,67 @@ export default function CatalogPage() {
             </div>
 
             {/* Category tabs */}
-            <div style={{ display: 'flex', gap: 0, marginBottom: '-1px', flexWrap: 'wrap' }}>
-              {(['todo', ...categorias.map(c => c.slug)]).map(slug => {
-                const cat    = categorias.find(c => c.slug === slug)
-                const active = slug === activeCat
-                const color  = SLUG_COLOR[slug] ?? PRIMARY
-                const label  = slug === 'todo' ? 'Todo' : (cat?.nombre ?? slug)
-                return (
-                  <button
-                    key={slug}
-                    onClick={() => setFilter(slug)}
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      borderBottom: active ? `2px solid ${color}` : '2px solid transparent',
-                      cursor: 'pointer',
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: '0.8rem',
-                      fontWeight: active ? 600 : 400,
-                      letterSpacing: '0.18em',
-                      textTransform: 'uppercase',
-                      color: active ? color : 'rgba(26,58,80,0.55)',
-                      padding: '1rem 1.25rem',
-                      transition: 'all 0.2s',
-                      marginBottom: '-2px',
-                    }}
-                  >
-                    {label}
-                  </button>
-                )
-              })}
+            <div style={{ position: 'relative' }}>
+              <div
+                className="no-scrollbar flex flex-nowrap overflow-x-auto snap-x snap-mandatory md:flex-wrap md:overflow-visible"
+                style={{ gap: 0, marginBottom: '-1px' }}
+              >
+                {(['todo', ...categorias.map(c => c.slug)]).map(slug => {
+                  const cat    = categorias.find(c => c.slug === slug)
+                  const active = slug === activeCat
+                  const color  = SLUG_COLOR[slug] ?? PRIMARY
+                  const label  = slug === 'todo' ? 'Todo' : (cat?.nombre ?? slug)
+                  return (
+                    <button
+                      key={slug}
+                      onClick={() => setFilter(slug)}
+                      className="snap-start"
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        borderBottom: active ? `2px solid ${color}` : '2px solid transparent',
+                        cursor: 'pointer',
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: '0.8rem',
+                        fontWeight: active ? 600 : 400,
+                        letterSpacing: '0.18em',
+                        textTransform: 'uppercase',
+                        color: active ? color : 'rgba(26,58,80,0.55)',
+                        padding: '1rem 1.25rem',
+                        transition: 'all 0.2s',
+                        marginBottom: '-2px',
+                        flexShrink: 0,
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {label}
+                    </button>
+                  )
+                })}
+              </div>
+              <div
+                className="md:hidden"
+                style={{
+                  position: 'absolute',
+                  top: 0, right: 0, bottom: '2px',
+                  width: '2rem',
+                  background: 'linear-gradient(to right, transparent, var(--bg))',
+                  pointerEvents: 'none',
+                }}
+              />
             </div>
           </div>
         </header>
 
         {/* ── Product grid ─────────────────────────────────────── */}
-        <main style={{
-          maxWidth: '1280px',
-          margin: '0 auto',
-          padding: '2.75rem 3rem 6rem',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-          gap: '1.5rem',
-        }}>
+        <main
+          className="grid grid-cols-2 gap-3 md:grid-cols-[repeat(auto-fill,minmax(min(100%,220px),1fr))] md:gap-6"
+          style={{
+            maxWidth: '1280px',
+            margin: '0 auto',
+            padding: '2.75rem clamp(1rem, 4vw, 3rem) 6rem',
+          }}
+        >
           {loading ? (
             Array.from({ length: 8 }).map((_e, i) => (
               <div key={i} style={{

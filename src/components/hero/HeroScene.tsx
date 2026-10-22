@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import type { Icon } from "@phosphor-icons/react";
 import {
@@ -94,7 +94,6 @@ export function HeroBadge() {
 }
 
 export function HeroScene() {
-  const navigate = useNavigate();
   const reduce   = useReducedMotion();
   const [eyeIdx, setEyeIdx] = useState(0);
   const [catalogHover, setCatalogHover] = useState(false);
@@ -127,7 +126,8 @@ export function HeroScene() {
     <section
       style={{
         background: "#f2ecdf",
-        minHeight: "100vh",
+        marginTop: "58px",
+        minHeight: "calc(100dvh - 58px)",
         position: "relative",
         overflow: "hidden",
       }}
@@ -188,7 +188,7 @@ export function HeroScene() {
           position: "relative",
           zIndex: 10,
           display: "flex",
-          minHeight: "100vh",
+          minHeight: "calc(100dvh - 58px)",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
@@ -211,7 +211,8 @@ export function HeroScene() {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 0.8 }}
-          style={{ marginBottom: "1.1rem", height: "1.4em", overflow: "hidden" }}
+          className="h-auto overflow-visible md:h-[1.4em] md:overflow-hidden"
+          style={{ marginBottom: "1.1rem" }}
         >
           <AnimatePresence mode="wait">
             <motion.p
@@ -220,13 +221,12 @@ export function HeroScene() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
+              className="text-[0.62rem] tracking-[0.16em] md:text-[0.75rem] md:tracking-[0.38em]"
               style={{
                 fontFamily: "'DM Sans', sans-serif",
                 margin: 0,
-                fontSize: "0.75rem",
                 fontWeight: 600,
                 textTransform: "uppercase",
-                letterSpacing: "0.38em",
                 color: "#2d6490",
               }}
             >
@@ -246,10 +246,11 @@ export function HeroScene() {
             fontSize: "clamp(0.95rem, 2.2vw, 1.15rem)",
             lineHeight: 1.65,
             color: "#5a8ab0",
+            textWrap: "balance",
           }}
         >
-          <span style={{ display: "block" }}>Todo lo que necesitás para escribir, estudiar y crear</span>
-          <span style={{ display: "block" }}>en un solo lugar de confianza</span>
+          <span className="md:block">Todo lo que necesitás para escribir, estudiar y crear</span>{' '}
+          <span className="md:block">en un solo lugar de confianza</span>
         </motion.p>
 
         <motion.div
@@ -264,10 +265,11 @@ export function HeroScene() {
             gap: "0.85rem",
           }}
         >
-          <button
-            onClick={() => navigate("/catalogo")}
+          <Link
+            to="/catalogo"
             onMouseEnter={() => setCatalogHover(true)}
             onMouseLeave={() => setCatalogHover(false)}
+            className="w-full max-w-[320px] md:w-auto md:max-w-none"
             style={{
               fontFamily: "'DM Sans', sans-serif",
               borderRadius: "9999px",
@@ -278,16 +280,20 @@ export function HeroScene() {
               backgroundColor: catalogHover ? "#1a3a50" : "#2d6490",
               border: "none",
               cursor: "pointer",
+              textDecoration: "none",
+              display: "inline-flex",
+              justifyContent: "center",
               transition: reduce ? "none" : "background-color 0.2s ease-out",
             }}
           >
             Ver catálogo
-          </button>
+          </Link>
 
           <button
             onClick={() => window.open(WA_PRODUCTOS, "_blank", "noopener,noreferrer")}
             onMouseEnter={() => setWaHover(true)}
             onMouseLeave={() => setWaHover(false)}
+            className="w-full max-w-[320px] md:w-auto md:max-w-none"
             style={{
               fontFamily: "'DM Sans', sans-serif",
               borderRadius: "9999px",
@@ -300,6 +306,7 @@ export function HeroScene() {
               cursor: "pointer",
               display: "inline-flex",
               alignItems: "center",
+              justifyContent: "center",
               gap: "0.55rem",
               transition: reduce ? "none" : "background-color 0.2s ease-out, color 0.2s ease-out",
             }}

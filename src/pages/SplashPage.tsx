@@ -25,6 +25,7 @@ import {
   Note,
 } from "@phosphor-icons/react"
 import type { ElementType, CSSProperties } from "react"
+import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 import GloboArgentina from "../components/illustrations/GloboArgentina"
 import CajaEntrega from "../components/illustrations/CajaEntrega"
@@ -182,7 +183,7 @@ function CategoryTile({ cat }: { cat: Categoria }) {
 
       <span style={{
         fontFamily: "'DM Sans', sans-serif",
-        fontSize: "0.6rem",
+        fontSize: "0.75rem",
         letterSpacing: "0.2em",
         textTransform: "uppercase",
         color: hovered ? meta.color : "var(--text-dim)",
@@ -203,6 +204,7 @@ export default function SplashPage() {
   const reduce = useReducedMotion()
   return (
     <div style={{ background: "var(--bg)" }}>
+      <Navbar />
       <HeroScene />
 
       {/* ── 1. Teaser de categorías ──────────────────────────── */}
@@ -402,7 +404,7 @@ export default function SplashPage() {
 
             <p style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: "0.62rem",
+              fontSize: "0.75rem",
               letterSpacing: "0.1em",
               color: "rgba(255,255,255,0.35)",
             }}>

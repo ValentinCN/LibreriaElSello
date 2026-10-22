@@ -130,7 +130,7 @@ export default function ConocenosPage() {
               <Reveal>
                 <p style={{
                   fontFamily: "'DM Sans', sans-serif",
-                  fontSize: "0.56rem",
+                  fontSize: "0.75rem",
                   letterSpacing: "0.34em",
                   textTransform: "uppercase",
                   color: ACCENT,
@@ -210,7 +210,7 @@ export default function ConocenosPage() {
                   </div>
                   <p style={{
                     fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "0.6rem",
+                    fontSize: "0.75rem",
                     letterSpacing: "0.22em",
                     textTransform: "uppercase",
                     color: "var(--text-dim)",
@@ -255,7 +255,7 @@ export default function ConocenosPage() {
             <Reveal style={{ textAlign: "center", marginBottom: "3rem" }}>
               <p style={{
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: "0.56rem",
+                fontSize: "0.75rem",
                 letterSpacing: "0.34em",
                 textTransform: "uppercase",
                 color: ACCENT,
@@ -348,7 +348,7 @@ export default function ConocenosPage() {
           <Reveal style={{ marginBottom: "2.25rem" }}>
             <p style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: "0.56rem",
+              fontSize: "0.75rem",
               letterSpacing: "0.34em",
               textTransform: "uppercase",
               color: ACCENT,
@@ -407,7 +407,7 @@ export default function ConocenosPage() {
                 height: "100%",
               }}>
                 <div>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.56rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--text-dim)", marginBottom: "0.4rem" }}>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--text-dim)", marginBottom: "0.4rem" }}>
                     Dirección
                   </p>
                   <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.35rem", fontWeight: 700, color: "var(--text)", lineHeight: 1.15 }}>
@@ -421,7 +421,7 @@ export default function ConocenosPage() {
                 <div style={{ width: "100%", height: 1, background: "var(--border)" }} />
 
                 <div>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.56rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--text-dim)", marginBottom: "0.4rem" }}>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--text-dim)", marginBottom: "0.4rem" }}>
                     Horario
                   </p>
                   <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", fontWeight: 700, color: "var(--text)", lineHeight: 1.2 }}>
@@ -483,7 +483,7 @@ export default function ConocenosPage() {
               gap: "2.25rem",
             }}>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.56rem", letterSpacing: "0.34em", textTransform: "uppercase", color: ACCENT, opacity: 0.75 }}>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.34em", textTransform: "uppercase", color: ACCENT, opacity: 0.75 }}>
                   · Seguinos ·
                 </p>
                 <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)", fontWeight: 700, color: "var(--text)" }}>

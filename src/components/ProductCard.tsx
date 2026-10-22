@@ -89,7 +89,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
             background: '#c8960c',
             color: '#ffffff',
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: '0.52rem',
+            fontSize: '0.75rem',
             fontWeight: 500,
             letterSpacing: '0.16em',
             textTransform: 'uppercase',
@@ -106,7 +106,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
             background: '#1a3a50',
             color: '#ffffff',
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: '0.58rem',
+            fontSize: '0.75rem',
             fontWeight: 700,
             letterSpacing: '0.16em',
             textTransform: 'uppercase',
@@ -126,7 +126,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
       }}>
         <span style={{
           fontFamily: "'DM Sans', sans-serif",
-          fontSize: '0.58rem',
+          fontSize: '0.75rem',
           letterSpacing: '0.2em',
           textTransform: 'uppercase',
           color: meta.color,
@@ -136,7 +136,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
           {meta.nombre || producto.categoria}
         </span>
 
-        <h3 style={{
+        <h3 className="line-clamp-2 md:line-clamp-none" style={{
           fontFamily: "'Playfair Display', serif",
           fontSize: '1rem',
           fontWeight: 700,
@@ -147,7 +147,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
           {producto.nombre}
         </h3>
 
-        <p style={{
+        <p className="line-clamp-2 md:line-clamp-none" style={{
           fontFamily: "'DM Sans', sans-serif",
           fontSize: '0.78rem',
           fontWeight: 300,
@@ -159,12 +159,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
           {producto.descripcion}
         </p>
 
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '0.5rem',
-        }}>
+        <div className="flex flex-col gap-2 md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-2">
           <span style={{
             fontFamily: "'Playfair Display', serif",
             fontSize: '1.1rem',
@@ -176,7 +171,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
               : 'Consultar'}
           </span>
 
-          <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+          <div className="flex flex-wrap" style={{ gap: '0.4rem', alignItems: 'center' }}>
             <button
               onClick={handleAdd}
               title={agotado ? 'Sin stock' : 'Agregar a mi lista'}
@@ -185,8 +180,8 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
                 background: added ? meta.color : 'transparent',
                 border: `1px solid ${added ? meta.color : 'var(--border)'}`,
                 color: added ? '#ffffff' : 'var(--text-dim)',
-                width: 30,
-                height: 30,
+                width: 44,
+                height: 44,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -213,7 +208,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
                 border: `1px solid ${hover ? '#25D366' : '#2d6490'}`,
                 color: hover ? '#fff' : '#2d6490',
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: '0.62rem',
+                fontSize: '0.75rem',
                 fontWeight: 500,
                 letterSpacing: '0.1em',
                 textTransform: 'uppercase',

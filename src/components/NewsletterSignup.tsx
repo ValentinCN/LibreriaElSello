@@ -20,7 +20,7 @@ export default function NewsletterSignup() {
 
   return (
     <div style={{
-      padding: '1.5rem 3rem',
+      padding: '1.5rem clamp(1rem, 4vw, 3rem)',
       borderBottom: '1px solid rgba(255,255,255,0.10)',
     }}>
       <div style={{ maxWidth: 480 }}>

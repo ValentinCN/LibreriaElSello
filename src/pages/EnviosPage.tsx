@@ -232,7 +232,7 @@ export default function EnviosPage() {
               style={{
                 marginTop: '0.5rem',
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: '0.6rem',
+                fontSize: '0.75rem',
                 letterSpacing: '0.18em',
                 textTransform: 'uppercase',
                 color: PRIMARY,
