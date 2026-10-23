@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from 'react'
+import { useRef, useEffect, useCallback, useMemo } from 'react'
 import { animate, useReducedMotion } from 'motion/react'
 import type { CSSProperties } from 'react'
 
@@ -21,7 +21,7 @@ export default function MagneticText({
 }: MagneticTextProps) {
   const Tag = as
   const prefersReduced = useReducedMotion()
-  const chars = children.split('')
+  const chars = useMemo(() => children.split(''), [children])
   const letterRefs = useRef<(HTMLSpanElement | null)[]>([])
   const rectsRef   = useRef<(DOMRect | null)[]>([])
   const lastRef    = useRef(0)
@@ -70,7 +70,7 @@ export default function MagneticText({
       window.removeEventListener('mousemove', handleMove)
       window.removeEventListener('mouseleave', handleLeave)
     }
-  }, [prefersReduced, children, maxLift, radius, updateRects])
+  }, [prefersReduced, chars, maxLift, radius, updateRects])
 
   return (
     <Tag style={style}>

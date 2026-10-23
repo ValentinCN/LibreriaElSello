@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'motion/react'
+import { motion, useReducedMotion, type Variants } from 'motion/react'
 
 const E_VAN = [0.16, 0.7, 0.3, 1] as const
 
@@ -13,6 +13,24 @@ const PUFFS = [
   { cx: 30, cy: 112, r: 7, delay: 0.55 },
   { cx: 30, cy: 112, r: 5, delay: 0.82 },
 ]
+
+// Fuera del componente: si se define adentro, se recrea en cada render
+function Wheel({ cx, cy, variants }: { cx: number; cy: number; variants?: Variants }) {
+  return (
+    <motion.g
+      variants={variants}
+      style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
+    >
+      <circle cx={cx} cy={cy} r={15} fill="#fff" stroke="#1a3a50" strokeWidth={2.8} />
+      <circle cx={cx} cy={cy} r={9}  fill="none" stroke="#1a3a50" strokeWidth={1.6} />
+      <path
+        d={`M${cx},${cy - 9} V${cy + 9} M${cx - 9},${cy} H${cx + 9} M${cx - 6.4},${cy - 6.4} L${cx + 6.4},${cy + 6.4} M${cx - 6.4},${cy + 6.4} L${cx + 6.4},${cy - 6.4}`}
+        stroke="#1a3a50" strokeWidth={1.6}
+      />
+      <circle cx={cx} cy={cy} r={3} fill="#1a3a50" />
+    </motion.g>
+  )
+}
 
 export default function PickupEntrega() {
   const reduce = useReducedMotion()
@@ -50,21 +68,6 @@ export default function PickupEntrega() {
       transition: { duration: 1.1, ease: 'easeOut' as const, delay, opacity: { times: [0, 0.25, 1] } },
     },
   })
-
-  const Wheel = ({ cx, cy }: { cx: number; cy: number }) => (
-    <motion.g
-      variants={wheelVariants}
-      style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
-    >
-      <circle cx={cx} cy={cy} r={15} fill="#fff" stroke="#1a3a50" strokeWidth={2.8} />
-      <circle cx={cx} cy={cy} r={9}  fill="none" stroke="#1a3a50" strokeWidth={1.6} />
-      <path
-        d={`M${cx},${cy - 9} V${cy + 9} M${cx - 9},${cy} H${cx + 9} M${cx - 6.4},${cy - 6.4} L${cx + 6.4},${cy + 6.4} M${cx - 6.4},${cy + 6.4} L${cx + 6.4},${cy - 6.4}`}
-        stroke="#1a3a50" strokeWidth={1.6}
-      />
-      <circle cx={cx} cy={cy} r={3} fill="#1a3a50" />
-    </motion.g>
-  )
 
   return (
     <svg
@@ -108,8 +111,8 @@ export default function PickupEntrega() {
         <path d="M40,113 H32" stroke="#1a3a50" strokeWidth={2.6} />
         <path d="M61,116 A15,15 0 0,1 91,116" stroke="#2d6490" strokeWidth={2.6} />
         <path d="M161,116 A15,15 0 0,1 191,116" stroke="#2d6490" strokeWidth={2.6} />
-        <Wheel cx={76} cy={118} />
-        <Wheel cx={176} cy={118} />
+        <Wheel cx={76} cy={118} variants={wheelVariants} />
+        <Wheel cx={176} cy={118} variants={wheelVariants} />
       </motion.g>
     </svg>
   )

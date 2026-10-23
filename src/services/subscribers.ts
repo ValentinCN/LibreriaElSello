@@ -44,7 +44,7 @@ export async function subscribe(rawEmail: string, source: string): Promise<Subsc
 
     console.error('[el-Sello] subscribe error:', error.message)
     return 'error'
-  } catch (_e) {
+  } catch {
     return 'error'
   }
 }

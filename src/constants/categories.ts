@@ -58,7 +58,3 @@ export const CATEGORIAS: CategoriaMeta[] = [
 export const CATEGORIA_BY_SLUG: Record<CategoriaSlug, CategoriaMeta> = Object.fromEntries(
   CATEGORIAS.map(c => [c.slug, c])
 ) as Record<CategoriaSlug, CategoriaMeta>
-
-export const CATEGORIA_BY_LABEL: Record<Categoria, CategoriaMeta> = Object.fromEntries(
-  CATEGORIAS.map(c => [c.label, c])
-) as Record<Categoria, CategoriaMeta>

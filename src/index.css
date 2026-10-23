@@ -8,9 +8,6 @@
   --font-sans:  "DM Sans", system-ui, sans-serif;
 }
 
-/* ── Tailwind v4: class-based dark mode ─────────────────────────── */
-@custom-variant dark (&:where(.dark, .dark *));
-
 /* ── Design tokens ──────────────────────────────────────────────── */
 :root {
   --bg:           #f2ecdf;
@@ -21,22 +18,6 @@
   --border:       rgba(45, 100, 144, 0.14);
   --nav-bg:       rgba(242, 236, 223, 0.92);
   --shadow:       0 2px 16px rgba(45, 100, 144, 0.09);
-
-  /* Hero halo — desactivado (fondo claro ya da contraste suficiente) */
-  --hero-halo: transparent;
-}
-
-.dark {
-  --bg:          #0e0b1a;
-  --surface:     rgba(255, 255, 255, 0.025);
-  --text:        #ffffff;
-  --text-muted:  rgba(255, 255, 255, 0.45);
-  --text-dim:    rgba(255, 255, 255, 0.2);
-  --border:      rgba(255, 255, 255, 0.06);
-  --nav-bg:      rgba(14, 11, 26, 0.88);
-  --shadow:      0 2px 16px rgba(0, 0, 0, 0.4);
-
-  --hero-halo: rgba(14, 11, 26, 0.88);
 }
 
 /* ── Lenis smooth scroll ────────────────────────────────────────── */

@@ -60,7 +60,8 @@ export default function Footer() {
           </span>
         </div>
 
-        {/* Right: social + copyright */}
+        {/* Right: social + copyright. Los "·" solo desde md: en mobile la fila
+            se corta y quedarían colgando; ahí separa el gap. */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
           <Link
             to="/conocenos"
@@ -70,7 +71,7 @@ export default function Footer() {
           >
             Conócenos
           </Link>
-          <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.75rem' }}>·</span>
+          <span className="hidden md:inline" aria-hidden="true" style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.75rem' }}>·</span>
           <a
             href={INSTAGRAM_URL}
             target="_blank"
@@ -81,7 +82,7 @@ export default function Footer() {
           >
             {INSTAGRAM_HANDLE}
           </a>
-          <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.75rem' }}>·</span>
+          <span className="hidden md:inline" aria-hidden="true" style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.75rem' }}>·</span>
           <a
             href={WA_URL}
             target="_blank"
@@ -92,7 +93,7 @@ export default function Footer() {
           >
             {HORARIO_TEL}
           </a>
-          <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.75rem' }}>·</span>
+          <span className="hidden md:inline" aria-hidden="true" style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.75rem' }}>·</span>
           <span style={{
             fontFamily: "'DM Sans', sans-serif",
             fontSize: '0.68rem',

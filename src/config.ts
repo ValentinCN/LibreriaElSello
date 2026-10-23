@@ -13,9 +13,6 @@ export const INSTAGRAM_URL    = 'https://www.instagram.com/libreriaelsello'
 export const MAPS_URL   = `https://maps.google.com/?q=${encodeURIComponent('Rivadavia 341, Quilmes Centro, Buenos Aires')}`
 export const MAPS_EMBED = 'https://maps.google.com/maps?q=Rivadavia+341,+Quilmes,+Buenos+Aires,+Argentina&output=embed&z=16'
 
-const WA_TEXT_PRODUCTOS = 'Hola! Quería hacer una consulta sobre los productos de Librería el Sello.'
-export const WA_PRODUCTOS = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_TEXT_PRODUCTOS)}`
-
 // Mismo patrón que CartDrawer/ProductCard: WA_URL + texto precargado.
 export const waLink = (texto: string) => `${WA_URL}?text=${encodeURIComponent(texto)}`
 export const WA_LISTA_COLEGIO = waLink('Hola! Les quiero mandar la lista del colegio.')
