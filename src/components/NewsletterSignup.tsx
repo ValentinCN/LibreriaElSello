@@ -80,18 +80,17 @@ export default function NewsletterSignup() {
               <button
                 type="submit"
                 disabled={!consent || uiState === 'loading'}
+                // Mismo par que el CTA final: dorado + texto oscuro (AA). Deshabilitado:
+                // blanco translúcido, para que no se lea como un dorado apagado.
+                className="bg-gold text-text transition-colors enabled:cursor-pointer enabled:hover:bg-bg disabled:cursor-not-allowed disabled:bg-white/15 disabled:text-white/70 motion-reduce:transition-none"
                 style={{
-                  background: !consent || uiState === 'loading' ? 'rgba(200,150,12,0.45)' : '#c8960c',
-                  color: '#fff',
                   border: 'none',
                   borderRadius: 8,
                   padding: '0.52rem 1.2rem',
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: '0.82rem',
                   fontWeight: 700,
-                  cursor: !consent || uiState === 'loading' ? 'not-allowed' : 'pointer',
                   whiteSpace: 'nowrap',
-                  transition: 'background 0.15s ease',
                 }}
               >
                 {uiState === 'loading' ? 'Enviando...' : 'Suscribirme'}
@@ -103,7 +102,7 @@ export default function NewsletterSignup() {
                 type="checkbox"
                 checked={consent}
                 onChange={(e) => setConsent(e.target.checked)}
-                style={{ marginTop: '0.15rem', accentColor: '#c8960c', flexShrink: 0 }}
+                style={{ marginTop: '0.15rem', accentColor: 'var(--color-gold)', flexShrink: 0 }}
               />
               <span style={{
                 fontFamily: "'DM Sans', sans-serif",
