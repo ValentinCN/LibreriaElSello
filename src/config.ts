@@ -18,3 +18,10 @@ export const waLink = (texto: string) => `${WA_URL}?text=${encodeURIComponent(te
 export const WA_LISTA_COLEGIO = waLink('Hola! Les quiero mandar la lista del colegio.')
 
 export const ENVIOS_ZONA = 'Quilmes y alrededores'
+
+// Perfil del local en Google Maps (reseñas y "Cómo llegar").
+export const GOOGLE_MAPS_URL = 'https://maps.app.goo.gl/ip4bbhEXZK9HnYUi9'
+
+// Foto PROVISORIA de la fachada (bajada de Google Maps): antes del deploy se
+// pisa el archivo con una foto propia, mismo nombre. null = Conócenos sin foto.
+export const LOCAL_FOTO: string | null = '/img/local-fachada.webp'

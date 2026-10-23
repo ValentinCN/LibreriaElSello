@@ -13,16 +13,22 @@ import ConsultaChat from "../components/illustrations/ConsultaChat"
 import {
   DIRECCION,
   CIUDAD,
-  MAPS_URL,
   MAPS_EMBED,
+  GOOGLE_MAPS_URL,
+  LOCAL_FOTO,
+  ENVIOS_ZONA,
   INSTAGRAM_URL,
   INSTAGRAM_HANDLE,
-  WA_CONSULTA,
+  waLink,
 } from "../config"
+import { REVIEWS } from "../constants/reviews"
 
 const PRIMARY = "#2d6490"
 const ACCENT  = "#c8960c"
 const SEC     = "#5a8ab0"
+
+// Cita destacada: la reseña de Clara V., tomada de reviews.ts (texto exacto)
+const CITA = REVIEWS.find(r => r.autor === "Clara V.")
 
 // ── Why-us cards ─────────────────────────────────────────────────────
 const CARDS = [
@@ -30,19 +36,19 @@ const CARDS = [
     Illustration: AtencionPersona,
     hoverLabel: "active",
     titulo: "Atención personalizada",
-    desc: "Asesoramiento real, no un carrito frío. Alguien te escucha y te ayuda a elegir bien.",
+    desc: "Alguien que te escucha y te ayuda a encontrar lo que necesitás, en el local o por WhatsApp.",
   },
   {
     Illustration: VariedadPaleta,
     hoverLabel: "active",
     titulo: "Variedad",
-    desc: "Artístico, escolar, librería y regalería en un solo lugar.",
+    desc: "Todo en un solo lugar, para el colegio, la oficina, el taller o un regalo.",
   },
   {
     Illustration: CercaTuyoPin,
     hoverLabel: "active",
     titulo: "Cerca tuyo",
-    desc: "Quilmes Centro, con envíos a domicilio en toda la zona.",
+    desc: `En Quilmes Centro, con envíos a ${ENVIOS_ZONA}.`,
   },
   {
     Illustration: ConsultaChat,
@@ -107,23 +113,40 @@ export default function ConocenosPage() {
               maxWidth: "400px",
               lineHeight: 1.65,
             }}>
-              Una papelería de barrio con atención real, variedad genuina y el trato de siempre.
+              Librería y regalería en Quilmes Centro.
             </p>
           </Reveal>
         </header>
 
-        {/* ── 2. Nuestra historia ─────────────────────────────── */}
+        {/* ── 2. El local ─────────────────────────────────────── */}
         <section style={{
           maxWidth: "1100px",
           margin: "0 auto",
           padding: "clamp(3.5rem, 7vw, 5.5rem) 2rem",
         }}>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "3rem",
-            alignItems: "start",
-          }}>
+          {/* Mobile: foto arriba, con el ancho del texto. Desde md: foto a la
+              derecha en una columna de 40% como máximo. Sin foto, solo texto. */}
+          <div className={LOCAL_FOTO ? "grid gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,40%)] md:items-center" : undefined}>
+            {LOCAL_FOTO && (
+              <Reveal delay={0.12} className="md:order-2">
+                <img
+                  src={LOCAL_FOTO}
+                  alt="Fachada de Librería el Sello en Rivadavia 341, Quilmes Centro"
+                  width={566}
+                  height={638}
+                  loading="lazy"
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    maxWidth: 566,
+                    height: "auto",
+                    objectFit: "cover",
+                    borderRadius: 12,
+                    marginInline: "auto",
+                  }}
+                />
+              </Reveal>
+            )}
 
             {/* Text column */}
             <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
@@ -133,115 +156,75 @@ export default function ConocenosPage() {
                   fontSize: "0.75rem",
                   letterSpacing: "0.34em",
                   textTransform: "uppercase",
-                  color: ACCENT,
-                  opacity: 0.75,
+                  color: "var(--color-gold-text)",
                 }}>
-                  · Nuestra historia ·
+                  · El local ·
                 </p>
               </Reveal>
               <Reveal delay={0.08}>
                 <h2 style={{
                   fontFamily: "'Playfair Display', serif",
-                  fontSize: "clamp(1.8rem, 4vw, 2.5rem)",
+                  fontSize: "clamp(1.6rem, 4vw, 2.5rem)",
                   fontWeight: 700,
                   color: "var(--text)",
                   lineHeight: 1.15,
+                  textWrap: "balance",
                 }}>
-                  Una librería de barrio{" "}
-                  <em style={{ color: PRIMARY, fontStyle: "italic" }}>con historia.</em>
+                  {/* Corte fijo antes de "insumos": nunca queda "a insumos" sola.
+                      Mínimo 1.6rem para que la 2.ª línea entre a 375. */}
+                  De útiles escolares a{" "}
+                  <span style={{ whiteSpace: "nowrap" }}>insumos de computación</span>
                 </h2>
               </Reveal>
-              {/* TODO: reemplazar por historia real */}
+              {/* Fuente: rubros del cartel del local. Nada de historia ni años
+                  hasta que el dueño los confirme. */}
               <Reveal delay={0.14}>
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem", fontWeight: 300, color: "var(--text-muted)", lineHeight: 1.82 }}>
-                  Librería el Sello es una papelería de barrio en pleno Quilmes Centro. Empezamos con una idea simple: que comprar útiles, material artístico o un regalo se sienta como entrar a la librería de siempre, esa donde alguien te conoce, te escucha y te ayuda a elegir bien.
+                  Tenemos artículos escolares, comerciales, técnicos y de arte, regalería e insumos de computación. También atendemos empresas.
                 </p>
               </Reveal>
               <Reveal delay={0.2}>
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem", fontWeight: 300, color: "var(--text-muted)", lineHeight: 1.82 }}>
-                  Con los años fuimos sumando de todo un poco —marcadores y acrílicos para los que pintan, cuadernos y mochilas para arrancar las clases, agendas, regalería y esos detalles que aparecen justo cuando los necesitás— pero sin perder lo que nos importa: la atención cara a cara y el consejo honesto.
-                </p>
-              </Reveal>
-              <Reveal delay={0.26}>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem", fontWeight: 300, color: "var(--text-muted)", lineHeight: 1.82 }}>
-                  Por eso acá no hay un carrito frío que te apura. Armás tu lista con calma y la charlamos por WhatsApp, como se hacen las cosas entre vecinos.
+                  Si no lo ves en el catálogo, preguntá: te asesoramos en el local y por WhatsApp.
                 </p>
               </Reveal>
             </div>
-
-            {/* Image placeholder column */}
-            <Reveal delay={0.12} style={{ alignSelf: "stretch", minHeight: "340px" }}>
-              <div style={{
-                height: "100%",
-                minHeight: "340px",
-                background: "linear-gradient(145deg, rgba(45,100,144,0.07) 0%, rgba(200,150,12,0.05) 100%)",
-                border: "1px solid var(--border)",
-                borderLeft: `3px solid ${ACCENT}`,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "0.9rem",
-                position: "relative",
-                overflow: "hidden",
-              }}>
-                <span style={{
-                  position: "absolute",
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: "clamp(6rem, 18vw, 11rem)",
-                  fontWeight: 900,
-                  color: "rgba(45,100,144,0.05)",
-                  letterSpacing: "-0.04em",
-                  userSelect: "none",
-                  lineHeight: 1,
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                }}>
-                  eS
-                </span>
-                <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "0.6rem" }}>
-                  <div style={{ width: 48, height: 48, borderRadius: 12, background: "rgba(45,100,144,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <rect x="3" y="3" width="18" height="18" rx="2" stroke={PRIMARY} strokeWidth="1.3" />
-                      <circle cx="8.5" cy="8.5" r="1.5" stroke={PRIMARY} strokeWidth="1" />
-                      <path d="M3 15l5-5 4 4 3-3 6 6" stroke={PRIMARY} strokeWidth="1.3" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                  <p style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "0.75rem",
-                    letterSpacing: "0.22em",
-                    textTransform: "uppercase",
-                    color: "var(--text-dim)",
-                  }}>
-                    Foto del local — próximamente
-                  </p>
-                </div>
-              </div>
-            </Reveal>
           </div>
 
-          {/* Tagline destacada */}
-          <Reveal delay={0.1} style={{ marginTop: "3.5rem" }}>
-            <div style={{
-              padding: "2rem 2.5rem",
-              borderLeft: `4px solid ${PRIMARY}`,
-              background: "rgba(45,100,144,0.04)",
-              borderRadius: "0 4px 4px 0",
-            }}>
-              <p style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(1.5rem, 3.5vw, 2.3rem)",
-                fontWeight: 700,
-                fontStyle: "italic",
-                color: PRIMARY,
-                lineHeight: 1.2,
+          {/* Cita destacada: testimonio de una clienta (reseña de Google),
+              atribuido a ella, no como afirmación del negocio. */}
+          {CITA && (
+            <Reveal delay={0.1} style={{ marginTop: "3.5rem" }}>
+              <figure style={{
+                padding: "2rem 2.5rem",
+                borderLeft: `4px solid ${PRIMARY}`,
+                background: "rgba(45,100,144,0.04)",
+                borderRadius: "0 4px 4px 0",
               }}>
-                "Sin carritos. Con personas."
-              </p>
-            </div>
-          </Reveal>
+                <blockquote style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: "clamp(1.5rem, 3.5vw, 2.3rem)",
+                  fontWeight: 700,
+                  fontStyle: "italic",
+                  color: PRIMARY,
+                  lineHeight: 1.2,
+                  maxWidth: "32ch",
+                  textWrap: "balance",
+                }}>
+                  “{CITA.texto}”
+                </blockquote>
+                <figcaption style={{
+                  marginTop: "1rem",
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: "0.9rem",
+                  fontWeight: 500,
+                  color: "var(--text-muted)",
+                }}>
+                  — {CITA.autor}, reseña en Google
+                </figcaption>
+              </figure>
+            </Reveal>
+          )}
         </section>
 
         {/* ── 3. Por qué elegirnos ────────────────────────────── */}
@@ -258,8 +241,7 @@ export default function ConocenosPage() {
                 fontSize: "0.75rem",
                 letterSpacing: "0.34em",
                 textTransform: "uppercase",
-                color: ACCENT,
-                opacity: 0.75,
+                color: "var(--color-gold-text)",
                 marginBottom: "0.65rem",
               }}>
                 · Lo que nos hace el sello ·
@@ -351,8 +333,7 @@ export default function ConocenosPage() {
               fontSize: "0.75rem",
               letterSpacing: "0.34em",
               textTransform: "uppercase",
-              color: ACCENT,
-              opacity: 0.75,
+              color: "var(--color-gold-text)",
               marginBottom: "0.5rem",
             }}>
               · Visitanos ·
@@ -433,7 +414,7 @@ export default function ConocenosPage() {
                 </div>
 
                 <a
-                  href={MAPS_URL}
+                  href={GOOGLE_MAPS_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -483,19 +464,20 @@ export default function ConocenosPage() {
               gap: "2.25rem",
             }}>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.34em", textTransform: "uppercase", color: ACCENT, opacity: 0.75 }}>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.34em", textTransform: "uppercase", color: "var(--color-gold-text)" }}>
                   · Seguinos ·
                 </p>
                 <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)", fontWeight: 700, color: "var(--text)" }}>
                   Estamos en las redes
                 </h2>
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.93rem", fontWeight: 300, color: "var(--text-muted)", lineHeight: 1.7 }}>
-                  Novedades, productos y lo que pasa en el local — todo en Instagram.
-                  Consultas por WhatsApp, rápido y sin vueltas.
+                  Novedades y productos en Instagram. Consultas por WhatsApp.
                 </p>
               </div>
 
-              <div style={{ display: "flex", gap: "0.85rem", flexWrap: "wrap", justifyContent: "center" }}>
+              {/* Grid de columnas iguales: los dos botones miden lo mismo.
+                  < 640: apilados, ancho completo con tope de 320px. Desde 640: en fila. */}
+              <div className="grid w-full max-w-[320px] gap-[0.85rem] sm:w-auto sm:max-w-none sm:grid-cols-2">
                 <a
                   href={INSTAGRAM_URL}
                   target="_blank"
@@ -503,6 +485,7 @@ export default function ConocenosPage() {
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
+                    justifyContent: "center",
                     gap: "0.55rem",
                     padding: "0.9rem 1.8rem",
                     border: "1.5px solid rgba(225,48,108,0.45)",
@@ -532,15 +515,16 @@ export default function ConocenosPage() {
                 </a>
 
                 <a
-                  href={WA_CONSULTA}
+                  href={waLink("Hola! Quería hacer una consulta")}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
+                    justifyContent: "center",
                     gap: "0.55rem",
                     padding: "0.9rem 1.8rem",
-                    background: "#25D366",
+                    background: "var(--color-primary)",
                     color: "#ffffff",
                     fontFamily: "'DM Sans', sans-serif",
                     fontSize: "0.78rem",
@@ -550,8 +534,8 @@ export default function ConocenosPage() {
                     textDecoration: "none",
                     transition: "background 0.2s",
                   }}
-                  onMouseEnter={e => (e.currentTarget.style.background = "#1cb955")}
-                  onMouseLeave={e => (e.currentTarget.style.background = "#25D366")}
+                  onMouseEnter={e => (e.currentTarget.style.background = SEC)}
+                  onMouseLeave={e => (e.currentTarget.style.background = "var(--color-primary)")}
                 >
                   <WhatsappLogo size={18} weight="bold" />
                   Escribinos

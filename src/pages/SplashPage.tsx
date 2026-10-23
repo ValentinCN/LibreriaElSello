@@ -31,6 +31,7 @@ import { HeroScene } from "../components/hero/HeroScene"
 import { CATEGORIAS, type CategoriaMeta } from "../constants/categories"
 import type { Categoria } from "../constants/categories"
 import AttributeStrip from "../components/home/AttributeStrip"
+import ReviewsSection from "../components/home/ReviewsSection"
 import FaqSection from "../components/home/FaqSection"
 import FinalCta from "../components/home/FinalCta"
 
@@ -231,7 +232,7 @@ export default function SplashPage() {
         </div>
       </section>
 
-      {/* FASE 4B: reseñas reales de Google van acá (entre las secciones de confianza y el FAQ) */}
+      <ReviewsSection />
 
       <FaqSection />
 

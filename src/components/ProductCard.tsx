@@ -17,9 +17,12 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
   const timerRef            = useRef<ReturnType<typeof setTimeout> | null>(null)
   const meta                = CATEGORIA_BY_SLUG[producto.categoria as CategoriaSlug] ?? DEFAULT_META
   const Icon                = meta.icon
-  const waText              = encodeURIComponent(`Hola! Me interesa: ${producto.nombre}`)
-  const waLink              = `${WA_URL}?text=${waText}`
   const agotado             = !producto.disponible
+  // Agotados: mensaje neutro, sin prometer aviso de reposición (no confirmado).
+  const waText              = encodeURIComponent(agotado
+    ? `Hola! Quería consultar por ${producto.nombre}, que figura sin stock.`
+    : `Hola! Me interesa: ${producto.nombre}`)
+  const waLink              = `${WA_URL}?text=${waText}`
 
   useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current) }, [])
 
@@ -214,7 +217,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
                 whiteSpace: 'nowrap',
               }}
             >
-              <span className="md:hidden">{agotado ? 'Avisame' : 'Consultar'}</span>
+              <span className="md:hidden">Consultar</span>
               <span className="hidden md:inline">{agotado ? 'Consultar disponibilidad' : 'Consultar'}</span>
             </a>
           </div>
