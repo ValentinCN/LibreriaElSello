@@ -1,6 +1,6 @@
 import { WhatsappLogo } from "@phosphor-icons/react"
 import Reveal from "../Reveal"
-import { DIRECCION, HORARIO, WA_LISTA_COLEGIO } from "../../config"
+import { WA_LISTA_COLEGIO } from "../../config"
 
 /* Banda final antes del footer. Solo tokens: fondo --color-primary, botón
    --color-gold con texto --color-text (≈4.7:1; blanco sobre dorado no da AA). */
@@ -74,17 +74,6 @@ export default function FinalCta() {
               <WhatsappLogo size={22} weight="fill" aria-hidden="true" />
               Mandar la lista por WhatsApp
             </a>
-
-            <p
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: "0.8rem",
-                letterSpacing: "0.06em",
-                color: "rgba(255,255,255,0.85)",
-              }}
-            >
-              {DIRECCION} · {HORARIO}
-            </p>
           </div>
         </Reveal>
       </section>

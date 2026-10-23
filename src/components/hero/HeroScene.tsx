@@ -16,7 +16,10 @@ import { WA_LISTA_COLEGIO } from "../../config";
    - Mobile (< 768px): 4 íconos ≤ 64px en las esquinas, dentro del
      padding-block del hero (nunca sobre el texto ni los botones).
    - Desktop (≥ 768px): 10 íconos en los costados (0–22% y 78–100% del
-     ancho); el bloque de texto está limitado a min(40rem, 54%) al centro. */
+     ancho); el bloque de texto está limitado a min(40rem, 54%) al centro.
+   - nearButtons: los que quedan a la altura de los botones. Entre 768 y
+     1030px la fila de botones es más ancha que la columna y los pisa,
+     así que esos aparecen recién desde 1031px. */
 
 interface Deco {
   Icon: Icon;
@@ -25,6 +28,7 @@ interface Deco {
   pos: CSSProperties;
   delay: number;
   peak: number;
+  nearButtons?: boolean;
 }
 
 const DECO_MOBILE: Deco[] = [
@@ -39,18 +43,18 @@ const DECO_DESKTOP: Deco[] = [
   { Icon: Pencil,        size: 88, rotate: -28, pos: { top: "4%",     left: "4%"  }, delay: 0.2, peak: 0.34 },
   { Icon: GraduationCap, size: 80, rotate: -12, pos: { top: "24%",    left: "11%" }, delay: 2.6, peak: 0.30 },
   { Icon: PaintBrush,    size: 96, rotate: 34,  pos: { top: "44%",    left: "3%"  }, delay: 4.8, peak: 0.32 },
-  { Icon: Calculator,    size: 72, rotate: 10,  pos: { top: "64%",    left: "12%" }, delay: 1.2, peak: 0.28 },
-  { Icon: Eraser,        size: 80, rotate: -40, pos: { bottom: "4%",  left: "3%"  }, delay: 3.4, peak: 0.30 },
+  { Icon: Calculator,    size: 72, rotate: 10,  pos: { top: "64%",    left: "12%" }, delay: 1.2, peak: 0.28, nearButtons: true },
+  { Icon: Eraser,        size: 80, rotate: -40, pos: { bottom: "4%",  left: "3%"  }, delay: 3.4, peak: 0.30, nearButtons: true },
   // Costado derecho
   { Icon: Pen,           size: 88, rotate: 30,  pos: { top: "4%",     right: "5%"  }, delay: 1.8, peak: 0.32 },
   { Icon: Stamp,         size: 76, rotate: -8,  pos: { top: "24%",    right: "12%" }, delay: 4.0, peak: 0.28 },
   { Icon: Books,         size: 96, rotate: 14,  pos: { top: "44%",    right: "3%"  }, delay: 0.8, peak: 0.32 },
-  { Icon: Paperclip,     size: 72, rotate: -36, pos: { top: "64%",    right: "12%" }, delay: 3.0, peak: 0.30 },
-  { Icon: Backpack,      size: 80, rotate: 8,   pos: { bottom: "4%",  right: "4%"  }, delay: 5.4, peak: 0.30 },
+  { Icon: Paperclip,     size: 72, rotate: -36, pos: { top: "64%",    right: "12%" }, delay: 3.0, peak: 0.30, nearButtons: true },
+  { Icon: Backpack,      size: 80, rotate: 8,   pos: { bottom: "4%",  right: "4%"  }, delay: 5.4, peak: 0.30, nearButtons: true },
 ];
 
-// Ciclo del barrido (fade in → quieto → fade out → pausa). Solo opacity y
-// clip-path: nada de filtros SVG en elementos animados.
+// Ciclo del fundido (fade in → quieto → fade out → pausa). Solo opacity:
+// el ícono siempre se ve entero, sin barridos que dejen fragmentos.
 const FADE = 2;
 const HOLD = 4;
 const PAUSE = 5;
@@ -68,11 +72,8 @@ function DecoIcon({ item, reduce, className }: { item: Deco; reduce: boolean; cl
         </div>
       ) : (
         <motion.div
-          initial={{ clipPath: "inset(0 100% 0 0)", opacity: 0 }}
-          animate={{
-            clipPath: ["inset(0 100% 0 0)", "inset(0 0% 0 0)", "inset(0 0% 0 0)", "inset(0 0% 0 0)"],
-            opacity: [0, item.peak, item.peak, 0],
-          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, item.peak, item.peak, 0] }}
           transition={{
             duration: TOTAL,
             delay: item.delay,
@@ -129,7 +130,7 @@ export function HeroScene() {
           <DecoIcon key={`m-${i}`} item={item} reduce={reduce} className="md:hidden" />
         ))}
         {DECO_DESKTOP.map((item, i) => (
-          <DecoIcon key={`d-${i}`} item={item} reduce={reduce} className="hidden md:block" />
+          <DecoIcon key={`d-${i}`} item={item} reduce={reduce} className={item.nearButtons ? "hidden min-[1031px]:block" : "hidden md:block"} />
         ))}
       </div>
 
@@ -172,7 +173,9 @@ export function HeroScene() {
             marginBottom: "1.1rem",
           }}
         >
-          Armá tu lista y te la preparamos
+          {/* Dos bloques sin corte interno: el balance no puede bajar la "y" */}
+          <span style={{ whiteSpace: "nowrap" }}>Armá tu lista y</span>{" "}
+          <span style={{ whiteSpace: "nowrap" }}>te la preparamos</span>
         </h1>
 
         <p
@@ -188,13 +191,13 @@ export function HeroScene() {
           Útiles escolares, papelería y artículos de arte. Mandanos tu lista por WhatsApp: sin carritos, con personas.
         </p>
 
+        {/* < 640px: apilados y del mismo ancho. ≥ 640px: en fila, sin wrap.
+            w-max: entre 768 y ~1030 la columna es más angosta que la fila (~493px);
+            el padre centra, así que la fila desborda parejo hacia ambos lados. */}
         <div
+          className="flex w-full flex-col items-center sm:w-max sm:flex-row"
           style={{
             marginTop: "clamp(1.5rem, 3vw, 2rem)",
-            width: "100%",
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
             gap: "0.85rem",
           }}
         >
@@ -202,7 +205,7 @@ export function HeroScene() {
             to="/catalogo"
             onMouseEnter={() => setCatalogHover(true)}
             onMouseLeave={() => setCatalogHover(false)}
-            className="w-full max-w-[320px] md:w-auto md:max-w-full"
+            className="w-full max-w-[320px] sm:w-auto sm:max-w-none"
             style={{
               fontFamily: "'DM Sans', sans-serif",
               borderRadius: "9999px",
@@ -227,7 +230,7 @@ export function HeroScene() {
             rel="noopener noreferrer"
             onMouseEnter={() => setWaHover(true)}
             onMouseLeave={() => setWaHover(false)}
-            className="w-full max-w-[320px] md:w-auto md:max-w-full"
+            className="w-full max-w-[320px] sm:w-auto sm:max-w-none"
             style={{
               fontFamily: "'DM Sans', sans-serif",
               borderRadius: "9999px",
