@@ -113,6 +113,30 @@ body {
   outline-offset: 2px;
 }
 
+/* ── FAQ (<details>/<summary> nativos, home) ────────────────────── */
+.faq-summary {
+  list-style: none;
+}
+.faq-summary::-webkit-details-marker {
+  display: none;
+}
+.faq-summary:focus {
+  outline: none;
+}
+.faq-summary:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+.faq-caret {
+  transition: transform 0.2s ease-out;
+}
+.faq-item[open] .faq-caret {
+  transform: rotate(180deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-caret { transition: none; }
+}
+
 /* ── Hide scrollbar for horizontally-scrollable catalog tabs ───── */
 .no-scrollbar {
   scrollbar-width: none;

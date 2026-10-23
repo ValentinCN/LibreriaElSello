@@ -10,7 +10,6 @@ import {
   Pencil,
   Notebook,
   Paperclip,
-  WhatsappLogo,
   PenNib,
   PaintBucket,
   Eyedropper,
@@ -27,22 +26,13 @@ import {
 import type { ElementType, CSSProperties } from "react"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
-import GloboArgentina from "../components/illustrations/GloboArgentina"
-import CajaEntrega from "../components/illustrations/CajaEntrega"
-import RelojAtencion from "../components/illustrations/RelojAtencion"
-import ConsultaChat from "../components/illustrations/ConsultaChat"
 import Reveal from "../components/Reveal"
 import { HeroScene } from "../components/hero/HeroScene"
 import { CATEGORIAS, type CategoriaMeta } from "../constants/categories"
 import type { Categoria } from "../constants/categories"
-import {
-  DIRECCION,
-  HORARIO,
-  WA_PRODUCTOS,
-} from "../config"
-
-const PRIMARY = "#2d6490"
-const ACCENT  = "#c8960c"
+import AttributeStrip from "../components/home/AttributeStrip"
+import FaqSection from "../components/home/FaqSection"
+import FinalCta from "../components/home/FinalCta"
 
 const CATEGORY_ICONS: Record<Categoria, ElementType> = {
   "Artístico": PaintBrush,
@@ -83,13 +73,6 @@ const CATEGORY_LINE_ART: Record<Categoria, LineArtDef[]> = {
     { Icon: Note,      size: 88,  pos: { top: "28%", right: "18%" },            rotate: 6   },
   ],
 }
-
-const TRUST_ITEMS = [
-  { Illustration: GloboArgentina, hoverLabel: "play", label: "Retiro en tienda",   value: DIRECCION      },
-  { Illustration: CajaEntrega,    hoverLabel: "open", label: "Envíos a domicilio", value: "En Quilmes"   },
-  { Illustration: RelojAtencion,  hoverLabel: "tick", label: "Atención",            value: HORARIO        },
-  { Illustration: ConsultaChat,   hoverLabel: "chat", label: "Consulta directa",   value: "Por WhatsApp" },
-]
 
 // ── Category tile with hover state ──────────────────────────────────
 function CategoryTile({ meta }: { meta: CategoriaMeta }) {
@@ -201,11 +184,11 @@ function CategoryTile({ meta }: { meta: CategoriaMeta }) {
 // ────────────────────────────────────────────────────────────────────
 
 export default function SplashPage() {
-  const reduce = useReducedMotion()
   return (
     <div style={{ background: "var(--bg)" }}>
       <Navbar />
       <HeroScene />
+      <AttributeStrip />
 
       {/* ── 1. Teaser de categorías ──────────────────────────── */}
       <section style={{
@@ -248,171 +231,11 @@ export default function SplashPage() {
         </div>
       </section>
 
-      {/* ── 2. Franja de confianza ───────────────────────────── */}
-      <section style={{
-        borderTop: "1px solid var(--border)",
-        borderBottom: "1px solid var(--border)",
-        background: `rgba(45,100,144,0.03)`,
-        padding: "clamp(2rem, 4vw, 3rem) 2rem",
-      }}>
-        <Reveal>
-          <div style={{
-            maxWidth: "1100px",
-            margin: "0 auto",
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "0",
-            justifyContent: "space-around",
-          }}>
-            {TRUST_ITEMS.map(({ Illustration, hoverLabel, label, value }, i) => (
-              <motion.div
-                key={label}
-                initial={reduce ? undefined : "rest"}
-                whileHover={reduce ? undefined : hoverLabel}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.85rem",
-                  padding: "1rem 1.5rem",
-                  flex: hoverLabel === "chat" ? "1 1 240px" : "1 1 200px",
-                  borderRight: i < TRUST_ITEMS.length - 1
-                    ? "1px solid var(--border)"
-                    : "none",
-                  cursor: "default",
-                }}
-              >
-                <div style={{
-                  width: hoverLabel === "chat" ? 80 : 56,
-                  height: 56,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                  overflow: hoverLabel === "chat" ? "visible" : "hidden",
-                }}>
-                  <Illustration />
-                </div>
-                <div>
-                  <p style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "0.65rem",
-                    letterSpacing: "0.22em",
-                    textTransform: "uppercase",
-                    color: "var(--text-muted)",
-                    marginBottom: "0.2rem",
-                  }}>
-                    {label}
-                  </p>
-                  <p style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "1rem",
-                    fontWeight: 600,
-                    color: "#1a3a50",
-                    lineHeight: 1.3,
-                  }}>
-                    {value}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </Reveal>
-      </section>
+      {/* FASE 4B: reseñas reales de Google van acá (entre las secciones de confianza y el FAQ) */}
 
-      {/* ── 3. CTA WhatsApp ──────────────────────────────────── */}
-      <div style={{ height: "4px", background: ACCENT }} />
-      <section style={{
-        background: PRIMARY,
-        padding: "clamp(5rem, 9vw, 7rem) 2rem",
-        position: "relative",
-        overflow: "hidden",
-      }}>
-        {/* Subtle background decoration */}
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          background: `radial-gradient(ellipse 70% 80% at 80% 50%, rgba(200,150,12,0.12) 0%, transparent 65%)`,
-          pointerEvents: "none",
-        }} />
+      <FaqSection />
 
-        <Reveal style={{ position: "relative", zIndex: 1 }}>
-          <div style={{
-            maxWidth: "640px",
-            margin: "0 auto",
-            textAlign: "center",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "1.75rem",
-          }}>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.85rem" }}>
-              <h2 style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(2.4rem, 5.5vw, 3.8rem)",
-                fontWeight: 700,
-                color: "#ffffff",
-                lineHeight: 1.1,
-              }}>
-                Armá tu lista con calma.
-              </h2>
-              <p style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: "1.15rem",
-                fontWeight: 300,
-                color: "rgba(255,255,255,0.72)",
-                lineHeight: 1.65,
-                maxWidth: "480px",
-              }}>
-                Mandanos los productos que te interesan por WhatsApp y te respondemos
-                con disponibilidad, precios y opciones de envío o retiro.
-              </p>
-            </div>
-
-            <a
-              href={WA_PRODUCTOS}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.6rem",
-                padding: "1rem 2.5rem",
-                background: ACCENT,
-                color: "#ffffff",
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: "0.82rem",
-                letterSpacing: "0.14em",
-                textTransform: "uppercase",
-                fontWeight: 600,
-                textDecoration: "none",
-                transition: "background 0.2s, transform 0.15s",
-              }}
-              onMouseEnter={e => {
-                const el = e.currentTarget as HTMLAnchorElement
-                el.style.background = "#b8860a"
-                el.style.transform = "translateY(-2px)"
-              }}
-              onMouseLeave={e => {
-                const el = e.currentTarget as HTMLAnchorElement
-                el.style.background = ACCENT
-                el.style.transform = "translateY(0)"
-              }}
-            >
-              <WhatsappLogo size={20} weight="bold" />
-              Consultar por WhatsApp
-            </a>
-
-            <p style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: "0.75rem",
-              letterSpacing: "0.1em",
-              color: "rgba(255,255,255,0.35)",
-            }}>
-              Lunes a Sábado · 9 a 20hs · Quilmes Centro
-            </p>
-          </div>
-        </Reveal>
-      </section>
+      <FinalCta />
 
       {/* Footer with existing reveal */}
       <motion.div

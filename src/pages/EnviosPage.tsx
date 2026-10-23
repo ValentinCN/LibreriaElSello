@@ -7,7 +7,7 @@ import PageBackground from '../components/PageBackground'
 import GloboArgentina from '../components/illustrations/GloboArgentina'
 import PickupEntrega from '../components/envios/PickupEntrega'
 import PosnetPago from '../components/envios/PosnetPago'
-import { WA_CONSULTA, DIRECCION, HORARIO, HORARIO_TEL, MAPS_URL } from '../config'
+import { WA_CONSULTA, DIRECCION, HORARIO, HORARIO_TEL, MAPS_URL, ENVIOS_ZONA } from '../config'
 
 const PRIMARY = '#2d6490'
 const ACCENT  = '#c8960c'
@@ -282,7 +282,7 @@ export default function EnviosPage() {
               color: 'var(--text-muted)',
               lineHeight: 1.6,
             }}>
-              Realizamos entregas en Quilmes y alrededores.
+              Realizamos entregas en {ENVIOS_ZONA}.
               Consultá disponibilidad y costo de envío por WhatsApp.
             </p>
             <p style={{

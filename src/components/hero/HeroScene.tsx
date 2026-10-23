@@ -1,77 +1,93 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState } from "react";
+import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import type { Icon } from "@phosphor-icons/react";
 import {
   Pencil, Pen, GraduationCap, Scissors, PaintBrush, Palette,
   Notebook, Eraser, Stamp, Paperclip, Calculator, Books,
-  Laptop, Backpack, WhatsappLogo,
+  Backpack, WhatsappLogo,
 } from "@phosphor-icons/react";
-import { WA_PRODUCTOS } from "../../config";
+import { WA_LISTA_COLEGIO } from "../../config";
 
-type PhIcon = Icon;
+/* ── Dibujos decorativos: posiciones FIJAS por breakpoint ──────────────
+   Nada de Math.random: mismo acomodo en cada visita. La visibilidad por
+   breakpoint la resuelve CSS (md:hidden / hidden md:block), no JS.
+   - Mobile (< 768px): 4 íconos ≤ 64px en las esquinas, dentro del
+     padding-block del hero (nunca sobre el texto ni los botones).
+   - Desktop (≥ 768px): 10 íconos en los costados (0–22% y 78–100% del
+     ancho); el bloque de texto está limitado a min(40rem, 54%) al centro. */
 
-const ICONS: PhIcon[] = [
-  Pencil, Pen, GraduationCap, Scissors, PaintBrush, Palette,
-  Notebook, Eraser, Stamp, Paperclip, Calculator, Books,
-  Laptop, Backpack,
-];
-
-const EYEBROW_LINES = [
-  "Papelería · Librería · Regalería",
-  "Escolar · Comercial · Artística",
-  "Técnica · Computación",
-];
-
-const BG_COUNT = 12;
-
-function rand(a: number, b: number) {
-  return Math.random() * (b - a) + a;
-}
-
-function generatePositions(count: number): Array<{ left: number; top: number }> {
-  const CX: [number, number] = [30, 70];
-  const CY: [number, number] = [20, 80];
-  const MIN_DIST = 18;
-  const placed: Array<{ left: number; top: number }> = [];
-
-  for (let i = 0; i < count; i++) {
-    let best = { left: rand(4, 92), top: rand(4, 92) };
-    for (let attempt = 0; attempt < 80; attempt++) {
-      const l = rand(4, 92);
-      const t = rand(4, 92);
-      const inCenter = l > CX[0] && l < CX[1] && t > CY[0] && t < CY[1];
-      if (inCenter) continue;
-      const tooClose = placed.some(p => {
-        const dx = l - p.left;
-        const dy = (t - p.top) * 0.56;
-        return Math.sqrt(dx * dx + dy * dy) < MIN_DIST;
-      });
-      if (!tooClose) {
-        best = { left: l, top: t };
-        break;
-      }
-    }
-    placed.push(best);
-  }
-
-  return placed;
-}
-
-interface BgItem {
-  id: number;
-  Icon: PhIcon;
-  left: number;
-  top: number;
-  rotation: number;
+interface Deco {
+  Icon: Icon;
   size: number;
+  rotate: number;
+  pos: CSSProperties;
   delay: number;
-  fadeDuration: number;
-  holdDuration: number;
-  repeatDelay: number;
-  peakOpacity: number;
+  peak: number;
 }
 
+const DECO_MOBILE: Deco[] = [
+  { Icon: Pencil,    size: 48, rotate: -24, pos: { top: "2%",    left: "3%"  }, delay: 0.4, peak: 0.30 },
+  { Icon: Scissors,  size: 44, rotate: 18,  pos: { top: "2%",    right: "3%" }, delay: 2.2, peak: 0.28 },
+  { Icon: Palette,   size: 48, rotate: 12,  pos: { bottom: "2%", left: "4%"  }, delay: 3.6, peak: 0.28 },
+  { Icon: Notebook,  size: 44, rotate: -14, pos: { bottom: "2%", right: "4%" }, delay: 1.4, peak: 0.30 },
+];
+
+const DECO_DESKTOP: Deco[] = [
+  // Costado izquierdo (left ≤ 12% + tamaño ≤ 96px → no pasa del 22% ni a 768px)
+  { Icon: Pencil,        size: 88, rotate: -28, pos: { top: "4%",     left: "4%"  }, delay: 0.2, peak: 0.34 },
+  { Icon: GraduationCap, size: 80, rotate: -12, pos: { top: "24%",    left: "11%" }, delay: 2.6, peak: 0.30 },
+  { Icon: PaintBrush,    size: 96, rotate: 34,  pos: { top: "44%",    left: "3%"  }, delay: 4.8, peak: 0.32 },
+  { Icon: Calculator,    size: 72, rotate: 10,  pos: { top: "64%",    left: "12%" }, delay: 1.2, peak: 0.28 },
+  { Icon: Eraser,        size: 80, rotate: -40, pos: { bottom: "4%",  left: "3%"  }, delay: 3.4, peak: 0.30 },
+  // Costado derecho
+  { Icon: Pen,           size: 88, rotate: 30,  pos: { top: "4%",     right: "5%"  }, delay: 1.8, peak: 0.32 },
+  { Icon: Stamp,         size: 76, rotate: -8,  pos: { top: "24%",    right: "12%" }, delay: 4.0, peak: 0.28 },
+  { Icon: Books,         size: 96, rotate: 14,  pos: { top: "44%",    right: "3%"  }, delay: 0.8, peak: 0.32 },
+  { Icon: Paperclip,     size: 72, rotate: -36, pos: { top: "64%",    right: "12%" }, delay: 3.0, peak: 0.30 },
+  { Icon: Backpack,      size: 80, rotate: 8,   pos: { bottom: "4%",  right: "4%"  }, delay: 5.4, peak: 0.30 },
+];
+
+// Ciclo del barrido (fade in → quieto → fade out → pausa). Solo opacity y
+// clip-path: nada de filtros SVG en elementos animados.
+const FADE = 2;
+const HOLD = 4;
+const PAUSE = 5;
+const TOTAL = FADE * 2 + HOLD;
+
+function DecoIcon({ item, reduce, className }: { item: Deco; reduce: boolean; className: string }) {
+  return (
+    <div
+      className={className}
+      style={{ position: "absolute", ...item.pos, transform: `rotate(${item.rotate}deg)` }}
+    >
+      {reduce ? (
+        <div style={{ opacity: 0.13 }}>
+          <item.Icon size={item.size} weight="thin" color="#111" />
+        </div>
+      ) : (
+        <motion.div
+          initial={{ clipPath: "inset(0 100% 0 0)", opacity: 0 }}
+          animate={{
+            clipPath: ["inset(0 100% 0 0)", "inset(0 0% 0 0)", "inset(0 0% 0 0)", "inset(0 0% 0 0)"],
+            opacity: [0, item.peak, item.peak, 0],
+          }}
+          transition={{
+            duration: TOTAL,
+            delay: item.delay,
+            repeat: Infinity,
+            repeatDelay: PAUSE,
+            times: [0, FADE / TOTAL, (FADE + HOLD) / TOTAL, 1],
+            ease: "easeInOut",
+          }}
+        >
+          <item.Icon size={item.size} weight="thin" color="#111" />
+        </motion.div>
+      )}
+    </div>
+  );
+}
 
 export function HeroBadge() {
   const reduce = useReducedMotion()
@@ -94,171 +110,88 @@ export function HeroBadge() {
 }
 
 export function HeroScene() {
-  const reduce   = useReducedMotion();
-  const [eyeIdx, setEyeIdx] = useState(0);
+  const reduce = useReducedMotion() ?? false;
   const [catalogHover, setCatalogHover] = useState(false);
   const [waHover, setWaHover] = useState(false);
-
-  useEffect(() => {
-    if (reduce) return;
-    const t = setInterval(() => setEyeIdx(i => (i + 1) % EYEBROW_LINES.length), 2800);
-    return () => clearInterval(t);
-  }, [reduce]);
-
-  const bgItems = useMemo<BgItem[]>(() => {
-    const positions = generatePositions(BG_COUNT);
-    return positions.map((pos, i) => ({
-      id: i,
-      Icon: ICONS[i % ICONS.length],
-      left: pos.left,
-      top: pos.top,
-      rotation: rand(-55, 55),
-      size: Math.round(rand(72, 120)),
-      delay: rand(0, 8),
-      fadeDuration: rand(1.5, 2.6),
-      holdDuration: rand(2.5, 5.5),
-      repeatDelay: rand(3.0, 8.0),
-      peakOpacity: rand(0.22, 0.40),
-    }));
-  }, []);
 
   return (
     <section
       style={{
-        background: "#f2ecdf",
+        background: "var(--color-bg)",
         marginTop: "58px",
-        minHeight: "calc(100dvh - 58px)",
         position: "relative",
         overflow: "hidden",
       }}
     >
-      {/* Line-art útiles — periferia */}
-      {bgItems.map(item => {
-        const total = item.fadeDuration * 2 + item.holdDuration;
-        const t1 = item.fadeDuration / total;
-        const t2 = (item.fadeDuration + item.holdDuration) / total;
+      {/* Capa decorativa: fuera del árbol de accesibilidad y sin capturar clics */}
+      <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", userSelect: "none" }}>
+        {DECO_MOBILE.map((item, i) => (
+          <DecoIcon key={`m-${i}`} item={item} reduce={reduce} className="md:hidden" />
+        ))}
+        {DECO_DESKTOP.map((item, i) => (
+          <DecoIcon key={`d-${i}`} item={item} reduce={reduce} className="hidden md:block" />
+        ))}
+      </div>
 
-        return (
-          <div
-            key={item.id}
-            style={{
-              position: "absolute",
-              left: `${item.left}%`,
-              top: `${item.top}%`,
-              transform: `rotate(${item.rotation}deg)`,
-              pointerEvents: "none",
-              userSelect: "none",
-            }}
-          >
-            {reduce ? (
-              <div style={{ opacity: 0.13 }}>
-                <item.Icon size={item.size} weight="thin" color="#111" />
-              </div>
-            ) : (
-              <motion.div
-                initial={{ clipPath: "inset(0 100% 0 0)", opacity: 0 }}
-                animate={{
-                  clipPath: [
-                    "inset(0 100% 0 0)",
-                    "inset(0 0% 0 0)",
-                    "inset(0 0% 0 0)",
-                    "inset(0 0% 0 0)",
-                  ],
-                  opacity: [0, item.peakOpacity, item.peakOpacity, 0],
-                }}
-                transition={{
-                  duration: total,
-                  delay: item.delay,
-                  repeat: Infinity,
-                  repeatDelay: item.repeatDelay,
-                  times: [0, t1, t2, 1],
-                  ease: "easeInOut",
-                }}
-              >
-                <item.Icon size={item.size} weight="thin" color="#111" />
-              </motion.div>
-            )}
-          </div>
-        );
-      })}
-
-      {/* Contenido central */}
+      {/* Contenido: el alto lo define el contenido + padding-block.
+          Visible desde el primer frame (sin opacity 0 ni delays) por el LCP. */}
       <div
+        className="mx-auto md:max-w-[min(40rem,54%)]"
         style={{
           position: "relative",
           zIndex: 10,
           display: "flex",
-          minHeight: "calc(100dvh - 58px)",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
-          padding: "2rem 2rem",
+          paddingBlock: "clamp(4.5rem, 8vw, 6rem)",
+          paddingInline: "clamp(1rem, 4vw, 2rem)",
           textAlign: "center",
         }}
       >
-        {/* Logo badge */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.1, duration: 0.7, type: "spring", stiffness: 200, damping: 18 }}
-          style={{ marginBottom: "2.25rem" }}
-        >
-          <HeroBadge />
-        </motion.div>
-
-        {/* Cycling eyebrow */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25, duration: 0.8 }}
-          className="h-auto overflow-visible md:h-[1.4em] md:overflow-hidden"
-          style={{ marginBottom: "1.1rem" }}
-        >
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={eyeIdx}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="text-[0.62rem] tracking-[0.16em] md:text-[0.75rem] md:tracking-[0.38em]"
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                margin: 0,
-                fontWeight: 600,
-                textTransform: "uppercase",
-                color: "#2d6490",
-              }}
-            >
-              {EYEBROW_LINES[eyeIdx]}
-            </motion.p>
-          </AnimatePresence>
-        </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.85 }}
+        <p
+          className="text-[0.75rem] tracking-[0.2em] md:text-[0.8rem] md:tracking-[0.3em]"
           style={{
             fontFamily: "'DM Sans', sans-serif",
-            margin: "0 auto",
-            maxWidth: "672px",
-            fontSize: "clamp(0.95rem, 2.2vw, 1.15rem)",
+            fontWeight: 600,
+            textTransform: "uppercase",
+            color: "var(--color-primary)",
+            marginBottom: "1rem",
+          }}
+        >
+          Librería en Quilmes Centro
+        </p>
+
+        <h1
+          style={{
+            fontFamily: "'Playfair Display', serif",
+            fontSize: "clamp(2.1rem, 5.5vw, 3.75rem)",
+            fontWeight: 700,
+            lineHeight: 1.08,
+            color: "var(--color-text)",
+            textWrap: "balance",
+            marginBottom: "1.1rem",
+          }}
+        >
+          Armá tu lista y te la preparamos
+        </h1>
+
+        <p
+          style={{
+            fontFamily: "'DM Sans', sans-serif",
+            maxWidth: "36rem",
+            fontSize: "clamp(1rem, 2.2vw, 1.15rem)",
             lineHeight: 1.65,
             color: "var(--color-primary)",
             textWrap: "balance",
           }}
         >
-          <span className="md:block">Todo lo que necesitás para escribir, estudiar y crear</span>{' '}
-          <span className="md:block">en un solo lugar de confianza</span>
-        </motion.p>
+          Útiles escolares, papelería y artículos de arte. Mandanos tu lista por WhatsApp: sin carritos, con personas.
+        </p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.85 }}
+        <div
           style={{
-            marginTop: "2.25rem",
+            marginTop: "clamp(1.5rem, 3vw, 2rem)",
+            width: "100%",
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "center",
@@ -269,7 +202,7 @@ export function HeroScene() {
             to="/catalogo"
             onMouseEnter={() => setCatalogHover(true)}
             onMouseLeave={() => setCatalogHover(false)}
-            className="w-full max-w-[320px] md:w-auto md:max-w-none"
+            className="w-full max-w-[320px] md:w-auto md:max-w-full"
             style={{
               fontFamily: "'DM Sans', sans-serif",
               borderRadius: "9999px",
@@ -277,11 +210,10 @@ export function HeroScene() {
               fontSize: "1.05rem",
               fontWeight: 600,
               color: "#ffffff",
-              backgroundColor: catalogHover ? "#1a3a50" : "#2d6490",
-              border: "none",
-              cursor: "pointer",
+              backgroundColor: catalogHover ? "var(--color-text)" : "var(--color-primary)",
               textDecoration: "none",
               display: "inline-flex",
+              alignItems: "center",
               justifyContent: "center",
               transition: reduce ? "none" : "background-color 0.2s ease-out",
             }}
@@ -289,21 +221,23 @@ export function HeroScene() {
             Ver catálogo
           </Link>
 
-          <button
-            onClick={() => window.open(WA_PRODUCTOS, "_blank", "noopener,noreferrer")}
+          <a
+            href={WA_LISTA_COLEGIO}
+            target="_blank"
+            rel="noopener noreferrer"
             onMouseEnter={() => setWaHover(true)}
             onMouseLeave={() => setWaHover(false)}
-            className="w-full max-w-[320px] md:w-auto md:max-w-none"
+            className="w-full max-w-[320px] md:w-auto md:max-w-full"
             style={{
               fontFamily: "'DM Sans', sans-serif",
               borderRadius: "9999px",
-              padding: "0.9rem 2.2rem",
+              padding: "0.8rem 1.8rem",
               fontSize: "1.05rem",
               fontWeight: 600,
-              color: waHover ? "#ffffff" : "#1a3a50",
-              backgroundColor: waHover ? "#2d6490" : "transparent",
-              border: "1.5px solid #2d6490",
-              cursor: "pointer",
+              color: waHover ? "#ffffff" : "var(--color-text)",
+              backgroundColor: waHover ? "var(--color-primary)" : "transparent",
+              border: "1.5px solid var(--color-primary)",
+              textDecoration: "none",
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
@@ -311,10 +245,10 @@ export function HeroScene() {
               transition: reduce ? "none" : "background-color 0.2s ease-out, color 0.2s ease-out",
             }}
           >
-            <WhatsappLogo size={28} weight="fill" color="#25d366" />
-            Consultar por WhatsApp
-          </button>
-        </motion.div>
+            <WhatsappLogo size={26} weight="fill" color="var(--color-whatsapp)" aria-hidden="true" />
+            Mandar la lista del colegio
+          </a>
+        </div>
       </div>
     </section>
   );
