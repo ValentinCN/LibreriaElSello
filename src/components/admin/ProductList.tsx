@@ -211,7 +211,8 @@ export default function ProductList({ products, ...h }: Props) {
       </div>
 
       {/* Mobile: tarjetas apiladas */}
-      <ul className="md:hidden" style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: '0.75rem' }}>
+      {/* display solo por clase: un display inline le gana a md:hidden y se veían tabla y tarjetas a la vez */}
+      <ul className="grid md:hidden" style={{ listStyle: 'none', margin: 0, padding: 0, gap: '0.75rem' }}>
         {products.map((p) => (
           <li key={p.id} style={{
             background: '#fff',
@@ -222,7 +223,7 @@ export default function ProductList({ products, ...h }: Props) {
             <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
               {p.imagen_url && (
                 <img src={p.imagen_url} alt="" loading="lazy" width={56} height={42}
-                  style={{ width: 56, height: 42, objectFit: 'cover', borderRadius: 4, flexShrink: 0, ...(p.activo ? null : DIM) }} />
+                  style={{ width: 56, height: 42, objectFit: 'contain', background: '#fff', padding: 2, borderRadius: 4, flexShrink: 0, ...(p.activo ? null : DIM) }} />
               )}
               <div style={{ minWidth: 0, flex: 1 }}>
                 <div style={{ color: '#1a3a50', fontWeight: 600, fontSize: '1rem', lineHeight: 1.3 }}>

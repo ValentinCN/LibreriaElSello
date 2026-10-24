@@ -88,7 +88,8 @@ export default function ImageField({ id, currentUrl, value, onChange, disabled }
           <img
             src={shownUrl}
             alt="Vista previa de la foto del producto"
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+            // Igual que ProductCard: la vista previa muestra lo mismo que el catálogo.
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', background: '#ffffff', padding: '10px' }}
           />
         ) : (
           <div style={{ textAlign: 'center', color: '#5a8ab0', fontSize: '0.875rem' }}>

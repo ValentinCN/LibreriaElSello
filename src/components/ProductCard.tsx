@@ -75,7 +75,10 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
               inset: 0,
               width: '100%',
               height: '100%',
-              objectFit: 'cover',
+              // contain: la foto entera, sin recortar logos ni títulos del packaging.
+              objectFit: 'contain',
+              background: '#ffffff',
+              padding: '10px',
             }}
           />
         ) : (
