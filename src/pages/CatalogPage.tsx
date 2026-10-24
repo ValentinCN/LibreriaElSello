@@ -7,9 +7,10 @@ import PageBackground from '../components/PageBackground'
 import MagneticText from '../components/MagneticText'
 import { getProducts, getCategories } from '../services/products'
 import type { ProductoSupabase, CategoriaSupabase } from '../types/producto'
-import { CATEGORIA_BY_SLUG, type CategoriaSlug } from '../constants/categories'
+import { CATEGORIA_BY_SLUG, alpha, type CategoriaSlug } from '../constants/categories'
+import { WA_URL } from '../config'
 
-const PRIMARY = '#2d6490'
+const PRIMARY = 'var(--color-primary)'
 
 type SortKey = 'titulo' | 'precio-asc' | 'precio-desc'
 
@@ -78,7 +79,7 @@ export default function CatalogPage() {
         position: 'fixed',
         top: 0, left: 0, right: 0,
         height: '35vh',
-        background: `radial-gradient(ellipse 50% 50% at 50% -5%, ${accentColor}14 0%, transparent 100%)`,
+        background: `radial-gradient(ellipse 50% 50% at 50% -5%, ${alpha(accentColor, 8)} 0%, transparent 100%)`,
         pointerEvents: 'none',
         zIndex: 0,
         transition: 'background 0.5s ease',
@@ -283,7 +284,19 @@ export default function CatalogPage() {
                 fontSize: '0.9rem',
                 color: 'var(--text-muted)',
               }}>
-                Pronto cargamos más productos.
+                {activeCat === 'todo' ? 'Pronto cargamos más productos.' : (
+                  <>
+                    Todavía no cargamos productos en esta categoría.{' '}
+                    <a
+                      href={WA_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: 'var(--color-primary)', fontWeight: 500, textDecoration: 'underline' }}
+                    >
+                      Consultanos por WhatsApp.
+                    </a>
+                  </>
+                )}
               </p>
             </div>
           ) : (

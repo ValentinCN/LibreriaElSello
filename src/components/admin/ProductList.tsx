@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react'
 import type { ProductoSupabase } from '../../types/producto'
+import { CATEGORIA_BY_SLUG, type CategoriaSlug } from '../../constants/categories'
 
 export type ListHandlers = {
   togglingDestacadoId: number | null
@@ -45,6 +46,10 @@ function pill(compact: boolean, extra: CSSProperties, busy = false): CSSProperti
     opacity: busy ? 0.6 : 1,
     ...extra,
   }
+}
+
+function categoriaTexto(p: ProductoSupabase) {
+  return CATEGORIA_BY_SLUG[p.categoria as CategoriaSlug]?.label ?? p.categoria
 }
 
 function precioTexto(p: ProductoSupabase) {
@@ -188,7 +193,7 @@ export default function ProductList({ products, ...h }: Props) {
                     <span style={dim}>{p.nombre}</span>
                     {!p.activo && <ArchivedBadge />}
                   </td>
-                  <td style={{ ...TD, ...dim, color: '#2d6490', textTransform: 'capitalize' }}>{p.categoria}</td>
+                  <td style={{ ...TD, ...dim, color: '#2d6490' }}>{categoriaTexto(p)}</td>
                   <td style={{ ...TD, ...dim, color: '#1a3a50', whiteSpace: 'nowrap' }}>{precioTexto(p)}</td>
                   <td style={TD}><DestacadoButton p={p} compact h={h} /></td>
                   <td style={TD}><DisponibleButton p={p} compact h={h} /></td>
@@ -225,7 +230,7 @@ export default function ProductList({ products, ...h }: Props) {
                   {!p.activo && <ArchivedBadge />}
                 </div>
                 <div style={{ color: '#2d6490', fontSize: '0.875rem', marginTop: '0.2rem', ...(p.activo ? null : DIM) }}>
-                  <span style={{ textTransform: 'capitalize' }}>{p.categoria}</span> · {precioTexto(p)}
+                  {categoriaTexto(p)} · {precioTexto(p)}
                 </div>
               </div>
             </div>

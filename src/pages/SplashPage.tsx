@@ -4,8 +4,6 @@ import { Link } from "react-router-dom"
 import {
   PaintBrush,
   Backpack,
-  BookOpen,
-  Scissors,
   Palette,
   Pencil,
   Notebook,
@@ -16,62 +14,57 @@ import {
   Ruler,
   Calculator,
   Eraser,
-  Books,
-  Book,
-  BookmarkSimple,
   PushPin,
-  Compass,
   Note,
+  Briefcase,
+  FolderSimple,
+  CompassTool,
+  Triangle,
+  PencilRuler,
+  GridFour,
 } from "@phosphor-icons/react"
 import type { ElementType, CSSProperties } from "react"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 import Reveal from "../components/Reveal"
 import { HeroScene } from "../components/hero/HeroScene"
-import { CATEGORIAS, type CategoriaMeta } from "../constants/categories"
+import { CATEGORIAS, alpha, type CategoriaMeta } from "../constants/categories"
 import type { Categoria } from "../constants/categories"
 import AttributeStrip from "../components/home/AttributeStrip"
 import ReviewsSection from "../components/home/ReviewsSection"
 import FaqSection from "../components/home/FaqSection"
 import FinalCta from "../components/home/FinalCta"
 
-const CATEGORY_ICONS: Record<Categoria, ElementType> = {
-  "Artístico": PaintBrush,
-  "Escolar":   Backpack,
-  "Librería":  BookOpen,
-  "Papelería": Scissors,
-}
-
 type LineArtDef = { Icon: ElementType; size: number; pos: CSSProperties; rotate: number }
 
 const CATEGORY_LINE_ART: Record<Categoria, LineArtDef[]> = {
-  "Artístico": [
+  "Escolar": [
+    { Icon: Backpack,   size: 120, pos: { bottom: "-1.5rem", right: "-1.5rem" }, rotate: 15  },
+    { Icon: Notebook,   size: 96,  pos: { top: "-1rem", left: "-1rem" },         rotate: -22 },
+    { Icon: Pencil,     size: 104, pos: { top: "-0.75rem", right: "2.5rem" },    rotate: -8  },
+    { Icon: Calculator, size: 100, pos: { bottom: "-0.5rem", left: "-0.75rem" }, rotate: 42  },
+    { Icon: Eraser,     size: 88,  pos: { top: "28%", right: "18%" },            rotate: -5  },
+  ],
+  "Artística": [
     { Icon: PaintBrush,  size: 120, pos: { bottom: "-1.5rem", right: "-1.5rem" }, rotate: 22  },
     { Icon: Palette,     size: 96,  pos: { top: "-1rem", left: "-1rem" },         rotate: -18 },
     { Icon: PenNib,      size: 104, pos: { top: "-0.75rem", right: "2.5rem" },    rotate: -12 },
     { Icon: PaintBucket, size: 100, pos: { bottom: "-0.5rem", left: "-0.75rem" }, rotate: 38  },
     { Icon: Eyedropper,  size: 88,  pos: { top: "28%", right: "18%" },            rotate: 8   },
   ],
-  "Escolar": [
-    { Icon: Backpack,   size: 120, pos: { bottom: "-1.5rem", right: "-1.5rem" }, rotate: 15  },
-    { Icon: Notebook,   size: 96,  pos: { top: "-1rem", left: "-1rem" },         rotate: -22 },
-    { Icon: Ruler,      size: 104, pos: { top: "-0.75rem", right: "2.5rem" },    rotate: -8  },
-    { Icon: Calculator, size: 100, pos: { bottom: "-0.5rem", left: "-0.75rem" }, rotate: 42  },
-    { Icon: Eraser,     size: 88,  pos: { top: "28%", right: "18%" },            rotate: -5  },
+  "Oficina y universidad": [
+    { Icon: Briefcase,    size: 120, pos: { bottom: "-1.5rem", right: "-1.5rem" }, rotate: 18  },
+    { Icon: Paperclip,    size: 96,  pos: { top: "-1rem", left: "-1rem" },         rotate: -12 },
+    { Icon: PushPin,      size: 104, pos: { top: "-0.75rem", right: "2.5rem" },    rotate: -18 },
+    { Icon: FolderSimple, size: 100, pos: { bottom: "-0.5rem", left: "-0.75rem" }, rotate: 30  },
+    { Icon: Note,         size: 88,  pos: { top: "28%", right: "18%" },            rotate: 6   },
   ],
-  "Librería": [
-    { Icon: BookOpen,       size: 120, pos: { bottom: "-1.5rem", right: "-1.5rem" }, rotate: 18  },
-    { Icon: Books,          size: 96,  pos: { top: "-1rem", left: "-1rem" },         rotate: -15 },
-    { Icon: Book,           size: 104, pos: { top: "-0.75rem", right: "2.5rem" },    rotate: -20 },
-    { Icon: BookmarkSimple, size: 100, pos: { bottom: "-0.5rem", left: "-0.75rem" }, rotate: 30  },
-    { Icon: Pencil,         size: 88,  pos: { top: "28%", right: "18%" },            rotate: 12  },
-  ],
-  "Papelería": [
-    { Icon: Scissors,  size: 120, pos: { bottom: "-1.5rem", right: "-1.5rem" }, rotate: 25  },
-    { Icon: Paperclip, size: 96,  pos: { top: "-1rem", left: "-1rem" },         rotate: -12 },
-    { Icon: PushPin,   size: 104, pos: { top: "-0.75rem", right: "2.5rem" },    rotate: -18 },
-    { Icon: Compass,   size: 100, pos: { bottom: "-0.5rem", left: "-0.75rem" }, rotate: 45  },
-    { Icon: Note,      size: 88,  pos: { top: "28%", right: "18%" },            rotate: 6   },
+  "Técnica": [
+    { Icon: CompassTool, size: 120, pos: { bottom: "-1.5rem", right: "-1.5rem" }, rotate: 25  },
+    { Icon: Ruler,       size: 96,  pos: { top: "-1rem", left: "-1rem" },         rotate: -15 },
+    { Icon: Triangle,    size: 104, pos: { top: "-0.75rem", right: "2.5rem" },    rotate: -20 },
+    { Icon: PencilRuler, size: 100, pos: { bottom: "-0.5rem", left: "-0.75rem" }, rotate: 40  },
+    { Icon: GridFour,    size: 88,  pos: { top: "28%", right: "18%" },            rotate: 12  },
   ],
 }
 
@@ -80,7 +73,7 @@ function CategoryTile({ meta }: { meta: CategoriaMeta }) {
   const [hovered, setHovered] = useState(false)
   const reduce  = useReducedMotion()
   const cat     = meta.label
-  const Icon    = CATEGORY_ICONS[cat]
+  const Icon    = meta.icon
   const lineArt = CATEGORY_LINE_ART[cat]
 
   return (
@@ -92,12 +85,12 @@ function CategoryTile({ meta }: { meta: CategoriaMeta }) {
         gap: "1rem",
         padding: "1.75rem",
         background: hovered ? meta.glow : "var(--surface)",
-        border: `1px solid ${hovered ? meta.color + "60" : "var(--border)"}`,
+        border: `1px solid ${hovered ? alpha(meta.color, 38) : "var(--border)"}`,
         textDecoration: "none",
         transition: "background 0.22s, border-color 0.22s, transform 0.22s, box-shadow 0.22s",
         transform: hovered ? "translateY(-4px)" : "translateY(0)",
         boxShadow: hovered
-          ? `0 12px 32px ${meta.color}20`
+          ? `0 12px 32px ${alpha(meta.color, 13)}`
           : "var(--shadow)",
         cursor: "pointer",
         position: "relative",
@@ -121,7 +114,7 @@ function CategoryTile({ meta }: { meta: CategoriaMeta }) {
             }}
             transition={reduce ? { duration: 0 } : { duration: 0.32, ease: "easeOut" }}
           >
-            <item.Icon size={item.size} weight="thin" color={meta.color} />
+            <item.Icon size={item.size} weight="thin" style={{ color: meta.color }} />
           </motion.div>
         </div>
       ))}
@@ -130,8 +123,8 @@ function CategoryTile({ meta }: { meta: CategoriaMeta }) {
         width: 50,
         height: 50,
         borderRadius: 12,
-        background: `${meta.color}14`,
-        border: `1px solid ${meta.color}30`,
+        background: alpha(meta.color, 8),
+        border: `1px solid ${alpha(meta.color, 19)}`,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -140,7 +133,7 @@ function CategoryTile({ meta }: { meta: CategoriaMeta }) {
         position: "relative",
         zIndex: 1,
       }}>
-        <Icon size={24} color={meta.color} weight="duotone" />
+        <Icon size={24} weight="duotone" style={{ color: meta.color }} />
       </div>
 
       <div style={{ position: "relative", zIndex: 1 }}>

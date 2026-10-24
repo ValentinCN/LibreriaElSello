@@ -4,9 +4,9 @@ import type { ElementType } from 'react'
 import type { ProductoSupabase } from '../types/producto'
 import { useCartStore } from '../store/cartStore'
 import { WA_URL } from '../config'
-import { CATEGORIA_BY_SLUG, type CategoriaSlug } from '../constants/categories'
+import { CATEGORIA_BY_SLUG, alpha, type CategoriaSlug } from '../constants/categories'
 
-const DEFAULT_META = { color: '#2d6490', textColor: '#1a3a50', icon: BookOpen as ElementType, label: '' }
+const DEFAULT_META = { color: 'var(--color-primary)', textColor: 'var(--color-text)', icon: BookOpen as ElementType, label: '' }
 
 export default function ProductCard({ producto }: { producto: ProductoSupabase }) {
   const [hover, setHover]   = useState(false)
@@ -39,7 +39,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
       onMouseLeave={() => setHover(false)}
       style={{
         background: 'var(--surface)',
-        border: `1px solid ${hover ? meta.color + '55' : 'var(--border)'}`,
+        border: `1px solid ${hover ? alpha(meta.color, 33) : 'var(--border)'}`,
         transition: 'all 0.28s ease',
         transform: hover && !agotado ? 'translateY(-4px)' : 'translateY(0)',
         display: 'flex',
@@ -59,7 +59,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
         aspectRatio: '4 / 3',
         flexShrink: 0,
         overflow: 'hidden',
-        background: `linear-gradient(135deg, ${meta.color}18 0%, ${meta.color}32 100%)`,
+        background: `linear-gradient(135deg, ${alpha(meta.color, 9)} 0%, ${alpha(meta.color, 20)} 100%)`,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -79,7 +79,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
             }}
           />
         ) : (
-          <Icon size={54} weight="thin" color={meta.color} style={{ opacity: 0.65 }} />
+          <Icon size={54} weight="thin" style={{ color: meta.color, opacity: 0.65 }} />
         )}
         {producto.destacado && !agotado && (
           <span style={{

@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback, useMemo } from 'react'
+import { Fragment, useRef, useEffect, useCallback, useMemo } from 'react'
 import { animate, useReducedMotion } from 'motion/react'
 import type { CSSProperties } from 'react'
 
@@ -72,21 +72,35 @@ export default function MagneticText({
     }
   }, [prefersReduced, chars, maxLift, radius, updateRects])
 
+  // Cada palabra va en un span nowrap: entre letras inline-block el navegador
+  // puede cortar línea en cualquier lado ("univer / sidad"); así solo corta en
+  // los espacios. `start` mantiene el índice global de chars para letterRefs.
+  const words = useMemo(() => {
+    const parts = children.split(' ')
+    return parts.map((word, wi) => ({
+      word,
+      start: parts.slice(0, wi).reduce((n, p) => n + p.length + 1, 0),
+    }))
+  }, [children])
+
   return (
     <Tag style={style}>
-      {chars.map((char, i) =>
-        char === ' ' ? (
-          <span key={i} style={{ display: 'inline-block', whiteSpace: 'pre' }}>{' '}</span>
-        ) : (
-          <span
-            key={`${i}-${char}`}
-            ref={el => { letterRefs.current[i] = el }}
-            style={{ display: 'inline-block' }}
-          >
-            {char}
+      {words.map(({ word, start }, wi) => (
+        <Fragment key={wi}>
+          {wi > 0 && ' '}
+          <span style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
+            {word.split('').map((char, j) => (
+              <span
+                key={`${start + j}-${char}`}
+                ref={el => { letterRefs.current[start + j] = el }}
+                style={{ display: 'inline-block' }}
+              >
+                {char}
+              </span>
+            ))}
           </span>
-        )
-      )}
+        </Fragment>
+      ))}
     </Tag>
   )
 }

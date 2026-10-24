@@ -1,14 +1,15 @@
-import { Palette, Backpack, BookOpen, Scissors } from '@phosphor-icons/react'
+import { Backpack, Palette, Briefcase, CompassTool } from '@phosphor-icons/react'
 import type { ElementType } from 'react'
 
-export type CategoriaSlug = 'artistico' | 'escolar' | 'libreria' | 'papeleria'
-export type Categoria = 'Artístico' | 'Escolar' | 'Librería' | 'Papelería'
+// Slugs iguales a los de la tienda en Tiendanube y a categories.slug en Supabase.
+export type CategoriaSlug = 'escolar' | 'artistica' | 'oficina-universidad' | 'tecnica'
+export type Categoria = 'Escolar' | 'Artística' | 'Oficina y universidad' | 'Técnica'
 
 export interface CategoriaMeta {
   slug: CategoriaSlug
   label: Categoria
   icon: ElementType
-  /** Vivo — para íconos, bordes y fondos suaves. No usar como color de texto. */
+  /** Token de color (var(--color-*)) — para íconos, bordes y fondos suaves. No usar como color de texto. */
   color: string
   glow: string
   /** >= 4.5:1 sobre blanco y sobre --color-bg — único uso válido como color de texto. */
@@ -16,42 +17,47 @@ export interface CategoriaMeta {
   desc: string
 }
 
+/** Color con transparencia: reemplaza concatenar alfa en hex, que no funciona con var(). */
+export const alpha = (color: string, pct: number) =>
+  `color-mix(in srgb, ${color} ${pct}%, transparent)`
+
 export const CATEGORIAS: CategoriaMeta[] = [
-  {
-    slug: 'artistico',
-    label: 'Artístico',
-    icon: Palette,
-    color: '#FF6B35',
-    glow: 'rgba(255,107,53,0.12)',
-    textColor: '#9A3412',
-    desc: 'Marcadores, lápices, acrílicos, pinceles y más',
-  },
   {
     slug: 'escolar',
     label: 'Escolar',
     icon: Backpack,
-    color: '#3B82F6',
-    glow: 'rgba(59,130,246,0.12)',
-    textColor: '#1D4ED8',
-    desc: 'Cuadernos, cartucheras, mochilas y útiles',
+    color: 'var(--color-primary)',
+    glow: alpha('var(--color-primary)', 12),
+    textColor: 'var(--color-primary)',
+    desc: 'Cuadernos, carpetas, témperas y útiles para el cole',
   },
   {
-    slug: 'libreria',
-    label: 'Librería',
-    icon: BookOpen,
-    color: '#22C55E',
-    glow: 'rgba(34,197,94,0.12)',
-    textColor: '#166534',
-    desc: 'Agendas Hello Kitty, Pusheen, Mickey y más',
+    slug: 'artistica',
+    label: 'Artística',
+    icon: Palette,
+    color: 'var(--color-gold)',
+    glow: alpha('var(--color-gold)', 12),
+    textColor: 'var(--color-gold-text)',
+    desc: 'Pintura, cerámica y manualidades',
   },
   {
-    slug: 'papeleria',
-    label: 'Papelería',
-    icon: Scissors,
-    color: '#A855F7',
-    glow: 'rgba(168,85,247,0.12)',
-    textColor: '#7E22CE',
-    desc: 'Resmas, tijeras, bisturí, cintas y compases',
+    slug: 'oficina-universidad',
+    label: 'Oficina y universidad',
+    icon: Briefcase,
+    color: 'var(--color-sky)',
+    glow: alpha('var(--color-sky)', 12),
+    // --color-sky da 3.1:1 sobre --color-bg: no llega a AA como texto.
+    textColor: 'var(--color-text)',
+    desc: 'Carpetas, folios y artículos de oficina',
+  },
+  {
+    slug: 'tecnica',
+    label: 'Técnica',
+    icon: CompassTool,
+    color: 'var(--color-text)',
+    glow: alpha('var(--color-text)', 12),
+    textColor: 'var(--color-text)',
+    desc: 'Tableros, escuadras y dibujo técnico',
   },
 ]
 
