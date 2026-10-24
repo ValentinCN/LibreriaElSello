@@ -3,7 +3,6 @@ import { createPortal } from 'react-dom'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { ReactLenis } from 'lenis/react'
 import CartDrawer        from './components/CartDrawer'
-import CursorTrail       from './components/CursorTrail'
 import ProtectedRoute    from './components/admin/ProtectedRoute'
 import SplashPage        from './pages/SplashPage'
 import CatalogPage       from './pages/CatalogPage'
@@ -50,7 +49,6 @@ function App() {
       {/* Mientras la lista (portal a document.body) está abierta, el resto
           de la app queda inert: foco y clicks no pueden escapar del panel. */}
       <div inert={cartOpen}>
-        <CursorTrail />
         <BrowserRouter>
           <Routes>
             <Route path="/"          element={<SplashPage />} />

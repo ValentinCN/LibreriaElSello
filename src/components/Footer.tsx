@@ -33,7 +33,9 @@ export default function Footer() {
       <NewsletterSignup />
 
       <div style={{
-        padding: '1.75rem clamp(1rem, 4vw, 3rem)',
+        maxWidth: '1100px',
+        margin: '0 auto',
+        padding: '1.75rem clamp(1rem, 4vw, 2rem)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',

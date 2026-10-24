@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { WhatsappLogo } from '@phosphor-icons/react'
 import Navbar from '../components/Navbar'
@@ -36,8 +35,6 @@ const STEPS = [
 
 export default function EnviosPage() {
   const reduce                           = useReducedMotion()
-  const [hovStep, setHovStep]           = useState<string | null>(null)
-  const [hovCard, setHovCard]           = useState<string | null>(null)
 
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--bg)', transition: 'background 0.3s ease' }}>
@@ -65,7 +62,7 @@ export default function EnviosPage() {
             fontFamily: "'DM Sans', sans-serif",
             fontSize: '0.78rem',
             letterSpacing: '0.34em',
-            color: ACCENT,
+            color: 'var(--color-gold-text)',
             textTransform: 'uppercase',
             marginBottom: '1.5rem',
           }}>
@@ -80,7 +77,7 @@ export default function EnviosPage() {
             marginBottom: '1.5rem',
           }}>
             Sin carritos.<br />
-            <em style={{ color: ACCENT, fontStyle: 'italic' }}>Con personas.</em>
+            <em style={{ color: 'var(--color-gold-text)', fontStyle: 'italic' }}>Con personas.</em>
           </h1>
           <p style={{
             fontFamily: "'DM Sans', sans-serif",
@@ -108,42 +105,25 @@ export default function EnviosPage() {
           {STEPS.map((s) => (
             <div
               key={s.num}
-              onMouseEnter={() => setHovStep(s.num)}
-              onMouseLeave={() => setHovStep(null)}
+              className="card"
               style={{
                 padding: '2.5rem 2rem',
-                border: '1px solid var(--border)',
-                background: 'var(--surface)',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '0.75rem',
-                transition: reduce ? 'none' : 'background 0.3s, border-color 0.22s, box-shadow 250ms ease-out',
-                borderColor: hovStep === s.num ? `${ACCENT}55` : 'var(--border)',
-                boxShadow: hovStep === s.num
-                  ? '0 10px 30px -10px rgba(200,150,12,0.35), 0 0 0 1px rgba(200,150,12,0.30)'
-                  : 'none',
-                cursor: 'default',
               }}
             >
-              <motion.span
-                animate={{
-                  opacity: hovStep === s.num ? 1 : 0.35,
-                  scale:   hovStep === s.num ? 1.05 : 1,
-                }}
-                transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: '2.8rem',
-                  fontWeight: 700,
-                  color: ACCENT,
-                  lineHeight: 1,
-                  userSelect: 'none',
-                  display: 'inline-block',
-                  transformOrigin: 'left center',
-                }}
-              >
+              <span style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: '2.8rem',
+                fontWeight: 700,
+                color: 'var(--color-gold-text)',
+                lineHeight: 1,
+                userSelect: 'none',
+                display: 'inline-block',
+              }}>
                 {s.num}
-              </motion.span>
+              </span>
               <h3 style={{
                 fontFamily: "'Playfair Display', serif",
                 fontSize: '1rem',
@@ -182,16 +162,12 @@ export default function EnviosPage() {
             whileInView={reduce ? undefined : 'play'}
             whileHover={reduce ? undefined : 'play'}
             viewport={{ once: true, amount: 0.5 }}
-            onMouseEnter={() => setHovCard('retiro')}
-            onMouseLeave={() => setHovCard(null)}
+            className="card"
             style={{
               padding: '2rem',
-              border: hovCard === 'retiro' ? '1px solid rgba(45,100,144,0.18)' : '1px solid var(--border)',
-              background: hovCard === 'retiro' ? 'rgba(45,100,144,0.04)' : 'var(--surface)',
               display: 'flex',
               flexDirection: 'column',
               gap: '0.6rem',
-              transition: reduce ? 'none' : 'background-color 0.2s ease-out, border-color 0.2s ease-out',
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'center', height: 180, alignItems: 'center' }}>
@@ -218,7 +194,7 @@ export default function EnviosPage() {
             <p style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: '0.8rem',
-              color: 'var(--text-dim)',
+              color: 'var(--text-muted)',
             }}>
               {HORARIO}
             </p>
@@ -249,16 +225,12 @@ export default function EnviosPage() {
             whileInView={reduce ? undefined : 'play'}
             whileHover={reduce ? undefined : 'play'}
             viewport={{ once: true, amount: 0.5 }}
-            onMouseEnter={() => setHovCard('entrega')}
-            onMouseLeave={() => setHovCard(null)}
+            className="card"
             style={{
               padding: '2rem',
-              border: hovCard === 'entrega' ? '1px solid rgba(45,100,144,0.18)' : '1px solid var(--border)',
-              background: hovCard === 'entrega' ? 'rgba(45,100,144,0.04)' : 'var(--surface)',
               display: 'flex',
               flexDirection: 'column',
               gap: '0.6rem',
-              transition: reduce ? 'none' : 'background-color 0.2s ease-out, border-color 0.2s ease-out',
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'center', height: 180, alignItems: 'center' }}>
@@ -285,7 +257,7 @@ export default function EnviosPage() {
             <p style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: '0.78rem',
-              color: 'var(--text-dim)',
+              color: 'var(--text-muted)',
               marginTop: '0.25rem',
             }}>
               * Sujeto a disponibilidad de zona
@@ -298,16 +270,12 @@ export default function EnviosPage() {
             whileInView={reduce ? undefined : 'play'}
             whileHover={reduce ? undefined : 'play'}
             viewport={{ once: true, amount: 0.5 }}
-            onMouseEnter={() => setHovCard('pago')}
-            onMouseLeave={() => setHovCard(null)}
+            className="card"
             style={{
               padding: '2rem',
-              border: hovCard === 'pago' ? '1px solid rgba(45,100,144,0.18)' : '1px solid var(--border)',
-              background: hovCard === 'pago' ? 'rgba(45,100,144,0.04)' : 'var(--surface)',
               display: 'flex',
               flexDirection: 'column',
               gap: '0.6rem',
-              transition: reduce ? 'none' : 'background-color 0.2s ease-out, border-color 0.2s ease-out',
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'center', height: 180, alignItems: 'center' }}>
@@ -347,16 +315,12 @@ export default function EnviosPage() {
           padding: '0 2.5rem 7rem',
           textAlign: 'center',
         }}>
-          <div style={{
-            padding: '5rem 2.5rem',
-            border: `1px solid rgba(45,100,144,0.18)`,
-            background: `radial-gradient(ellipse 80% 50% at 50% 100%, rgba(45,100,144,0.05) 0%, transparent 70%)`,
-          }}>
+          <div className="card" style={{ padding: '5rem 2.5rem' }}>
             <p style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: '0.72rem',
               letterSpacing: '0.3em',
-              color: ACCENT,
+              color: 'var(--color-gold-text)',
               textTransform: 'uppercase',
               marginBottom: '1.2rem',
             }}>

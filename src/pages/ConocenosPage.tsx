@@ -18,7 +18,6 @@ import {
 import { REVIEWS } from "../constants/reviews"
 
 const PRIMARY = "#2d6490"
-const ACCENT  = "#c8960c"
 
 // Cita destacada: la reseña de Clara V., tomada de reviews.ts (texto exacto)
 const CITA = REVIEWS.find(r => r.autor === "Clara V.")
@@ -61,7 +60,7 @@ export default function ConocenosPage() {
           className="hero-bg"
           style={{
             paddingTop: "5rem",
-            paddingBottom: "5.5rem",
+            paddingBottom: 0,
             paddingLeft: "2rem",
             paddingRight: "2rem",
             display: "flex",
@@ -121,7 +120,8 @@ export default function ConocenosPage() {
                     width: "100%",
                     maxWidth: 566,
                     height: "auto",
-                    objectFit: "cover",
+                    aspectRatio: "566 / 638",
+                    objectFit: "contain",
                     borderRadius: 12,
                     marginInline: "auto",
                   }}
@@ -317,6 +317,7 @@ export default function ConocenosPage() {
             <Reveal style={{ flex: "2 1 340px", minWidth: 0 }}>
               <div style={{
                 border: "1px solid var(--border)",
+                borderRadius: 12,
                 overflow: "hidden",
                 height: "100%",
                 minHeight: "360px",
@@ -335,25 +336,21 @@ export default function ConocenosPage() {
 
             {/* Info block */}
             <Reveal delay={0.15} style={{ flex: "1 1 260px", minWidth: 0 }}>
-              <div style={{
+              <div className="card" style={{
                 padding: "2rem",
-                border: "1px solid var(--border)",
-                borderTop: `3px solid ${PRIMARY}`,
-                background: "var(--surface)",
-                boxShadow: "var(--shadow)",
                 display: "flex",
                 flexDirection: "column",
                 gap: "1.5rem",
                 height: "100%",
               }}>
                 <div>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--text-dim)", marginBottom: "0.4rem" }}>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>
                     Dirección
                   </p>
                   <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.35rem", fontWeight: 700, color: "var(--text)", lineHeight: 1.15 }}>
                     {DIRECCION}
                   </p>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem", color: "var(--text-dim)", marginTop: "0.25rem" }}>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem", color: "var(--text-muted)", marginTop: "0.25rem" }}>
                     {CIUDAD}
                   </p>
                 </div>
@@ -361,13 +358,13 @@ export default function ConocenosPage() {
                 <div style={{ width: "100%", height: 1, background: "var(--border)" }} />
 
                 <div>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--text-dim)", marginBottom: "0.4rem" }}>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>
                     Horario
                   </p>
                   <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", fontWeight: 700, color: "var(--text)", lineHeight: 1.2 }}>
                     Lunes a Sábado
                   </p>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1rem", color: ACCENT, fontWeight: 500, marginTop: "0.2rem" }}>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1rem", color: "var(--color-gold-text)", fontWeight: 500, marginTop: "0.2rem" }}>
                     9 a 20hs
                   </p>
                 </div>

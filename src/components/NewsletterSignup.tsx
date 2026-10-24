@@ -20,9 +20,11 @@ export default function NewsletterSignup() {
 
   return (
     <div style={{
-      padding: '1.5rem clamp(1rem, 4vw, 3rem)',
+      paddingBlock: '1.5rem',
       borderBottom: '1px solid rgba(255,255,255,0.10)',
     }}>
+      {/* Mismo ancho máximo que las secciones del sitio (1100px, padding adentro) */}
+      <div style={{ maxWidth: '1100px', margin: '0 auto', paddingInline: 'clamp(1rem, 4vw, 2rem)' }}>
       {/* Mobile: apilado (máx. 480px). Desde md: texto a la izquierda y
           formulario a la derecha, en la misma grilla que la fila de abajo. */}
       <div className="max-w-[480px] md:flex md:max-w-none md:items-center md:justify-between md:gap-8">
@@ -132,6 +134,7 @@ export default function NewsletterSignup() {
             </form>
           )}
         </div>
+      </div>
       </div>
     </div>
   )
