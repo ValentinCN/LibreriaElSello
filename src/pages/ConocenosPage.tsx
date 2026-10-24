@@ -1,15 +1,9 @@
-import { MapPin, InstagramLogo, WhatsappLogo } from "@phosphor-icons/react"
-import { motion, useReducedMotion } from "motion/react"
+import { MapPin, InstagramLogo, WhatsappLogo, UserCircle, Palette, ChatCircle } from "@phosphor-icons/react"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 import Reveal from "../components/Reveal"
-import PageBackground from "../components/PageBackground"
 import MagneticText from "../components/MagneticText"
 import { HeroBadge } from "../components/hero/HeroScene"
-import AtencionPersona from "../components/illustrations/AtencionPersona"
-import VariedadPaleta from "../components/illustrations/VariedadPaleta"
-import CercaTuyoPin from "../components/illustrations/CercaTuyoPin"
-import ConsultaChat from "../components/illustrations/ConsultaChat"
 import {
   DIRECCION,
   CIUDAD,
@@ -25,7 +19,6 @@ import { REVIEWS } from "../constants/reviews"
 
 const PRIMARY = "#2d6490"
 const ACCENT  = "#c8960c"
-const SEC     = "#5a8ab0"
 
 // Cita destacada: la reseña de Clara V., tomada de reviews.ts (texto exacto)
 const CITA = REVIEWS.find(r => r.autor === "Clara V.")
@@ -33,44 +26,32 @@ const CITA = REVIEWS.find(r => r.autor === "Clara V.")
 // ── Why-us cards ─────────────────────────────────────────────────────
 const CARDS = [
   {
-    Illustration: AtencionPersona,
-    hoverLabel: "active",
+    Icon: UserCircle,
     titulo: "Atención personalizada",
     desc: "Alguien que te escucha y te ayuda a encontrar lo que necesitás, en el local o por WhatsApp.",
   },
   {
-    Illustration: VariedadPaleta,
-    hoverLabel: "active",
+    Icon: Palette,
     titulo: "Variedad",
     desc: "Todo en un solo lugar, para el colegio, la oficina, el taller o un regalo.",
   },
   {
-    Illustration: CercaTuyoPin,
-    hoverLabel: "active",
+    Icon: MapPin,
     titulo: "Cerca tuyo",
     desc: `En Quilmes Centro, con envíos a ${ENVIOS_ZONA}.`,
   },
   {
-    Illustration: ConsultaChat,
-    hoverLabel: "chat",
+    Icon: ChatCircle,
     titulo: "Consulta directa",
     desc: "Armás tu lista con calma y la mandás por WhatsApp. Sin apuros ni carritos.",
   },
 ]
 
-const CARD_VARS = {
-  rest:   { y: 0 },
-  active: { y: -3 },
-  chat:   { y: -3 },
-}
-
 // ─────────────────────────────────────────────────────────────────────
 
 export default function ConocenosPage() {
-  const reduce = useReducedMotion()
   return (
     <div style={{ minHeight: "100dvh", background: "var(--bg)", transition: "background 0.3s ease" }}>
-      <PageBackground />
       <Navbar />
 
       <div style={{ paddingTop: "58px", position: "relative", zIndex: 1 }}>
@@ -261,42 +242,20 @@ export default function ConocenosPage() {
               gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
               gap: "1.1rem",
             }}>
-              {CARDS.map(({ Illustration, hoverLabel, titulo, desc }, i) => (
+              {CARDS.map(({ Icon, titulo, desc }, i) => (
                 <Reveal key={titulo} delay={0.08 + i * 0.08}>
-                  <motion.div
-                    initial={reduce ? undefined : "rest"}
-                    whileHover={reduce ? undefined : hoverLabel}
-                    variants={reduce ? undefined : CARD_VARS}
-                    transition={{ type: "spring", stiffness: 300, damping: 22 }}
-                    onMouseEnter={e => {
-                      (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 32px rgba(45,100,144,0.13)"
-                    }}
-                    onMouseLeave={e => {
-                      (e.currentTarget as HTMLDivElement).style.boxShadow = "var(--shadow)"
-                    }}
+                  {/* Sin acción: tarjeta estática (sin .card-hover) */}
+                  <div
+                    className="card"
                     style={{
-                      background: "var(--surface)",
-                      border: "1px solid var(--border)",
                       padding: "2rem 1.75rem",
                       display: "flex",
                       flexDirection: "column",
                       gap: "0.85rem",
-                      boxShadow: "var(--shadow)",
-                      cursor: "default",
                       height: "100%",
                     }}
                   >
-                    <div style={{
-                      width: 64,
-                      height: 64,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                      overflow: hoverLabel === "chat" ? "visible" : "hidden",
-                    }}>
-                      <Illustration />
-                    </div>
+                    <Icon size={32} weight="regular" aria-hidden="true" style={{ color: "var(--color-primary)", flexShrink: 0 }} />
                     <h3 style={{
                       fontFamily: "'Playfair Display', serif",
                       fontSize: "1.05rem",
@@ -314,7 +273,7 @@ export default function ConocenosPage() {
                     }}>
                       {desc}
                     </p>
-                  </motion.div>
+                  </div>
                 </Reveal>
               ))}
             </div>
@@ -417,27 +376,10 @@ export default function ConocenosPage() {
                   href={GOOGLE_MAPS_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{
-                    marginTop: "auto",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    padding: "0.8rem 1.5rem",
-                    background: PRIMARY,
-                    color: "#ffffff",
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "0.68rem",
-                    letterSpacing: "0.14em",
-                    textTransform: "uppercase",
-                    fontWeight: 500,
-                    textDecoration: "none",
-                    alignSelf: "flex-start",
-                    transition: "background 0.2s",
-                  }}
-                  onMouseEnter={e => (e.currentTarget.style.background = SEC)}
-                  onMouseLeave={e => (e.currentTarget.style.background = PRIMARY)}
+                  className="btn btn-primary"
+                  style={{ marginTop: "auto", alignSelf: "flex-start" }}
                 >
-                  <MapPin size={15} weight="bold" />
+                  <MapPin size={18} weight="bold" aria-hidden="true" />
                   Cómo llegar
                 </a>
               </div>
@@ -482,35 +424,9 @@ export default function ConocenosPage() {
                   href={INSTAGRAM_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "0.55rem",
-                    padding: "0.9rem 1.8rem",
-                    border: "1.5px solid rgba(225,48,108,0.45)",
-                    background: "var(--surface)",
-                    color: "#E1306C",
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "0.78rem",
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    fontWeight: 500,
-                    textDecoration: "none",
-                    transition: "background 0.2s, border-color 0.2s",
-                  }}
-                  onMouseEnter={e => {
-                    const el = e.currentTarget as HTMLAnchorElement
-                    el.style.background = "rgba(225,48,108,0.07)"
-                    el.style.borderColor = "#E1306C"
-                  }}
-                  onMouseLeave={e => {
-                    const el = e.currentTarget as HTMLAnchorElement
-                    el.style.background = "var(--surface)"
-                    el.style.borderColor = "rgba(225,48,108,0.45)"
-                  }}
+                  className="btn btn-secondary"
                 >
-                  <InstagramLogo size={18} weight="bold" />
+                  <InstagramLogo size={18} weight="bold" aria-hidden="true" />
                   {INSTAGRAM_HANDLE}
                 </a>
 
@@ -518,26 +434,9 @@ export default function ConocenosPage() {
                   href={waLink("Hola! Quería hacer una consulta")}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "0.55rem",
-                    padding: "0.9rem 1.8rem",
-                    background: "var(--color-primary)",
-                    color: "#ffffff",
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "0.78rem",
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    fontWeight: 500,
-                    textDecoration: "none",
-                    transition: "background 0.2s",
-                  }}
-                  onMouseEnter={e => (e.currentTarget.style.background = SEC)}
-                  onMouseLeave={e => (e.currentTarget.style.background = "var(--color-primary)")}
+                  className="btn btn-primary"
                 >
-                  <WhatsappLogo size={18} weight="bold" />
+                  <WhatsappLogo size={18} weight="bold" aria-hidden="true" />
                   Escribinos
                 </a>
               </div>

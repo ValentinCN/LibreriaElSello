@@ -3,7 +3,6 @@ import { motion, useReducedMotion } from 'motion/react'
 import { WhatsappLogo } from '@phosphor-icons/react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import PageBackground from '../components/PageBackground'
 import GloboArgentina from '../components/illustrations/GloboArgentina'
 import PickupEntrega from '../components/envios/PickupEntrega'
 import PosnetPago from '../components/envios/PosnetPago'
@@ -11,7 +10,6 @@ import { WA_CONSULTA, DIRECCION, HORARIO, HORARIO_TEL, MAPS_URL, ENVIOS_ZONA } f
 
 const PRIMARY = '#2d6490'
 const ACCENT  = '#c8960c'
-const WA      = '#25D366'
 
 const STEPS = [
   {
@@ -43,7 +41,6 @@ export default function EnviosPage() {
 
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--bg)', transition: 'background 0.3s ease' }}>
-      <PageBackground />
       <Navbar />
 
       {/* Atmospheric gradient */}
@@ -386,31 +383,9 @@ export default function EnviosPage() {
               href={WA_CONSULTA}
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.65rem',
-                padding: '1rem 2.5rem',
-                background: WA,
-                color: '#fff',
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: '0.72rem',
-                fontWeight: 600,
-                letterSpacing: '0.16em',
-                textTransform: 'uppercase',
-                textDecoration: 'none',
-                transition: 'opacity 0.2s, transform 0.15s',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.opacity = '0.88'
-                e.currentTarget.style.transform = 'translateY(-2px)'
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.opacity = '1'
-                e.currentTarget.style.transform = 'translateY(0)'
-              }}
+              className="btn btn-primary btn-lg"
             >
-              <WhatsappLogo size={20} weight="fill" />
+              <WhatsappLogo size={22} weight="fill" aria-hidden="true" style={{ color: 'var(--color-whatsapp)' }} />
               <span>{HORARIO_TEL}</span>
             </a>
           </div>

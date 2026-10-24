@@ -9,7 +9,6 @@ import { CATEGORIA_BY_SLUG, alpha, type CategoriaSlug } from '../constants/categ
 const DEFAULT_META = { color: 'var(--color-primary)', textColor: 'var(--color-text)', icon: BookOpen as ElementType, label: '' }
 
 export default function ProductCard({ producto }: { producto: ProductoSupabase }) {
-  const [hover, setHover]   = useState(false)
   const [added, setAdded]   = useState(false)
   // Se guarda la URL que falló (no un boolean): si la foto cambia, se vuelve a intentar sola.
   const [failedImg, setFailedImg] = useState<string | null>(null)
@@ -18,6 +17,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
   const meta                = CATEGORIA_BY_SLUG[producto.categoria as CategoriaSlug] ?? DEFAULT_META
   const Icon                = meta.icon
   const agotado             = !producto.disponible
+  const hasImg              = !!producto.imagen_url && failedImg !== producto.imagen_url
   // Agotados: mensaje neutro, sin prometer aviso de reposición (no confirmado).
   const waText              = encodeURIComponent(agotado
     ? `Hola! Quería consultar por ${producto.nombre}, que figura sin stock.`
@@ -35,19 +35,11 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
 
   return (
     <article
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+      className={`card card-hover${agotado ? ' card-static' : ''}`}
       style={{
-        background: 'var(--surface)',
-        border: `1px solid ${hover ? alpha(meta.color, 33) : 'var(--border)'}`,
-        transition: 'all 0.28s ease',
-        transform: hover && !agotado ? 'translateY(-4px)' : 'translateY(0)',
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
-        boxShadow: hover
-          ? '0 8px 28px rgba(45,100,144,0.15)'
-          : '0 2px 12px rgba(45,100,144,0.10)',
         filter: agotado ? 'grayscale(0.85)' : 'none',
         opacity: agotado ? 0.72 : 1,
       }}
@@ -59,14 +51,16 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
         aspectRatio: '4 / 3',
         flexShrink: 0,
         overflow: 'hidden',
-        background: `linear-gradient(135deg, ${alpha(meta.color, 9)} 0%, ${alpha(meta.color, 20)} 100%)`,
+        background: hasImg
+          ? '#ffffff'
+          : `linear-gradient(135deg, ${alpha(meta.color, 9)} 0%, ${alpha(meta.color, 20)} 100%)`,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-        {producto.imagen_url && failedImg !== producto.imagen_url ? (
+        {hasImg ? (
           <img
-            src={producto.imagen_url}
+            src={producto.imagen_url ?? undefined}
             alt={producto.nombre}
             loading="lazy"
             onError={() => setFailedImg(producto.imagen_url)}
@@ -77,8 +71,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
               height: '100%',
               // contain: la foto entera, sin recortar logos ni títulos del packaging.
               objectFit: 'contain',
-              background: '#ffffff',
-              padding: '10px',
+              padding: '16px',
             }}
           />
         ) : (
@@ -178,24 +171,11 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
               title={agotado ? 'Sin stock' : 'Agregar a mi lista'}
               aria-label={agotado ? `${producto.nombre}: sin stock` : `Agregar ${producto.nombre} a mi lista`}
               disabled={agotado}
-              style={{
-                background: 'var(--color-primary)',
-                border: '1px solid var(--color-primary)',
-                color: '#ffffff',
-                width: 44,
-                height: 44,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: agotado ? 'not-allowed' : 'pointer',
-                transition: 'all 0.22s ease',
-                flexShrink: 0,
-                opacity: agotado ? 0.5 : 1,
-              }}
+              className="btn btn-primary btn-icon"
             >
               {added
-                ? <Check size={14} weight="bold" />
-                : <Plus size={14} weight="bold" />
+                ? <Check size={18} weight="bold" />
+                : <Plus size={18} weight="bold" />
               }
             </button>
 
@@ -204,21 +184,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
               target="_blank"
               rel="noopener noreferrer"
               onClick={e => e.stopPropagation()}
-              className="flex-1 text-center"
-              style={{
-                padding: '0.6rem 0.6rem',
-                background: hover ? '#25D366' : 'transparent',
-                border: `1px solid ${hover ? '#25D366' : 'var(--color-primary)'}`,
-                color: hover ? '#1a3a50' : 'var(--color-primary)',
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: '0.72rem',
-                fontWeight: 500,
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase',
-                textDecoration: 'none',
-                transition: 'all 0.25s ease',
-                whiteSpace: 'nowrap',
-              }}
+              className="btn btn-secondary btn-sm flex-1"
             >
               <span className="md:hidden">Consultar</span>
               <span className="hidden md:inline">{agotado ? 'Consultar disponibilidad' : 'Consultar'}</span>

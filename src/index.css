@@ -94,6 +94,112 @@ body {
   outline-offset: 2px;
 }
 
+/* ── Sistema de botones (sitio público) ─────────────────────────────
+   Todo botón nuevo usa .btn + una variante; nada de estilos sueltos.
+   En @layer components: las utilidades de Tailwind (w-full, flex-1…)
+   le siguen ganando para el layout. */
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.6rem 1.4rem;
+    border: 1.5px solid transparent;
+    border-radius: 9999px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease-out, color 0.2s ease-out, border-color 0.2s ease-out;
+  }
+  .btn:focus { outline: none; }
+  .btn:focus-visible {
+    outline: 2px solid var(--color-text);
+    outline-offset: 2px;
+  }
+  .btn-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #ffffff;
+  }
+  .btn-primary:hover {
+    background-color: var(--color-text);
+    border-color: var(--color-text);
+  }
+  .btn-secondary {
+    background-color: transparent;
+    border-color: var(--color-primary);
+    color: var(--color-text);
+  }
+  .btn-secondary:hover {
+    background-color: var(--color-primary);
+    color: #ffffff;
+  }
+  .btn-lg {
+    padding: 0.85rem 2.1rem;
+    font-size: 1.05rem;
+  }
+  /* Tarjeta de producto: entra en una línea junto al "+" a 375px */
+  .btn-sm {
+    padding: 0.5rem 0.5rem;
+    font-size: 0.8125rem;
+    white-space: nowrap;
+  }
+  @media (min-width: 768px) {
+    .btn-sm { padding-inline: 1rem; }
+  }
+  /* Acción circular (el "+" de ProductCard) */
+  .btn-icon {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    flex-shrink: 0;
+  }
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .btn-primary:disabled:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+
+  /* ── Sistema de tarjetas ──────────────────────────────────────────
+     .card-hover solo en tarjetas que son links o tienen una acción. */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 1px 2px color-mix(in srgb, var(--color-text) 6%, transparent);
+  }
+  .card-hover {
+    transition: border-color 0.2s ease-out, transform 0.2s ease-out;
+  }
+  .card-hover:hover {
+    border-color: color-mix(in srgb, var(--color-primary) 35%, transparent);
+    transform: translateY(-2px);
+  }
+  /* Agotados: el borde cambia, la tarjeta no se levanta */
+  .card-hover.card-static:hover { transform: none; }
+
+  /* "Ver →" de las categorías de la home */
+  .card-arrow {
+    display: inline-block;
+    transition: transform 0.2s ease-out;
+  }
+  .card-hover:hover .card-arrow { transform: translateX(4px); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn, .card-hover, .card-arrow { transition: none; }
+    .card-hover:hover, .card-hover:hover .card-arrow { transform: none; }
+  }
+}
+
 /* ── FAQ (<details>/<summary> nativos, home) ────────────────────── */
 .faq-summary {
   list-style: none;

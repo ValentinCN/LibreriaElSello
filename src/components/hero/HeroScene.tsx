@@ -1,4 +1,3 @@
-import { useState } from "react";
 import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "motion/react";
@@ -33,22 +32,22 @@ interface Deco {
 
 const DECO_MOBILE: Deco[] = [
   { Icon: Pencil,    size: 48, rotate: -24, pos: { top: "2%",    left: "3%"  }, delay: 0.4, peak: 0.30 },
-  { Icon: Scissors,  size: 44, rotate: 18,  pos: { top: "2%",    right: "3%" }, delay: 2.2, peak: 0.28 },
-  { Icon: Palette,   size: 48, rotate: 12,  pos: { bottom: "2%", left: "4%"  }, delay: 3.6, peak: 0.28 },
+  { Icon: Scissors,  size: 44, rotate: 18,  pos: { top: "2%",    right: "3%" }, delay: 2.2, peak: 0.30 },
+  { Icon: Palette,   size: 48, rotate: 12,  pos: { bottom: "2%", left: "4%"  }, delay: 3.6, peak: 0.30 },
   { Icon: Notebook,  size: 44, rotate: -14, pos: { bottom: "2%", right: "4%" }, delay: 1.4, peak: 0.30 },
 ];
 
 const DECO_DESKTOP: Deco[] = [
   // Costado izquierdo (left ≤ 12% + tamaño ≤ 96px → no pasa del 22% ni a 768px)
-  { Icon: Pencil,        size: 88, rotate: -28, pos: { top: "4%",     left: "4%"  }, delay: 0.2, peak: 0.34 },
+  { Icon: Pencil,        size: 88, rotate: -28, pos: { top: "4%",     left: "4%"  }, delay: 0.2, peak: 0.30 },
   { Icon: GraduationCap, size: 80, rotate: -12, pos: { top: "24%",    left: "11%" }, delay: 2.6, peak: 0.30 },
-  { Icon: PaintBrush,    size: 96, rotate: 34,  pos: { top: "44%",    left: "3%"  }, delay: 4.8, peak: 0.32 },
-  { Icon: Calculator,    size: 72, rotate: 10,  pos: { top: "64%",    left: "12%" }, delay: 1.2, peak: 0.28, nearButtons: true },
+  { Icon: PaintBrush,    size: 96, rotate: 34,  pos: { top: "44%",    left: "3%"  }, delay: 4.8, peak: 0.30 },
+  { Icon: Calculator,    size: 72, rotate: 10,  pos: { top: "64%",    left: "12%" }, delay: 1.2, peak: 0.30, nearButtons: true },
   { Icon: Eraser,        size: 80, rotate: -40, pos: { bottom: "4%",  left: "3%"  }, delay: 3.4, peak: 0.30, nearButtons: true },
   // Costado derecho
-  { Icon: Pen,           size: 88, rotate: 30,  pos: { top: "4%",     right: "5%"  }, delay: 1.8, peak: 0.32 },
-  { Icon: Stamp,         size: 76, rotate: -8,  pos: { top: "24%",    right: "12%" }, delay: 4.0, peak: 0.28 },
-  { Icon: Books,         size: 96, rotate: 14,  pos: { top: "44%",    right: "3%"  }, delay: 0.8, peak: 0.32 },
+  { Icon: Pen,           size: 88, rotate: 30,  pos: { top: "4%",     right: "5%"  }, delay: 1.8, peak: 0.30 },
+  { Icon: Stamp,         size: 76, rotate: -8,  pos: { top: "24%",    right: "12%" }, delay: 4.0, peak: 0.30 },
+  { Icon: Books,         size: 96, rotate: 14,  pos: { top: "44%",    right: "3%"  }, delay: 0.8, peak: 0.30 },
   { Icon: Paperclip,     size: 72, rotate: -36, pos: { top: "64%",    right: "12%" }, delay: 3.0, peak: 0.30, nearButtons: true },
   { Icon: Backpack,      size: 80, rotate: 8,   pos: { bottom: "4%",  right: "4%"  }, delay: 5.4, peak: 0.30, nearButtons: true },
 ];
@@ -68,7 +67,7 @@ function DecoIcon({ item, reduce, className }: { item: Deco; reduce: boolean; cl
     >
       {reduce ? (
         <div style={{ opacity: 0.13 }}>
-          <item.Icon size={item.size} weight="thin" color="#111" />
+          <item.Icon size={item.size} weight="thin" style={{ color: "var(--color-text)" }} />
         </div>
       ) : (
         <motion.div
@@ -83,7 +82,7 @@ function DecoIcon({ item, reduce, className }: { item: Deco; reduce: boolean; cl
             ease: "easeInOut",
           }}
         >
-          <item.Icon size={item.size} weight="thin" color="#111" />
+          <item.Icon size={item.size} weight="thin" style={{ color: "var(--color-text)" }} />
         </motion.div>
       )}
     </div>
@@ -112,8 +111,6 @@ export function HeroBadge() {
 
 export function HeroScene() {
   const reduce = useReducedMotion() ?? false;
-  const [catalogHover, setCatalogHover] = useState(false);
-  const [waHover, setWaHover] = useState(false);
 
   return (
     <section
@@ -203,23 +200,7 @@ export function HeroScene() {
         >
           <Link
             to="/catalogo"
-            onMouseEnter={() => setCatalogHover(true)}
-            onMouseLeave={() => setCatalogHover(false)}
-            className="w-full max-w-[320px] sm:w-auto sm:max-w-none"
-            style={{
-              fontFamily: "'DM Sans', sans-serif",
-              borderRadius: "9999px",
-              padding: "0.9rem 2.2rem",
-              fontSize: "1.05rem",
-              fontWeight: 600,
-              color: "#ffffff",
-              backgroundColor: catalogHover ? "var(--color-text)" : "var(--color-primary)",
-              textDecoration: "none",
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: reduce ? "none" : "background-color 0.2s ease-out",
-            }}
+            className="btn btn-primary btn-lg w-full max-w-[320px] sm:w-auto sm:max-w-none"
           >
             Ver catálogo
           </Link>
@@ -228,25 +209,7 @@ export function HeroScene() {
             href={WA_LISTA_COLEGIO}
             target="_blank"
             rel="noopener noreferrer"
-            onMouseEnter={() => setWaHover(true)}
-            onMouseLeave={() => setWaHover(false)}
-            className="w-full max-w-[320px] sm:w-auto sm:max-w-none"
-            style={{
-              fontFamily: "'DM Sans', sans-serif",
-              borderRadius: "9999px",
-              padding: "0.8rem 1.8rem",
-              fontSize: "1.05rem",
-              fontWeight: 600,
-              color: waHover ? "#ffffff" : "var(--color-text)",
-              backgroundColor: waHover ? "var(--color-primary)" : "transparent",
-              border: "1.5px solid var(--color-primary)",
-              textDecoration: "none",
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "0.55rem",
-              transition: reduce ? "none" : "background-color 0.2s ease-out, color 0.2s ease-out",
-            }}
+            className="btn btn-secondary btn-lg w-full max-w-[320px] sm:w-auto sm:max-w-none"
           >
             <WhatsappLogo size={26} weight="fill" color="var(--color-whatsapp)" aria-hidden="true" />
             Mandar la lista del colegio

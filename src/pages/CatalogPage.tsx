@@ -3,7 +3,6 @@ import { useSearchParams } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import ProductCard from '../components/ProductCard'
-import PageBackground from '../components/PageBackground'
 import MagneticText from '../components/MagneticText'
 import { getProducts, getCategories } from '../services/products'
 import type { ProductoSupabase, CategoriaSupabase } from '../types/producto'
@@ -71,7 +70,6 @@ export default function CatalogPage() {
 
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--bg)', transition: 'background 0.3s ease' }}>
-      <PageBackground />
       <Navbar />
 
       {/* Atmospheric top accent */}
@@ -261,18 +259,7 @@ export default function CatalogPage() {
               </p>
               <button
                 onClick={() => setTick(t => t + 1)}
-                style={{
-                  padding: '0.55rem 1.5rem',
-                  background: 'transparent',
-                  border: '1px solid #2d6490',
-                  color: '#2d6490',
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: '0.8rem',
-                  fontWeight: 500,
-                  letterSpacing: '0.12em',
-                  textTransform: 'uppercase',
-                  cursor: 'pointer',
-                }}
+                className="btn btn-secondary"
               >
                 Reintentar
               </button>

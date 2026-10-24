@@ -68,16 +68,12 @@ export default function ReviewsSection() {
       <div className="grid grid-cols-1 gap-[1.1rem] md:grid-cols-2">
         {REVIEWS.map((r, i) => (
           <Reveal key={r.autor} delay={0.06 + i * 0.07} style={{ height: "100%" }}>
-            <figure style={{
+            <figure className="card" style={{
               height: "100%",
               display: "flex",
               flexDirection: "column",
               gap: "0.9rem",
               padding: "1.6rem 1.75rem",
-              background: "var(--surface)",
-              border: "1px solid var(--border)",
-              borderRadius: 12,
-              boxShadow: "var(--shadow)",
             }}>
               <Stars n={r.estrellas} />
               <blockquote style={{
@@ -107,21 +103,7 @@ export default function ReviewsSection() {
           href={GOOGLE_MAPS_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-text transition-colors hover:bg-primary hover:text-white motion-reduce:transition-none"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            minHeight: 44,
-            padding: "0.6rem 1.4rem",
-            borderRadius: "9999px",
-            border: "1.5px solid var(--color-primary)",
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: "0.95rem",
-            fontWeight: 600,
-            textDecoration: "none",
-            textAlign: "center",
-          }}
+          className="btn btn-secondary"
         >
           Ver todas las reseñas en Google
         </a>

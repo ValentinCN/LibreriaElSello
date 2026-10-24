@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react'
 import { useCartStore, selectTotalPrice, buildWhatsAppMessage, getCartTrigger } from '../store/cartStore'
 import { WA_URL } from '../config'
 
-const WA   = '#25D366'
 const TITLE_ID = 'cart-drawer-title'
 
 export default function CartDrawer() {
@@ -301,22 +300,7 @@ export default function CartDrawer() {
               href={waLink}
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                display: 'block',
-                textAlign: 'center',
-                padding: '0.85rem',
-                background: WA,
-                color: 'var(--color-text)',
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: '0.65rem',
-                fontWeight: 500,
-                letterSpacing: '0.16em',
-                textTransform: 'uppercase',
-                textDecoration: 'none',
-                transition: 'opacity 0.2s',
-              }}
-              onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
-              onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+              className="btn btn-primary w-full"
             >
               Consultar por WhatsApp
             </a>

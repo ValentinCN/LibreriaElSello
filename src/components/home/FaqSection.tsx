@@ -71,21 +71,8 @@ export default function FaqSection() {
                   href={waLink(waTexto)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-text transition-colors hover:bg-primary hover:text-white motion-reduce:transition-none"
-                  style={{
-                    marginTop: "1rem",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    minHeight: 44,
-                    padding: "0.6rem 1.4rem",
-                    borderRadius: "9999px",
-                    border: "1.5px solid var(--color-primary)",
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "0.95rem",
-                    fontWeight: 600,
-                    textDecoration: "none",
-                  }}
+                  className="btn btn-secondary"
+                  style={{ marginTop: "1rem" }}
                 >
                   <WhatsappLogo size={22} weight="fill" color="var(--color-whatsapp)" aria-hidden="true" />
                   Mandar la lista del colegio

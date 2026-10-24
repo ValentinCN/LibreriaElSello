@@ -79,19 +79,13 @@ function CategoryTile({ meta }: { meta: CategoriaMeta }) {
   return (
     <Link
       to={`/catalogo?cat=${meta.slug}`}
+      className="card card-hover"
       style={{
         display: "flex",
         flexDirection: "column",
         gap: "1rem",
         padding: "1.75rem",
-        background: hovered ? meta.glow : "var(--surface)",
-        border: `1px solid ${hovered ? alpha(meta.color, 38) : "var(--border)"}`,
         textDecoration: "none",
-        transition: "background 0.22s, border-color 0.22s, transform 0.22s, box-shadow 0.22s",
-        transform: hovered ? "translateY(-4px)" : "translateY(0)",
-        boxShadow: hovered
-          ? `0 12px 32px ${alpha(meta.color, 13)}`
-          : "var(--shadow)",
         cursor: "pointer",
         position: "relative",
         overflow: "hidden",
@@ -168,7 +162,7 @@ function CategoryTile({ meta }: { meta: CategoriaMeta }) {
         position: "relative",
         zIndex: 1,
       }}>
-        Ver →
+        Ver <span className="card-arrow" aria-hidden="true">→</span>
       </span>
     </Link>
   )
