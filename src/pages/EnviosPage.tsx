@@ -82,7 +82,7 @@ export default function EnviosPage() {
             margin: '0 auto',
           }}>
             No tenemos e-commerce automático porque preferimos atenderte bien.
-            Confirmamos stock en tiempo real y respondemos cada consulta de forma personalizada.
+            Te confirmamos el stock y el precio final por WhatsApp, y respondemos cada consulta de forma personalizada.
           </p>
         </header>
 
@@ -327,7 +327,7 @@ export default function EnviosPage() {
               color: 'var(--text-muted)',
               marginBottom: '2.5rem',
             }}>
-              Respondemos en minutos de lunes a sábado.
+              Te respondemos por WhatsApp de lunes a sábado.
             </p>
             <a
               href={WA_CONSULTA}

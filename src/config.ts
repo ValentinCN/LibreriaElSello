@@ -22,6 +22,7 @@ export const ENVIOS_ZONA = 'Quilmes y alrededores'
 // Perfil del local en Google Maps (reseñas y "Cómo llegar").
 export const GOOGLE_MAPS_URL = 'https://maps.app.goo.gl/ip4bbhEXZK9HnYUi9'
 
-// Foto PROVISORIA de la fachada (bajada de Google Maps): antes del deploy se
-// pisa el archivo con una foto propia, mismo nombre. null = Conócenos sin foto.
-export const LOCAL_FOTO: string | null = '/img/local-fachada.webp'
+// Foto de la fachada: la de public/img/local-fachada.webp es PROVISORIA (de
+// Google Maps, no es propia) y no se publica. Con una foto propia se pisa ese
+// archivo y se vuelve a '/img/local-fachada.webp'. null = Conócenos sin foto.
+export const LOCAL_FOTO: string | null = null
