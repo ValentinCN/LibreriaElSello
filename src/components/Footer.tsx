@@ -10,7 +10,6 @@ import {
 } from '../config'
 import NewsletterSignup from './NewsletterSignup'
 
-const PRIMARY = 'var(--color-primary)'
 const ACCENT  = 'var(--color-gold)'
 
 const linkStyle: CSSProperties = {
@@ -26,7 +25,7 @@ const linkStyle: CSSProperties = {
 export default function Footer() {
   return (
     <footer style={{
-      background: PRIMARY,
+      background: 'var(--color-text)',
       borderTop: `2px solid ${ACCENT}`,
     }}>
 

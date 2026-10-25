@@ -39,28 +39,50 @@ export default function ReviewsSection() {
       }}
     >
       <Reveal style={{ textAlign: "center", marginBottom: "2.75rem" }}>
-        <p style={{
-          fontFamily: "'DM Sans', sans-serif",
-          fontSize: "0.9375rem",
-          fontWeight: 600,
-          letterSpacing: "0.18em",
-          textTransform: "uppercase",
-          color: "var(--color-gold-text)",
-          marginBottom: "0.65rem",
-        }}>
+        <p className="eyebrow eyebrow-tight" style={{ marginBottom: "0.65rem" }}>
           · Lo que dicen nuestros clientes ·
         </p>
+        {/* Mismo texto que antes ("4,7 en Google · más de 260 reseñas"), en dos
+            bloques: el puntaje grande con estrellas decorativas y el resto abajo. */}
         <h2
           id="reviews-titulo"
+          // En flex el espacio entre bloques no llega al nombre accesible
+          aria-label={`${RATING_TXT} en Google · más de ${REVIEWS_TXT} reseñas`}
           style={{
             fontFamily: "'Playfair Display', serif",
-            fontSize: "clamp(1.7rem, 3.5vw, 2.4rem)",
             fontWeight: 700,
-            color: "var(--text)",
-            textWrap: "balance",
+            color: "var(--color-text)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "0.35rem",
           }}
         >
-          {RATING_TXT} en Google · más de {REVIEWS_TXT} reseñas
+          <span style={{
+            display: "inline-flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "0.5rem 0.85rem",
+            fontSize: "clamp(3.5rem, 8vw, 5rem)",
+          }}>
+            <span style={{ lineHeight: 1 }}>{RATING_TXT}</span>
+            {/* Playfair usa números de estilo antiguo (el 4 y el 7 bajan de la
+                línea de base): su centro queda 0.22em debajo del de la caja */}
+            <span aria-hidden="true" style={{ display: "inline-flex", gap: "0.15rem", position: "relative", top: "0.22em" }}>
+              {Array.from({ length: 5 }, (_, i) => (
+                <Star key={i} size={28} weight="fill" color="var(--color-gold-text)" />
+              ))}
+            </span>
+          </span>
+          <span style={{
+            fontSize: "clamp(1.15rem, 2.6vw, 1.5rem)",
+            lineHeight: 1.3,
+            color: "var(--text-muted)",
+            textWrap: "balance",
+          }}>
+            en Google · más de {REVIEWS_TXT} reseñas
+          </span>
         </h2>
       </Reveal>
 
@@ -78,9 +100,10 @@ export default function ReviewsSection() {
               <Stars n={r.estrellas} />
               <blockquote style={{
                 flex: 1,
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: "1rem",
-                lineHeight: 1.65,
+                fontFamily: "'Playfair Display', serif",
+                fontStyle: "italic",
+                fontSize: "clamp(1.05rem, 1.5vw, 1.1rem)",
+                lineHeight: 1.6,
                 color: "var(--color-text)",
               }}>
                 {r.texto}

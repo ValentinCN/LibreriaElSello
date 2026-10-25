@@ -91,14 +91,7 @@ export default function CatalogPage() {
           borderBottom: '1px solid var(--border)',
         }}>
           <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-            <p style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: '0.75rem',
-              letterSpacing: '0.22em',
-              color: 'var(--text-muted)',
-              textTransform: 'uppercase',
-              marginBottom: '1.25rem',
-            }}>
+            <p className="eyebrow eyebrow-tight" style={{ marginBottom: '1.25rem' }}>
               · Librería El Sello · Quilmes Centro ·
             </p>
 

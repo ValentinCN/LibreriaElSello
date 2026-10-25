@@ -132,13 +132,7 @@ export default function ConocenosPage() {
             {/* Text column */}
             <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
               <Reveal>
-                <p style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: "0.75rem",
-                  letterSpacing: "0.34em",
-                  textTransform: "uppercase",
-                  color: "var(--color-gold-text)",
-                }}>
+                <p className="eyebrow">
                   · El local ·
                 </p>
               </Reveal>
@@ -217,14 +211,7 @@ export default function ConocenosPage() {
         }}>
           <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
             <Reveal style={{ textAlign: "center", marginBottom: "3rem" }}>
-              <p style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: "0.75rem",
-                letterSpacing: "0.34em",
-                textTransform: "uppercase",
-                color: "var(--color-gold-text)",
-                marginBottom: "0.65rem",
-              }}>
+              <p className="eyebrow" style={{ marginBottom: "0.65rem" }}>
                 · Lo que nos hace el sello ·
               </p>
               <h2 style={{
@@ -287,14 +274,7 @@ export default function ConocenosPage() {
           padding: "clamp(3.5rem, 7vw, 5.5rem) 2rem",
         }}>
           <Reveal style={{ marginBottom: "2.25rem" }}>
-            <p style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: "0.75rem",
-              letterSpacing: "0.34em",
-              textTransform: "uppercase",
-              color: "var(--color-gold-text)",
-              marginBottom: "0.5rem",
-            }}>
+            <p className="eyebrow" style={{ marginBottom: "0.5rem" }}>
               · Visitanos ·
             </p>
             <h2 style={{
@@ -403,7 +383,7 @@ export default function ConocenosPage() {
               gap: "2.25rem",
             }}>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.34em", textTransform: "uppercase", color: "var(--color-gold-text)" }}>
+                <p className="eyebrow">
                   · Seguinos ·
                 </p>
                 <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)", fontWeight: 700, color: "var(--text)" }}>

@@ -58,14 +58,7 @@ export default function EnviosPage() {
           padding: '5rem 2.5rem 4rem',
           textAlign: 'center',
         }}>
-          <p style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: '0.78rem',
-            letterSpacing: '0.34em',
-            color: 'var(--color-gold-text)',
-            textTransform: 'uppercase',
-            marginBottom: '1.5rem',
-          }}>
+          <p className="eyebrow" style={{ marginBottom: '1.5rem' }}>
             · Cómo pedimos ·
           </p>
           <h1 style={{
@@ -316,14 +309,7 @@ export default function EnviosPage() {
           textAlign: 'center',
         }}>
           <div className="card" style={{ padding: '5rem 2.5rem' }}>
-            <p style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: '0.72rem',
-              letterSpacing: '0.3em',
-              color: 'var(--color-gold-text)',
-              textTransform: 'uppercase',
-              marginBottom: '1.2rem',
-            }}>
+            <p className="eyebrow" style={{ marginBottom: '1.2rem' }}>
               ¿Tenés alguna duda?
             </p>
             <h2 style={{

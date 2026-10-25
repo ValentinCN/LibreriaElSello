@@ -184,15 +184,7 @@ export default function SplashPage() {
         padding: "clamp(3.5rem, 7vw, 5.5rem) 2rem",
       }}>
         <Reveal style={{ textAlign: "center", marginBottom: "2.75rem" }}>
-          <p style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: "0.9375rem",
-            fontWeight: 600,
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            color: "var(--color-gold-text)",
-            marginBottom: "0.65rem",
-          }}>
+          <p className="eyebrow" style={{ marginBottom: "0.65rem" }}>
             · NUESTRAS CATEGORÍAS ·
           </p>
           <h2 style={{

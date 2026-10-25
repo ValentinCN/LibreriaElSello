@@ -146,16 +146,7 @@ export function HeroScene() {
           textAlign: "center",
         }}
       >
-        <p
-          className="text-[0.75rem] tracking-[0.2em] md:text-[0.8rem] md:tracking-[0.3em]"
-          style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontWeight: 600,
-            textTransform: "uppercase",
-            color: "var(--color-primary)",
-            marginBottom: "1rem",
-          }}
-        >
+        <p className="eyebrow" style={{ marginBottom: "1rem" }}>
           Librería en Quilmes Centro
         </p>
 

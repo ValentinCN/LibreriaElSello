@@ -11,6 +11,10 @@
   --color-text:      #1a3a50;
   --color-whatsapp:  #25d366;
 
+  /* Papel cálido para tarjetas (.card). Las fotos de producto, inputs y
+     miniaturas del admin siguen sobre blanco. */
+  --color-surface:   #fbf9f5;
+
   /* Variante oscura del dorado: sobre --color-bg da >= 4.5:1 (AA) */
   --color-gold-text: #806008;
 }
