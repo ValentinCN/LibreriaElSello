@@ -174,47 +174,49 @@ export default function SplashPage() {
   return (
     <div style={{ background: "var(--bg)" }}>
       <Navbar />
-      <HeroScene />
-      <AttributeStrip />
+      <main>
+        <HeroScene />
+        <AttributeStrip />
 
-      {/* ── 1. Teaser de categorías ──────────────────────────── */}
-      <section style={{
-        maxWidth: "1100px",
-        margin: "0 auto",
-        padding: "clamp(3.5rem, 7vw, 5.5rem) 2rem",
-      }}>
-        <Reveal style={{ textAlign: "center", marginBottom: "2.75rem" }}>
-          <p className="eyebrow" style={{ marginBottom: "0.65rem" }}>
-            · NUESTRAS CATEGORÍAS ·
-          </p>
-          <h2 style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: "clamp(1.7rem, 3.5vw, 2.4rem)",
-            fontWeight: 700,
-            color: "var(--text)",
-          }}>
-            ¿Qué estás buscando?
-          </h2>
-        </Reveal>
-
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-          gap: "1.1rem",
+        {/* ── 1. Teaser de categorías ──────────────────────────── */}
+        <section style={{
+          maxWidth: "1100px",
+          margin: "0 auto",
+          padding: "clamp(3.5rem, 7vw, 5.5rem) 2rem",
         }}>
-          {CATEGORIAS.map((meta, i) => (
-            <Reveal key={meta.slug} delay={0.06 + i * 0.07}>
-              <CategoryTile meta={meta} />
-            </Reveal>
-          ))}
-        </div>
-      </section>
+          <Reveal style={{ textAlign: "center", marginBottom: "2.75rem" }}>
+            <p className="eyebrow" style={{ marginBottom: "0.65rem" }}>
+              · NUESTRAS CATEGORÍAS ·
+            </p>
+            <h2 style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: "clamp(1.7rem, 3.5vw, 2.4rem)",
+              fontWeight: 700,
+              color: "var(--text)",
+            }}>
+              ¿Qué estás buscando?
+            </h2>
+          </Reveal>
 
-      <ReviewsSection />
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+            gap: "1.1rem",
+          }}>
+            {CATEGORIAS.map((meta, i) => (
+              <Reveal key={meta.slug} delay={0.06 + i * 0.07}>
+                <CategoryTile meta={meta} />
+              </Reveal>
+            ))}
+          </div>
+        </section>
 
-      <FaqSection />
+        <ReviewsSection />
 
-      <FinalCta />
+        <FaqSection />
+
+        <FinalCta />
+      </main>
 
       {/* Footer with existing reveal */}
       <m.div

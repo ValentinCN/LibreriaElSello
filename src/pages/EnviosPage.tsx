@@ -56,295 +56,297 @@ export default function EnviosPage() {
       }} />
 
       <div style={{ position: 'relative', zIndex: 1, paddingTop: '58px' }}>
-        {/* ── Hero ───────────────────────────────────────── */}
-        <header style={{
-          maxWidth: '860px',
-          margin: '0 auto',
-          padding: '5rem 2.5rem 4rem',
-          textAlign: 'center',
-        }}>
-          <p className="eyebrow" style={{ marginBottom: '1.5rem' }}>
-            · Cómo pedimos ·
-          </p>
-          <h1 style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: 'clamp(2.6rem, 7vw, 4.8rem)',
-            fontWeight: 700,
-            color: 'var(--text)',
-            lineHeight: 0.95,
-            marginBottom: '1.5rem',
-          }}>
-            Sin carritos.<br />
-            <em style={{ color: 'var(--color-gold-text)', fontStyle: 'italic' }}>Con personas.</em>
-          </h1>
-          <p style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: '1rem',
-            fontWeight: 300,
-            color: 'var(--text-muted)',
-            lineHeight: 1.7,
-            maxWidth: '580px',
+        <main>
+          {/* ── Hero ───────────────────────────────────────── */}
+          <header style={{
+            maxWidth: '860px',
             margin: '0 auto',
+            padding: '5rem 2.5rem 4rem',
+            textAlign: 'center',
           }}>
-            No tenemos e-commerce automático porque preferimos atenderte bien.
-            Te confirmamos el stock y el precio final por WhatsApp, y respondemos cada consulta de forma personalizada.
-          </p>
-        </header>
-
-        {/* ── Steps ──────────────────────────────────────── */}
-        <section
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-stretch gap-5"
-          style={{
-            maxWidth: '900px',
-            margin: '0 auto',
-            padding: '0 2.5rem 5rem',
-          }}
-        >
-          {STEPS.map((s) => (
-            <div
-              key={s.num}
-              className="card"
-              style={{
-                padding: '2.5rem 2rem',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.75rem',
-              }}
-            >
-              <span style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: '2.8rem',
-                fontWeight: 700,
-                color: 'var(--color-gold-text)',
-                lineHeight: 1,
-                userSelect: 'none',
-                display: 'inline-block',
-              }}>
-                {s.num}
-              </span>
-              <h3 style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: '1rem',
-                fontWeight: 700,
-                color: 'var(--text)',
-                lineHeight: 1.3,
-              }}>
-                {s.titulo}
-              </h3>
-              <p style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: '0.82rem',
-                fontWeight: 300,
-                color: 'var(--text-muted)',
-                lineHeight: 1.65,
-              }}>
-                {s.desc}
-              </p>
-            </div>
-          ))}
-        </section>
-
-        {/* ── Info panels ────────────────────────────────── */}
-        <section style={{
-          maxWidth: '900px',
-          margin: '0 auto',
-          padding: '0 2.5rem 5rem',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-          gap: '1.25rem',
-        }}>
-
-          {/* Retiro en tienda */}
-          <m.article
-            initial={reduce ? undefined : 'rest'}
-            whileInView={reduce ? undefined : 'play'}
-            whileHover={reduce ? undefined : 'play'}
-            viewport={{ once: true, amount: 0.5 }}
-            className="card"
-            style={{
-              padding: '2rem',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.6rem',
-            }}
-          >
-            <div style={{ display: 'flex', justifyContent: 'center', height: 180, alignItems: 'center' }}>
-              <GloboArgentina />
-            </div>
-            <h3 style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: '1.1rem',
-              fontWeight: 700,
-              color: PRIMARY,
-            }}>
-              Retiro en tienda
-            </h3>
-            <p style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: '0.85rem',
-              fontWeight: 300,
-              color: 'var(--text-muted)',
-              lineHeight: 1.6,
-            }}>
-              {DIRECCION}<br />
-              Buenos Aires
+            <p className="eyebrow" style={{ marginBottom: '1.5rem' }}>
+              · Cómo pedimos ·
             </p>
-            <p style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: '0.8rem',
-              color: 'var(--text-muted)',
-            }}>
-              {HORARIO}
-            </p>
-            <a
-              href={MAPS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                marginTop: '0.5rem',
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: '0.75rem',
-                letterSpacing: '0.18em',
-                textTransform: 'uppercase',
-                color: PRIMARY,
-                textDecoration: 'none',
-                borderBottom: `1px solid rgba(45,100,144,0.3)`,
-                paddingBottom: '1px',
-                alignSelf: 'flex-start',
-              }}
-            >
-              Ver en Google Maps →
-            </a>
-          </m.article>
-
-          {/* Zona de entrega */}
-          <m.article
-            initial={reduce ? undefined : 'rest'}
-            whileInView={reduce ? undefined : 'play'}
-            whileHover={reduce ? undefined : 'play'}
-            viewport={{ once: true, amount: 0.5 }}
-            className="card"
-            style={{
-              padding: '2rem',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.6rem',
-            }}
-          >
-            <div style={{ display: 'flex', justifyContent: 'center', height: 180, alignItems: 'center' }}>
-              <PickupEntrega />
-            </div>
-            <h3 style={{
+            <h1 style={{
               fontFamily: "'Playfair Display', serif",
-              fontSize: '1.1rem',
+              fontSize: 'clamp(2.6rem, 7vw, 4.8rem)',
               fontWeight: 700,
               color: 'var(--text)',
+              lineHeight: 0.95,
+              marginBottom: '1.5rem',
             }}>
-              Entregas a domicilio
-            </h3>
-            <p style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: '0.85rem',
-              fontWeight: 300,
-              color: 'var(--text-muted)',
-              lineHeight: 1.6,
-            }}>
-              Realizamos entregas en {ENVIOS_ZONA}.
-              Consultá disponibilidad y costo de envío por WhatsApp.
-            </p>
-            <p style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: '0.78rem',
-              color: 'var(--text-muted)',
-              marginTop: '0.25rem',
-            }}>
-              * Sujeto a disponibilidad de zona
-            </p>
-          </m.article>
-
-          {/* Pago */}
-          <m.article
-            initial={reduce ? undefined : 'rest'}
-            whileInView={reduce ? undefined : 'play'}
-            whileHover={reduce ? undefined : 'play'}
-            viewport={{ once: true, amount: 0.5 }}
-            className="card"
-            style={{
-              padding: '2rem',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.6rem',
-            }}
-          >
-            <div style={{ display: 'flex', justifyContent: 'center', height: 180, alignItems: 'center' }}>
-              <PosnetPago />
-            </div>
-            <h3 style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: '1.1rem',
-              fontWeight: 700,
-              color: 'var(--text)',
-            }}>
-              Formas de pago
-            </h3>
-            <ul style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: '0.85rem',
-              fontWeight: 300,
-              color: 'var(--text-muted)',
-              lineHeight: 1.8,
-              listStyle: 'none',
-              padding: 0,
-            }}>
-              {['Efectivo', 'Transferencia bancaria', 'Mercado Pago', 'Débito y crédito'].map(medio => (
-                <li key={medio} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ color: ACCENT, fontSize: '0.5rem' }}>◆</span>
-                  {medio}
-                </li>
-              ))}
-            </ul>
-          </m.article>
-        </section>
-
-        {/* ── CTA WhatsApp ───────────────────────────────── */}
-        <section style={{
-          maxWidth: '900px',
-          margin: '0 auto',
-          padding: '0 2.5rem 7rem',
-          textAlign: 'center',
-        }}>
-          <div className="card" style={{ padding: '5rem 2.5rem' }}>
-            <p className="eyebrow" style={{ marginBottom: '1.2rem' }}>
-              ¿Tenés alguna duda?
-            </p>
-            <h2 style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(2rem, 5vw, 3.2rem)',
-              fontWeight: 700,
-              color: 'var(--text)',
-              marginBottom: '0.9rem',
-            }}>
-              Escribinos directo
-            </h2>
+              Sin carritos.<br />
+              <em style={{ color: 'var(--color-gold-text)', fontStyle: 'italic' }}>Con personas.</em>
+            </h1>
             <p style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: '1rem',
+              fontWeight: 300,
               color: 'var(--text-muted)',
-              marginBottom: '2.5rem',
+              lineHeight: 1.7,
+              maxWidth: '580px',
+              margin: '0 auto',
             }}>
-              Te respondemos por WhatsApp de lunes a sábado.
+              No tenemos e-commerce automático porque preferimos atenderte bien.
+              Te confirmamos el stock y el precio final por WhatsApp, y respondemos cada consulta de forma personalizada.
             </p>
-            <a
-              href={WA_CONSULTA}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary btn-lg"
+          </header>
+
+          {/* ── Steps ──────────────────────────────────────── */}
+          <section
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-stretch gap-5"
+            style={{
+              maxWidth: '900px',
+              margin: '0 auto',
+              padding: '0 2.5rem 5rem',
+            }}
+          >
+            {STEPS.map((s) => (
+              <div
+                key={s.num}
+                className="card"
+                style={{
+                  padding: '2.5rem 2rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.75rem',
+                }}
+              >
+                <span style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: '2.8rem',
+                  fontWeight: 700,
+                  color: 'var(--color-gold-text)',
+                  lineHeight: 1,
+                  userSelect: 'none',
+                  display: 'inline-block',
+                }}>
+                  {s.num}
+                </span>
+                <h3 style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: '1rem',
+                  fontWeight: 700,
+                  color: 'var(--text)',
+                  lineHeight: 1.3,
+                }}>
+                  {s.titulo}
+                </h3>
+                <p style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: '0.82rem',
+                  fontWeight: 300,
+                  color: 'var(--text-muted)',
+                  lineHeight: 1.65,
+                }}>
+                  {s.desc}
+                </p>
+              </div>
+            ))}
+          </section>
+
+          {/* ── Info panels ────────────────────────────────── */}
+          <section style={{
+            maxWidth: '900px',
+            margin: '0 auto',
+            padding: '0 2.5rem 5rem',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: '1.25rem',
+          }}>
+
+            {/* Retiro en tienda */}
+            <m.article
+              initial={reduce ? undefined : 'rest'}
+              whileInView={reduce ? undefined : 'play'}
+              whileHover={reduce ? undefined : 'play'}
+              viewport={{ once: true, amount: 0.5 }}
+              className="card"
+              style={{
+                padding: '2rem',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.6rem',
+              }}
             >
-              <WhatsappLogo size={22} weight="fill" aria-hidden="true" style={{ color: 'var(--color-whatsapp)' }} />
-              <span>{HORARIO_TEL}</span>
-            </a>
-          </div>
-        </section>
+              <div style={{ display: 'flex', justifyContent: 'center', height: 180, alignItems: 'center' }}>
+                <GloboArgentina />
+              </div>
+              <h3 style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: '1.1rem',
+                fontWeight: 700,
+                color: PRIMARY,
+              }}>
+                Retiro en tienda
+              </h3>
+              <p style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: '0.85rem',
+                fontWeight: 300,
+                color: 'var(--text-muted)',
+                lineHeight: 1.6,
+              }}>
+                {DIRECCION}<br />
+                Buenos Aires
+              </p>
+              <p style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: '0.8rem',
+                color: 'var(--text-muted)',
+              }}>
+                {HORARIO}
+              </p>
+              <a
+                href={MAPS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  marginTop: '0.5rem',
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: '0.75rem',
+                  letterSpacing: '0.18em',
+                  textTransform: 'uppercase',
+                  color: PRIMARY,
+                  textDecoration: 'none',
+                  borderBottom: `1px solid rgba(45,100,144,0.3)`,
+                  paddingBottom: '1px',
+                  alignSelf: 'flex-start',
+                }}
+              >
+                Ver en Google Maps →
+              </a>
+            </m.article>
+
+            {/* Zona de entrega */}
+            <m.article
+              initial={reduce ? undefined : 'rest'}
+              whileInView={reduce ? undefined : 'play'}
+              whileHover={reduce ? undefined : 'play'}
+              viewport={{ once: true, amount: 0.5 }}
+              className="card"
+              style={{
+                padding: '2rem',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.6rem',
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'center', height: 180, alignItems: 'center' }}>
+                <PickupEntrega />
+              </div>
+              <h3 style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: '1.1rem',
+                fontWeight: 700,
+                color: 'var(--text)',
+              }}>
+                Entregas a domicilio
+              </h3>
+              <p style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: '0.85rem',
+                fontWeight: 300,
+                color: 'var(--text-muted)',
+                lineHeight: 1.6,
+              }}>
+                Realizamos entregas en {ENVIOS_ZONA}.
+                Consultá disponibilidad y costo de envío por WhatsApp.
+              </p>
+              <p style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: '0.78rem',
+                color: 'var(--text-muted)',
+                marginTop: '0.25rem',
+              }}>
+                * Sujeto a disponibilidad de zona
+              </p>
+            </m.article>
+
+            {/* Pago */}
+            <m.article
+              initial={reduce ? undefined : 'rest'}
+              whileInView={reduce ? undefined : 'play'}
+              whileHover={reduce ? undefined : 'play'}
+              viewport={{ once: true, amount: 0.5 }}
+              className="card"
+              style={{
+                padding: '2rem',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.6rem',
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'center', height: 180, alignItems: 'center' }}>
+                <PosnetPago />
+              </div>
+              <h3 style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: '1.1rem',
+                fontWeight: 700,
+                color: 'var(--text)',
+              }}>
+                Formas de pago
+              </h3>
+              <ul style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: '0.85rem',
+                fontWeight: 300,
+                color: 'var(--text-muted)',
+                lineHeight: 1.8,
+                listStyle: 'none',
+                padding: 0,
+              }}>
+                {['Efectivo', 'Transferencia bancaria', 'Mercado Pago', 'Débito y crédito'].map(medio => (
+                  <li key={medio} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span style={{ color: ACCENT, fontSize: '0.5rem' }}>◆</span>
+                    {medio}
+                  </li>
+                ))}
+              </ul>
+            </m.article>
+          </section>
+
+          {/* ── CTA WhatsApp ───────────────────────────────── */}
+          <section style={{
+            maxWidth: '900px',
+            margin: '0 auto',
+            padding: '0 2.5rem 7rem',
+            textAlign: 'center',
+          }}>
+            <div className="card" style={{ padding: '5rem 2.5rem' }}>
+              <p className="eyebrow" style={{ marginBottom: '1.2rem' }}>
+                ¿Tenés alguna duda?
+              </p>
+              <h2 style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: 'clamp(2rem, 5vw, 3.2rem)',
+                fontWeight: 700,
+                color: 'var(--text)',
+                marginBottom: '0.9rem',
+              }}>
+                Escribinos directo
+              </h2>
+              <p style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: '1rem',
+                color: 'var(--text-muted)',
+                marginBottom: '2.5rem',
+              }}>
+                Te respondemos por WhatsApp de lunes a sábado.
+              </p>
+              <a
+                href={WA_CONSULTA}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary btn-lg"
+              >
+                <WhatsappLogo size={22} weight="fill" aria-hidden="true" style={{ color: 'var(--color-whatsapp)' }} />
+                <span>{HORARIO_TEL}</span>
+              </a>
+            </div>
+          </section>
+        </main>
 
         <Footer />
       </div>

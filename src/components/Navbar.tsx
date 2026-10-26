@@ -109,8 +109,10 @@ export default function Navbar() {
       }}>
 
         {/* Left: Logo */}
+        {/* aria-label: en mobile el texto se oculta y el logo es aria-hidden */}
         <Link
           to="/"
+          aria-label="Librería el Sello, inicio"
           style={{
             display: 'flex', alignItems: 'center', gap: '0.65rem',
             textDecoration: 'none',
