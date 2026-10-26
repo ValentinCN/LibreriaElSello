@@ -1,4 +1,4 @@
-import { motion, useReducedMotion, type Variants } from 'motion/react'
+import { m, useReducedMotion, type Variants } from 'motion/react'
 
 const E_VAN = [0.16, 0.7, 0.3, 1] as const
 
@@ -17,7 +17,7 @@ const PUFFS = [
 // Fuera del componente: si se define adentro, se recrea en cada render
 function Wheel({ cx, cy, variants }: { cx: number; cy: number; variants?: Variants }) {
   return (
-    <motion.g
+    <m.g
       variants={variants}
       style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
     >
@@ -28,7 +28,7 @@ function Wheel({ cx, cy, variants }: { cx: number; cy: number; variants?: Varian
         stroke="#1a3a50" strokeWidth={1.6}
       />
       <circle cx={cx} cy={cy} r={3} fill="#1a3a50" />
-    </motion.g>
+    </m.g>
   )
 }
 
@@ -81,7 +81,7 @@ export default function PickupEntrega() {
       <line x1={14} y1={132} x2={226} y2={132} stroke="#cfc8ba" strokeWidth={2} strokeDasharray="12 10" />
 
       {SPEEDS.map((s, i) => (
-        <motion.line
+        <m.line
           key={i}
           x1={s.x1} y1={s.y1} x2={s.x2} y2={s.y2}
           stroke="#5a8ab0" strokeWidth={2.4}
@@ -90,7 +90,7 @@ export default function PickupEntrega() {
       ))}
 
       {PUFFS.map((p, i) => (
-        <motion.circle
+        <m.circle
           key={i}
           cx={p.cx} cy={p.cy} r={p.r}
           fill="#c9c2b4"
@@ -99,7 +99,7 @@ export default function PickupEntrega() {
         />
       ))}
 
-      <motion.g variants={vanVariants}>
+      <m.g variants={vanVariants}>
         <path d="M40,116 V84 H120 V60 H160 L174,80 L204,96 Q208,98 208,104 V116 Z" stroke="#2d6490" strokeWidth={2.6} />
         <path d="M46,88 H116" stroke="#5a8ab0" strokeWidth={1.6} />
         <path d="M58,84 V68 H96 V84 Z" fill="rgba(200,150,12,.12)" stroke="#c8960c" strokeWidth={1.8} />
@@ -113,7 +113,7 @@ export default function PickupEntrega() {
         <path d="M161,116 A15,15 0 0,1 191,116" stroke="#2d6490" strokeWidth={2.6} />
         <Wheel cx={76} cy={118} variants={wheelVariants} />
         <Wheel cx={176} cy={118} variants={wheelVariants} />
-      </motion.g>
+      </m.g>
     </svg>
   )
 }

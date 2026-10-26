@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../store/authStore'
+import PageMeta from '../../components/PageMeta'
 import { getProducts, getCategories, toggleDestacado, toggleDisponible, setProductActivo } from '../../services/products'
 import { getSubscribersForExport } from '../../services/subscribers'
 import type { ProductoSupabase, CategoriaSupabase } from '../../types/producto'
@@ -154,6 +155,7 @@ export default function AdminDashboardPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#f2ecdf', fontFamily: 'DM Sans, sans-serif' }}>
+      <PageMeta title="Panel · Librería el Sello" />
       <header style={{
         background: '#fff',
         borderBottom: '2px solid #c8960c',

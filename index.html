@@ -1,14 +1,41 @@
 <!doctype html>
-<html lang="es">
+<html lang="es-AR">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Solo claro: evita que Chrome aplique su modo oscuro automático -->
     <meta name="color-scheme" content="only light" />
+    <meta name="theme-color" content="#F2ECDF" />
     <!-- Sin indexar hasta que el dueño apruebe (también X-Robots-Tag en vercel.json) -->
     <meta name="robots" content="noindex, nofollow" />
-    <title>Librería el Sello</title>
+    <title>Librería el Sello · Útiles escolares, papelería y arte en Quilmes Centro</title>
+    <meta name="description" content="Librería en Rivadavia 341, Quilmes Centro. Armá tu lista de útiles escolares, papelería o artículos de arte y mandala por WhatsApp: te la preparamos." />
+    <!-- Las URLs absolutas (SITE_URL) y el JSON-LD salen de src/config.ts: plugin seo de vite.config.ts -->
+    <link rel="canonical" href="%SITE_URL%/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:site_name" content="Librería el Sello" />
+    <meta property="og:title" content="Librería el Sello · Útiles escolares, papelería y arte en Quilmes Centro" />
+    <meta property="og:description" content="Librería en Rivadavia 341, Quilmes Centro. Armá tu lista de útiles escolares, papelería o artículos de arte y mandala por WhatsApp: te la preparamos." />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:image" content="%SITE_URL%/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Librería el Sello, útiles escolares, papelería y arte en Quilmes Centro" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Librería el Sello · Útiles escolares, papelería y arte en Quilmes Centro" />
+    <meta name="twitter:description" content="Librería en Rivadavia 341, Quilmes Centro. Armá tu lista de útiles escolares, papelería o artículos de arte y mandala por WhatsApp: te la preparamos." />
+    <meta name="twitter:image" content="%SITE_URL%/og-image.png" />
+    <meta name="twitter:image:alt" content="Librería el Sello, útiles escolares, papelería y arte en Quilmes Centro" />
+
+    <!--jsonld-->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Dancing+Script:wght@700&display=swap" />
   </head>
   <body>
     <div id="root"></div>

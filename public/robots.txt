@@ -1,6 +1,0 @@
-# El rastreo NO se bloquea a propósito: si Google no puede entrar, no ve el
-# noindex. La web no se indexa por el <meta name="robots"> de index.html y el
-# header X-Robots-Tag de vercel.json. Para indexar: sacar ambos y sumar el
-# sitemap (Fase 5B).
-User-agent: *
-Allow: /

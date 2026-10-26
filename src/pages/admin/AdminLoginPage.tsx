@@ -1,6 +1,7 @@
 import { useState, useEffect, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../store/authStore'
+import PageMeta from '../../components/PageMeta'
 
 export default function AdminLoginPage() {
   const [email, setEmail]       = useState('')
@@ -52,6 +53,7 @@ export default function AdminLoginPage() {
       padding: '1rem',
       fontFamily: 'DM Sans, sans-serif',
     }}>
+      <PageMeta title="Panel · Librería el Sello" />
       <div style={{
         background: '#fff',
         borderRadius: 12,

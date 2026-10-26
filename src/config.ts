@@ -1,3 +1,8 @@
+// URL pública del sitio: canonical, og:url, og:image, JSON-LD y sitemap salen
+// de acá (vite.config.ts la inyecta en index.html). Cambiar si se pasa al
+// dominio del local.
+export const SITE_URL = 'https://libreria-el-sello.vercel.app'
+
 export const WA_NUMBER   = '541137723335'
 export const WA_URL      = `https://wa.me/${WA_NUMBER}`
 export const WA_CONSULTA = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola! Quería hacer una consulta')}`
@@ -6,6 +11,13 @@ export const DIRECCION        = 'Rivadavia 341, Quilmes Centro'
 export const CIUDAD           = 'Buenos Aires, Argentina'
 export const HORARIO          = 'Lun–Sáb 9 a 20hs'
 export const HORARIO_TEL      = '11 3772-3335'
+
+// Mismos datos, separados para el JSON-LD (index.html).
+export const DIRECCION_CALLE  = 'Rivadavia 341'
+export const LOCALIDAD        = 'Quilmes'
+export const PROVINCIA        = 'Buenos Aires'
+export const HORARIO_ABRE     = '09:00'
+export const HORARIO_CIERRA   = '20:00'
 
 export const INSTAGRAM_HANDLE = '@libreriaelsello'
 export const INSTAGRAM_URL    = 'https://www.instagram.com/libreriaelsello'

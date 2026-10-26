@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import Navbar from '../components/Navbar'
+import PageMeta from '../components/PageMeta'
 import Footer from '../components/Footer'
 import ProductCard from '../components/ProductCard'
 import MagneticText from '../components/MagneticText'
@@ -70,6 +71,10 @@ export default function CatalogPage() {
 
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--bg)', transition: 'background 0.3s ease' }}>
+      <PageMeta
+        title="Catálogo · Librería el Sello"
+        description="Útiles escolares, artículos de arte, oficina y técnica. Armá tu lista y consultanos stock y precio por WhatsApp."
+      />
       <Navbar />
 
       {/* Atmospheric top accent */}

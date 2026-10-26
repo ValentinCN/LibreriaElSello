@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { motion, useReducedMotion } from "motion/react"
+import { m, useReducedMotion } from "motion/react"
 import { Link } from "react-router-dom"
 import {
   PaintBrush,
@@ -99,7 +99,7 @@ function CategoryTile({ meta }: { meta: CategoriaMeta }) {
           key={idx}
           style={{ position: "absolute", pointerEvents: "none", ...item.pos }}
         >
-          <motion.div
+          <m.div
             initial={false}
             animate={{
               opacity: hovered ? 0.16 : 0,
@@ -109,7 +109,7 @@ function CategoryTile({ meta }: { meta: CategoriaMeta }) {
             transition={reduce ? { duration: 0 } : { duration: 0.32, ease: "easeOut" }}
           >
             <item.Icon size={item.size} weight="thin" style={{ color: meta.color }} />
-          </motion.div>
+          </m.div>
         </div>
       ))}
 
@@ -217,14 +217,14 @@ export default function SplashPage() {
       <FinalCta />
 
       {/* Footer with existing reveal */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
         <Footer />
-      </motion.div>
+      </m.div>
     </div>
   )
 }

@@ -10,6 +10,4 @@ if (!url || !key) {
   )
 }
 
-console.log('[el-Sello] Supabase URL cargada:', url)
-
 export const supabase = createClient(url, key)

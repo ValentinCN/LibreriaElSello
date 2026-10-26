@@ -1,5 +1,6 @@
 import { MapPin, InstagramLogo, WhatsappLogo, UserCircle, Palette, ChatCircle } from "@phosphor-icons/react"
 import Navbar from "../components/Navbar"
+import PageMeta from "../components/PageMeta"
 import Footer from "../components/Footer"
 import Reveal from "../components/Reveal"
 import MagneticText from "../components/MagneticText"
@@ -51,6 +52,10 @@ const CARDS = [
 export default function ConocenosPage() {
   return (
     <div style={{ minHeight: "100dvh", background: "var(--bg)", transition: "background 0.3s ease" }}>
+      <PageMeta
+        title="Conocé el Sello · Librería en Quilmes Centro"
+        description="Librería y regalería en Rivadavia 341, Quilmes Centro. Artículos escolares, comerciales, técnicos y de arte. Lunes a sábado de 9 a 20."
+      />
       <Navbar />
 
       <div style={{ paddingTop: "58px", position: "relative", zIndex: 1 }}>

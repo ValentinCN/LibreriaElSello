@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { ShoppingBag, List, X, WhatsappLogo } from '@phosphor-icons/react'
-import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
+import { m, AnimatePresence, useReducedMotion } from 'motion/react'
 import { useLenis } from 'lenis/react'
 import { useCartStore, selectTotalItems, setCartTrigger } from '../store/cartStore'
 import { LogoMark } from './LogoMark'
@@ -236,7 +236,7 @@ export default function Navbar() {
       {/* Mobile menu backdrop + panel */}
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
+          <m.div
             ref={backdropRef}
             key="mobile-nav-backdrop"
             onClick={() => setMobileOpen(false)}
@@ -256,7 +256,7 @@ export default function Navbar() {
       </AnimatePresence>
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
+          <m.div
             ref={panelRef}
             id="mobile-nav-panel"
             initial={reduce ? { opacity: 1 } : { opacity: 0, y: -8 }}
@@ -326,7 +326,7 @@ export default function Navbar() {
               <WhatsappLogo size={20} weight="fill" color="#25d366" />
               Escribinos por WhatsApp
             </a>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>

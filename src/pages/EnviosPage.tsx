@@ -1,6 +1,7 @@
-import { motion, useReducedMotion } from 'motion/react'
+import { m, useReducedMotion } from 'motion/react'
 import { WhatsappLogo } from '@phosphor-icons/react'
 import Navbar from '../components/Navbar'
+import PageMeta from '../components/PageMeta'
 import Footer from '../components/Footer'
 import GloboArgentina from '../components/illustrations/GloboArgentina'
 import PickupEntrega from '../components/envios/PickupEntrega'
@@ -38,6 +39,10 @@ export default function EnviosPage() {
 
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--bg)', transition: 'background 0.3s ease' }}>
+      <PageMeta
+        title="Cómo pedimos y envíos · Librería el Sello"
+        description="Cómo pedir en el Sello: armás tu lista, te confirmamos stock y precio por WhatsApp y retirás en el local o te lo enviamos en Quilmes y alrededores."
+      />
       <Navbar />
 
       {/* Atmospheric gradient */}
@@ -150,7 +155,7 @@ export default function EnviosPage() {
         }}>
 
           {/* Retiro en tienda */}
-          <motion.article
+          <m.article
             initial={reduce ? undefined : 'rest'}
             whileInView={reduce ? undefined : 'play'}
             whileHover={reduce ? undefined : 'play'}
@@ -210,10 +215,10 @@ export default function EnviosPage() {
             >
               Ver en Google Maps →
             </a>
-          </motion.article>
+          </m.article>
 
           {/* Zona de entrega */}
-          <motion.article
+          <m.article
             initial={reduce ? undefined : 'rest'}
             whileInView={reduce ? undefined : 'play'}
             whileHover={reduce ? undefined : 'play'}
@@ -255,10 +260,10 @@ export default function EnviosPage() {
             }}>
               * Sujeto a disponibilidad de zona
             </p>
-          </motion.article>
+          </m.article>
 
           {/* Pago */}
-          <motion.article
+          <m.article
             initial={reduce ? undefined : 'rest'}
             whileInView={reduce ? undefined : 'play'}
             whileHover={reduce ? undefined : 'play'}
@@ -291,14 +296,14 @@ export default function EnviosPage() {
               listStyle: 'none',
               padding: 0,
             }}>
-              {['Efectivo', 'Transferencia bancaria', 'Mercado Pago', 'Débito y crédito'].map(m => (
-                <li key={m} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              {['Efectivo', 'Transferencia bancaria', 'Mercado Pago', 'Débito y crédito'].map(medio => (
+                <li key={medio} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   <span style={{ color: ACCENT, fontSize: '0.5rem' }}>◆</span>
-                  {m}
+                  {medio}
                 </li>
               ))}
             </ul>
-          </motion.article>
+          </m.article>
         </section>
 
         {/* ── CTA WhatsApp ───────────────────────────────── */}

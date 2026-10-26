@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'motion/react'
+import { m, useReducedMotion } from 'motion/react'
 
 const E_OUT  = [0.22, 0.9, 0.3, 1] as const
 const E_SOFT = [0.3, 1.1, 0.4, 1] as const
@@ -40,11 +40,11 @@ export default function PosnetPago() {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <motion.g variants={posVariants}>
+      <m.g variants={posVariants}>
         <rect x={66} y={52} width={68} height={7} rx={3.5} stroke="#2d6490" strokeWidth={2.4} />
         <rect x={60} y={60} width={80} height={104} rx={11} stroke="#2d6490" strokeWidth={2.4} />
         <rect x={70} y={72} width={60} height={36} rx={4} fill="#e8f1f8" stroke="#5a8ab0" strokeWidth={1.6} />
-        <motion.path
+        <m.path
           d="M86,90 l8,9 l16,-19"
           stroke="#2e9e5b" strokeWidth={3.4}
           variants={checkVariants}
@@ -52,12 +52,12 @@ export default function PosnetPago() {
         {KEYS.map(({ cx, cy }) => (
           <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r={5} stroke="#2d6490" strokeWidth={1.8} />
         ))}
-      </motion.g>
+      </m.g>
 
-      <motion.g variants={paycardVariants}>
+      <m.g variants={paycardVariants}>
         <rect x={74} y={20} width={52} height={32} rx={5} fill="#fbf2da" stroke="#c8960c" strokeWidth={2.4} />
         <path d="M78,30 H122" stroke="#c8960c" strokeWidth={4} />
-      </motion.g>
+      </m.g>
     </svg>
   )
 }

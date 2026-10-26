@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
-import { motion, useReducedMotion } from "motion/react";
+import { m, useReducedMotion } from "motion/react";
 import type { Icon } from "@phosphor-icons/react";
 import {
   Pencil, Pen, GraduationCap, Scissors, PaintBrush, Palette,
@@ -70,7 +70,7 @@ function DecoIcon({ item, reduce, className }: { item: Deco; reduce: boolean; cl
           <item.Icon size={item.size} weight="thin" style={{ color: "var(--color-text)" }} />
         </div>
       ) : (
-        <motion.div
+        <m.div
           initial={{ opacity: 0 }}
           animate={{ opacity: [0, item.peak, item.peak, 0] }}
           transition={{
@@ -83,7 +83,7 @@ function DecoIcon({ item, reduce, className }: { item: Deco; reduce: boolean; cl
           }}
         >
           <item.Icon size={item.size} weight="thin" style={{ color: "var(--color-text)" }} />
-        </motion.div>
+        </m.div>
       )}
     </div>
   );
@@ -92,7 +92,7 @@ function DecoIcon({ item, reduce, className }: { item: Deco; reduce: boolean; cl
 export function HeroBadge() {
   const reduce = useReducedMotion()
   return (
-    <motion.div
+    <m.div
       whileHover={reduce ? undefined : { scale: 1.07, rotate: -8 }}
       transition={{ type: "spring", stiffness: 200, damping: 14 }}
       style={{ display: "inline-block", cursor: "default" }}
@@ -105,7 +105,7 @@ export function HeroBadge() {
         <line x1="36" y1="85" x2="92" y2="85" stroke="#c8960c" strokeWidth="0.7" opacity="0.45" />
         <text x="64" y="101" textAnchor="middle" fill="rgba(255,255,255,0.3)" fontSize="8.5" fontFamily="'DM Sans',sans-serif" letterSpacing="3">QUILMES</text>
       </svg>
-    </motion.div>
+    </m.div>
   )
 }
 

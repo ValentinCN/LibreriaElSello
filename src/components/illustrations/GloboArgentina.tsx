@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'motion/react'
+import { m, useReducedMotion } from 'motion/react'
 
 const E_OUT  = [0.22, 0.9, 0.3, 1] as const
 const E_BACK = [0.3, 1.5, 0.5, 1] as const
@@ -60,7 +60,7 @@ export default function GloboArgentina() {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <motion.g
+      <m.g
         variants={globeVariants}
         style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
       >
@@ -69,7 +69,7 @@ export default function GloboArgentina() {
         <ellipse cx={110} cy={100} rx={44} ry={62} stroke="#5a8ab0" strokeWidth={1.5} />
 
         {TRAZOS.map((t, i) => (
-          <motion.path
+          <m.path
             key={i}
             d={t.d}
             stroke="#5a8ab0"
@@ -78,23 +78,23 @@ export default function GloboArgentina() {
           />
         ))}
 
-        <motion.path
+        <m.path
           d="M97,76 C106,73 116,74 124,79 C128,84 128,92 125,99 C131,103 130,110 124,115 C120,126 116,138 110,152 C107,144 105,138 105,131 C100,128 97,120 99,112 C95,106 95,94 98,86 C97,83 96,79 97,76 Z"
           stroke="#2d6490"
           strokeWidth={3}
           fill="rgba(200,150,12,.13)"
           variants={argVariants}
         />
-      </motion.g>
+      </m.g>
 
-      <motion.circle
+      <m.circle
         cx={127} cy={101} r={9}
         stroke="#c8960c" strokeWidth={2} fill="none"
         variants={pulseVariants}
         style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
       />
 
-      <motion.g
+      <m.g
         variants={pinVariants}
         style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
       >
@@ -103,7 +103,7 @@ export default function GloboArgentina() {
           fill="#c8960c" stroke="#c8960c" strokeWidth={1}
         />
         <circle cx={127} cy={83} r={4} fill="#fff" />
-      </motion.g>
+      </m.g>
     </svg>
   )
 }
