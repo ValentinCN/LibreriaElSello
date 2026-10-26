@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { subscribe, type SubscribeResult } from '../services/subscribers'
+import type { SubscribeResult } from '../services/subscribers'
 
 type UIState = 'idle' | 'loading' | SubscribeResult
 
@@ -12,8 +12,14 @@ export default function NewsletterSignup() {
     e.preventDefault()
     if (!consent || uiState === 'loading') return
     setUiState('loading')
-    const result = await subscribe(email, 'footer')
-    setUiState(result)
+    // Supabase se baja recién al enviar: el footer está en todas las páginas
+    // y no tiene que sumar el cliente a la carga inicial.
+    try {
+      const { subscribe } = await import('../services/subscribers')
+      setUiState(await subscribe(email, 'footer'))
+    } catch {
+      setUiState('error')
+    }
   }
 
   const done = uiState === 'ok' || uiState === 'already_subscribed'
@@ -30,7 +36,7 @@ export default function NewsletterSignup() {
       <div className="max-w-[480px] md:flex md:max-w-none md:items-center md:justify-between md:gap-8">
         <div>
           <p style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "var(--font-display)",
             fontSize: '0.95rem',
             fontWeight: 700,
             color: '#ffffff',
@@ -39,7 +45,7 @@ export default function NewsletterSignup() {
             Novedades y promos
           </p>
           <p className="mb-[0.9rem] md:mb-0" style={{
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "var(--font-body)",
             fontSize: '0.78rem',
             color: 'rgba(255,255,255,0.85)',
           }}>
@@ -50,7 +56,7 @@ export default function NewsletterSignup() {
         <div className="w-full md:max-w-[440px]">
           {done ? (
             <p role="status" aria-live="polite" style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "var(--font-body)",
               fontSize: '0.875rem',
               color: '#ffffff',
               margin: 0,
@@ -77,7 +83,7 @@ export default function NewsletterSignup() {
                     border: '1px solid rgba(255,255,255,0.3)',
                     borderRadius: 8,
                     padding: '0.52rem 0.85rem',
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "var(--font-body)",
                     fontSize: '0.875rem',
                     color: '#1a3a50',
                     outline: 'none',
@@ -93,7 +99,7 @@ export default function NewsletterSignup() {
                     border: 'none',
                     borderRadius: 8,
                     padding: '0.52rem 1.2rem',
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "var(--font-body)",
                     fontSize: '0.82rem',
                     fontWeight: 700,
                     whiteSpace: 'nowrap',
@@ -111,7 +117,7 @@ export default function NewsletterSignup() {
                   style={{ marginTop: '0.15rem', accentColor: 'var(--color-gold)', flexShrink: 0 }}
                 />
                 <span style={{
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "var(--font-body)",
                   fontSize: '0.72rem',
                   color: 'rgba(255,255,255,0.85)',
                   lineHeight: 1.45,
@@ -123,7 +129,7 @@ export default function NewsletterSignup() {
 
               {uiState === 'error' && (
                 <p role="alert" aria-live="polite" style={{
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "var(--font-body)",
                   fontSize: '0.78rem',
                   color: '#ffd7d7',
                   margin: '0.5rem 0 0',

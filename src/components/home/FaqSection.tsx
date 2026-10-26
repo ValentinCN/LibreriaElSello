@@ -20,7 +20,7 @@ export default function FaqSection() {
         <h2
           id="faq-titulo"
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "var(--font-display)",
             fontSize: "clamp(1.7rem, 3.5vw, 2.4rem)",
             fontWeight: 700,
             color: "var(--text)",
@@ -43,7 +43,7 @@ export default function FaqSection() {
                 minHeight: 44,
                 paddingBlock: "1.1rem",
                 cursor: "pointer",
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontSize: "1.02rem",
                 fontWeight: 600,
                 color: "var(--color-text)",
@@ -57,7 +57,7 @@ export default function FaqSection() {
             <div style={{ paddingBottom: "1.25rem", paddingRight: "2.25rem" }}>
               <p
                 style={{
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "var(--font-body)",
                   fontSize: "0.95rem",
                   lineHeight: 1.7,
                   color: "var(--text-muted)",

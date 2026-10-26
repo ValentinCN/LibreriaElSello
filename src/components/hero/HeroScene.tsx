@@ -100,10 +100,10 @@ export function HeroBadge() {
       <svg width="192" height="192" viewBox="0 0 128 128" fill="none" aria-hidden="true">
         <circle cx="64" cy="64" r="62" fill="#2d6490" />
         <circle cx="64" cy="64" r="58" stroke="#c8960c" strokeWidth="0.9" opacity="0.6" />
-        <text x="64" y="40" textAnchor="middle" fill="rgba(255,255,255,0.45)" fontSize="9.5" fontFamily="'DM Sans',sans-serif" letterSpacing="2.5">LIBRERÍA</text>
-        <text x="64" y="77" textAnchor="middle" fill="#c8960c" fontSize="29" fontFamily="'Playfair Display',serif" fontWeight="600" fontStyle="italic">el Sello</text>
+        <text x="64" y="40" textAnchor="middle" fill="rgba(255,255,255,0.45)" fontSize="9.5" style={{ fontFamily: 'var(--font-body)' }} letterSpacing="2.5">LIBRERÍA</text>
+        <text x="64" y="77" textAnchor="middle" fill="#c8960c" fontSize="29" style={{ fontFamily: 'var(--font-display)' }} fontWeight="600" fontStyle="italic">el Sello</text>
         <line x1="36" y1="85" x2="92" y2="85" stroke="#c8960c" strokeWidth="0.7" opacity="0.45" />
-        <text x="64" y="101" textAnchor="middle" fill="rgba(255,255,255,0.3)" fontSize="8.5" fontFamily="'DM Sans',sans-serif" letterSpacing="3">QUILMES</text>
+        <text x="64" y="101" textAnchor="middle" fill="rgba(255,255,255,0.3)" fontSize="8.5" style={{ fontFamily: 'var(--font-body)' }} letterSpacing="3">QUILMES</text>
       </svg>
     </m.div>
   )
@@ -152,7 +152,7 @@ export function HeroScene() {
 
         <h1
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "var(--font-display)",
             fontSize: "clamp(2.1rem, 5.5vw, 3.75rem)",
             fontWeight: 700,
             lineHeight: 1.08,
@@ -168,7 +168,7 @@ export function HeroScene() {
 
         <p
           style={{
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "var(--font-body)",
             maxWidth: "36rem",
             fontSize: "clamp(1rem, 2.2vw, 1.15rem)",
             lineHeight: 1.65,

@@ -1,7 +1,26 @@
 import { useState, useEffect, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuthStore } from '../../store/authStore'
+import { useAuthStore, ensureAuth } from '../../store/authStore'
 import PageMeta from '../../components/PageMeta'
+
+// Supabase Auth devuelve los errores en inglés: se traducen por `code`
+// (AuthError) y cualquier otro cae en el mensaje genérico, nunca el original.
+const LOGIN_ERRORS: Record<string, string> = {
+  invalid_credentials:        'Email o contraseña incorrectos.',
+  email_not_confirmed:        'Tenés que confirmar el email antes de entrar.',
+  user_banned:                'Esta cuenta está bloqueada.',
+  over_request_rate_limit:    'Demasiados intentos. Esperá unos minutos y probá de nuevo.',
+  over_email_send_rate_limit: 'Demasiados intentos. Esperá unos minutos y probá de nuevo.',
+}
+const LOGIN_ERROR_GENERIC = 'No se pudo iniciar sesión. Probá de nuevo.'
+
+function loginErrorMessage(err: unknown): string {
+  const code = typeof err === 'object' && err !== null && 'code' in err ? String(err.code) : ''
+  if (LOGIN_ERRORS[code]) return LOGIN_ERRORS[code]
+  // Por si la versión del cliente no trae `code`.
+  if (err instanceof Error && /invalid login credentials/i.test(err.message)) return LOGIN_ERRORS.invalid_credentials
+  return LOGIN_ERROR_GENERIC
+}
 
 export default function AdminLoginPage() {
   const [email, setEmail]       = useState('')
@@ -11,6 +30,8 @@ export default function AdminLoginPage() {
 
   const { signIn, session } = useAuthStore()
   const navigate = useNavigate()
+
+  useEffect(ensureAuth, [])
 
   useEffect(() => {
     if (session) navigate('/admin', { replace: true })
@@ -24,7 +45,7 @@ export default function AdminLoginPage() {
       await signIn(email, password)
       navigate('/admin', { replace: true })
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Error al iniciar sesión')
+      setError(loginErrorMessage(err))
     } finally {
       setSubmitting(false)
     }
@@ -34,7 +55,7 @@ export default function AdminLoginPage() {
     border: '1.5px solid #c8d8e8',
     borderRadius: 8,
     padding: '0.6rem 0.8rem',
-    fontFamily: 'DM Sans, sans-serif',
+    fontFamily: 'var(--font-body)',
     fontSize: '0.95rem',
     color: '#1a3a50',
     outline: 'none',
@@ -51,7 +72,7 @@ export default function AdminLoginPage() {
       justifyContent: 'center',
       background: '#f2ecdf',
       padding: '1rem',
-      fontFamily: 'DM Sans, sans-serif',
+      fontFamily: 'var(--font-body)',
     }}>
       <PageMeta title="Panel · Librería el Sello" />
       <div style={{
@@ -63,7 +84,7 @@ export default function AdminLoginPage() {
         boxShadow: '0 4px 24px rgba(45,100,144,0.10)',
       }}>
         <h1 style={{
-          fontFamily: 'Playfair Display, serif',
+          fontFamily: 'var(--font-display)',
           color: '#1a3a50',
           fontSize: '1.75rem',
           margin: '0 0 0.25rem',
@@ -130,7 +151,7 @@ export default function AdminLoginPage() {
               border: 'none',
               borderRadius: 8,
               padding: '0.7rem 1rem',
-              fontFamily: 'DM Sans, sans-serif',
+              fontFamily: 'var(--font-body)',
               fontSize: '0.95rem',
               fontWeight: 600,
               cursor: submitting ? 'not-allowed' : 'pointer',

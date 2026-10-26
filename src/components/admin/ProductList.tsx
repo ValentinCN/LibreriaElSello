@@ -37,7 +37,7 @@ function pill(compact: boolean, extra: CSSProperties, busy = false): CSSProperti
     minHeight: compact ? 32 : 44,
     borderRadius: compact ? 4 : 8,
     padding: compact ? '0.15rem 0.6rem' : '0.4rem 0.9rem',
-    fontFamily: 'DM Sans, sans-serif',
+    fontFamily: 'var(--font-body)',
     fontSize: compact ? '0.75rem' : '0.875rem',
     fontWeight: 700,
     letterSpacing: '0.04em',

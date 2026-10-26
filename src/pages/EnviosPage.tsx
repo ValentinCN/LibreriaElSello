@@ -68,7 +68,7 @@ export default function EnviosPage() {
               · Cómo pedimos ·
             </p>
             <h1 style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "var(--font-display)",
               fontSize: 'clamp(2.6rem, 7vw, 4.8rem)',
               fontWeight: 700,
               color: 'var(--text)',
@@ -79,7 +79,7 @@ export default function EnviosPage() {
               <em style={{ color: 'var(--color-gold-text)', fontStyle: 'italic' }}>Con personas.</em>
             </h1>
             <p style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "var(--font-body)",
               fontSize: '1rem',
               fontWeight: 300,
               color: 'var(--text-muted)',
@@ -113,7 +113,7 @@ export default function EnviosPage() {
                 }}
               >
                 <span style={{
-                  fontFamily: "'Playfair Display', serif",
+                  fontFamily: "var(--font-display)",
                   fontSize: '2.8rem',
                   fontWeight: 700,
                   color: 'var(--color-gold-text)',
@@ -124,7 +124,7 @@ export default function EnviosPage() {
                   {s.num}
                 </span>
                 <h3 style={{
-                  fontFamily: "'Playfair Display', serif",
+                  fontFamily: "var(--font-display)",
                   fontSize: '1rem',
                   fontWeight: 700,
                   color: 'var(--text)',
@@ -133,7 +133,7 @@ export default function EnviosPage() {
                   {s.titulo}
                 </h3>
                 <p style={{
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "var(--font-body)",
                   fontSize: '0.82rem',
                   fontWeight: 300,
                   color: 'var(--text-muted)',
@@ -173,7 +173,7 @@ export default function EnviosPage() {
                 <GloboArgentina />
               </div>
               <h3 style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "var(--font-display)",
                 fontSize: '1.1rem',
                 fontWeight: 700,
                 color: PRIMARY,
@@ -181,7 +181,7 @@ export default function EnviosPage() {
                 Retiro en tienda
               </h3>
               <p style={{
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontSize: '0.85rem',
                 fontWeight: 300,
                 color: 'var(--text-muted)',
@@ -191,7 +191,7 @@ export default function EnviosPage() {
                 Buenos Aires
               </p>
               <p style={{
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontSize: '0.8rem',
                 color: 'var(--text-muted)',
               }}>
@@ -203,7 +203,7 @@ export default function EnviosPage() {
                 rel="noopener noreferrer"
                 style={{
                   marginTop: '0.5rem',
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "var(--font-body)",
                   fontSize: '0.75rem',
                   letterSpacing: '0.18em',
                   textTransform: 'uppercase',
@@ -236,7 +236,7 @@ export default function EnviosPage() {
                 <PickupEntrega />
               </div>
               <h3 style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "var(--font-display)",
                 fontSize: '1.1rem',
                 fontWeight: 700,
                 color: 'var(--text)',
@@ -244,7 +244,7 @@ export default function EnviosPage() {
                 Entregas a domicilio
               </h3>
               <p style={{
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontSize: '0.85rem',
                 fontWeight: 300,
                 color: 'var(--text-muted)',
@@ -254,7 +254,7 @@ export default function EnviosPage() {
                 Consultá disponibilidad y costo de envío por WhatsApp.
               </p>
               <p style={{
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontSize: '0.78rem',
                 color: 'var(--text-muted)',
                 marginTop: '0.25rem',
@@ -281,7 +281,7 @@ export default function EnviosPage() {
                 <PosnetPago />
               </div>
               <h3 style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "var(--font-display)",
                 fontSize: '1.1rem',
                 fontWeight: 700,
                 color: 'var(--text)',
@@ -289,7 +289,7 @@ export default function EnviosPage() {
                 Formas de pago
               </h3>
               <ul style={{
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontSize: '0.85rem',
                 fontWeight: 300,
                 color: 'var(--text-muted)',
@@ -319,7 +319,7 @@ export default function EnviosPage() {
                 ¿Tenés alguna duda?
               </p>
               <h2 style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "var(--font-display)",
                 fontSize: 'clamp(2rem, 5vw, 3.2rem)',
                 fontWeight: 700,
                 color: 'var(--text)',
@@ -328,7 +328,7 @@ export default function EnviosPage() {
                 Escribinos directo
               </h2>
               <p style={{
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontSize: '1rem',
                 color: 'var(--text-muted)',
                 marginBottom: '2.5rem',

@@ -37,7 +37,7 @@ export default function AttributeStrip() {
             <Icon size={24} weight="regular" aria-hidden="true" style={{ color: "var(--color-primary)", flexShrink: 0 }} />
             <span
               style={{
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontSize: "0.9rem",
                 fontWeight: 600,
                 lineHeight: 1.35,

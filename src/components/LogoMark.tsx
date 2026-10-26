@@ -22,7 +22,7 @@ export function LogoMark({ size = 44 }: LogoMarkProps) {
         textAnchor="middle"
         fill="rgba(255,255,255,0.48)"
         fontSize="4.2"
-        fontFamily="'DM Sans', sans-serif"
+        style={{ fontFamily: 'var(--font-body)' }}
         letterSpacing="0.8"
       >
         LIBRERÍA
@@ -43,7 +43,7 @@ export function LogoMark({ size = 44 }: LogoMarkProps) {
         textAnchor="middle"
         fill="rgba(255,255,255,0.38)"
         fontSize="4"
-        fontFamily="'DM Sans', sans-serif"
+        style={{ fontFamily: 'var(--font-body)' }}
         letterSpacing="1"
       >
         EL SELLO

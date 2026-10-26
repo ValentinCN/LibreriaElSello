@@ -154,7 +154,7 @@ export default function AdminDashboardPage() {
     filtro === 'todos' ? true : filtro === 'activos' ? p.activo : !p.activo)
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f2ecdf', fontFamily: 'DM Sans, sans-serif' }}>
+    <div style={{ minHeight: '100vh', background: '#f2ecdf', fontFamily: 'var(--font-body)' }}>
       <PageMeta title="Panel · Librería el Sello" />
       <header style={{
         background: '#fff',
@@ -166,7 +166,7 @@ export default function AdminDashboardPage() {
         gap: '1rem',
       }}>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem' }}>
-          <span style={{ fontFamily: 'Playfair Display, serif', color: '#1a3a50', fontSize: '1.2rem', fontWeight: 700 }}>
+          <span style={{ fontFamily: 'var(--font-display)', color: '#1a3a50', fontSize: '1.2rem', fontWeight: 700 }}>
             el Sello
           </span>
           <span style={{ color: '#2d6490', fontSize: '0.82rem', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
@@ -218,7 +218,7 @@ export default function AdminDashboardPage() {
                       border: 'none',
                       background: on ? '#2d6490' : '#fff',
                       color: on ? '#fff' : '#2d6490',
-                      fontFamily: 'DM Sans, sans-serif',
+                      fontFamily: 'var(--font-body)',
                       fontSize: '0.875rem',
                       fontWeight: 600,
                       cursor: 'pointer',

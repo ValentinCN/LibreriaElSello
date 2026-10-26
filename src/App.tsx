@@ -4,10 +4,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { ReactLenis } from 'lenis/react'
 import { LazyMotion, domAnimation } from 'motion/react'
 import CartDrawer        from './components/CartDrawer'
-import ProtectedRoute    from './components/admin/ProtectedRoute'
 import Navbar            from './components/Navbar'
 import SplashPage        from './pages/SplashPage'
-import { useAuthStore }  from './store/authStore'
 import { useCartStore }  from './store/cartStore'
 
 // La home va en el bundle principal; el resto de las páginas se baja aparte.
@@ -34,9 +32,14 @@ const CatalogPage   = Catalog.Page
 const EnviosPage    = Envios.Page
 const ConocenosPage = Conocenos.Page
 
-// Precarga las páginas públicas cuando el navegador queda libre (el admin no).
+// Precarga las páginas públicas cuando el navegador queda libre (el admin no),
+// más el servicio de productos del catálogo: así Supabase queda bajado antes
+// de entrar al Catálogo sin sumarse a la carga inicial de la home.
 function preloadPages() {
-  const run = () => { Catalog.preload(); Envios.preload(); Conocenos.preload() }
+  const run = () => {
+    Catalog.preload(); Envios.preload(); Conocenos.preload()
+    import('./services/products')
+  }
   if ('requestIdleCallback' in window) {
     const id = requestIdleCallback(run)
     return () => cancelIdleCallback(id)
@@ -46,8 +49,9 @@ function preloadPages() {
 }
 
 // El panel se baja recién al entrar a /admin: el visitante no lo descarga.
-const AdminLoginPage     = lazy(() => import('./pages/admin/AdminLoginPage'))
-const AdminDashboardPage = lazy(() => import('./pages/admin/AdminDashboardPage'))
+// La sesión (authStore + Supabase) se inicia ahí adentro, no en App.
+const AdminLoginPage = lazy(() => import('./pages/admin/AdminLoginPage'))
+const AdminPage      = lazy(() => import('./pages/admin/AdminPage'))
 
 // Igual al "Cargando..." de ProtectedRoute, para que no se note el cambio.
 function AdminFallback() {
@@ -60,7 +64,7 @@ function AdminFallback() {
         alignItems: 'center',
         justifyContent: 'center',
         background: '#f2ecdf',
-        fontFamily: 'DM Sans, sans-serif',
+        fontFamily: 'var(--font-body)',
         color: '#5a8ab0',
         fontSize: '0.95rem',
       }}
@@ -81,12 +85,7 @@ function PageFallback() {
 }
 
 function App() {
-  const initAuth = useAuthStore((s) => s.initAuth)
   const cartOpen = useCartStore((s) => s.isOpen)
-
-  useEffect(() => {
-    return initAuth()
-  }, [initAuth])
 
   useEffect(preloadPages, [])
 
@@ -108,9 +107,7 @@ function App() {
                 <Suspense fallback={<AdminFallback />}><AdminLoginPage /></Suspense>
               } />
               <Route path="/admin" element={
-                <ProtectedRoute>
-                  <Suspense fallback={<AdminFallback />}><AdminDashboardPage /></Suspense>
-                </ProtectedRoute>
+                <Suspense fallback={<AdminFallback />}><AdminPage /></Suspense>
               } />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>

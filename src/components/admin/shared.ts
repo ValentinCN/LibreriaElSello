@@ -17,7 +17,7 @@ export const inputStyle: CSSProperties = {
   padding: '0.55rem 0.7rem',
   border: '1.5px solid #cfe0ee',
   borderRadius: 6,
-  fontFamily: 'DM Sans, sans-serif',
+  fontFamily: 'var(--font-body)',
   fontSize: '1rem',
   color: '#1a3a50',
   background: '#fff',
@@ -26,7 +26,7 @@ export const inputStyle: CSSProperties = {
 const buttonBase: CSSProperties = {
   minHeight: 44,
   borderRadius: 8,
-  fontFamily: 'DM Sans, sans-serif',
+  fontFamily: 'var(--font-body)',
   fontSize: '0.9rem',
   fontWeight: 600,
   padding: '0.5rem 1.1rem',

@@ -87,7 +87,7 @@ export default function CartDrawer() {
         }}>
           <div>
             <p style={{
-              fontFamily: "'DM Sans', sans-serif",
+              fontFamily: "var(--font-body)",
               fontSize: '0.75rem',
               letterSpacing: '0.3em',
               color: 'var(--color-gold-text)',
@@ -97,7 +97,7 @@ export default function CartDrawer() {
               Mi consulta
             </p>
             <h2 id={TITLE_ID} style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "var(--font-display)",
               fontSize: '1.35rem',
               fontWeight: 700,
               color: 'var(--text)',
@@ -134,7 +134,7 @@ export default function CartDrawer() {
           {items.length === 0 ? (
             <div style={{ textAlign: 'center' }}>
               <p style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "var(--font-display)",
                 fontSize: '1.1rem',
                 fontStyle: 'italic',
                 color: 'var(--text-muted)',
@@ -143,7 +143,7 @@ export default function CartDrawer() {
                 Tu lista está vacía
               </p>
               <p style={{
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontSize: '0.78rem',
                 color: 'var(--text-dim)',
                 lineHeight: 1.6,
@@ -164,7 +164,7 @@ export default function CartDrawer() {
                   {/* Name + price */}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <p className="line-clamp-2" style={{
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "var(--font-body)",
                       fontSize: '0.82rem',
                       fontWeight: 500,
                       color: 'var(--text)',
@@ -174,7 +174,7 @@ export default function CartDrawer() {
                       {item.nombre}
                     </p>
                     <p style={{
-                      fontFamily: "'Playfair Display', serif",
+                      fontFamily: "var(--font-display)",
                       fontSize: '0.85rem',
                       color: 'var(--color-text)',
                       fontWeight: 700,
@@ -199,7 +199,7 @@ export default function CartDrawer() {
                         border: 'none',
                         width: 40, height: 40,
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontFamily: "'DM Sans', sans-serif",
+                        fontFamily: "var(--font-body)",
                         fontSize: '1rem',
                         color: 'var(--text-muted)',
                         cursor: 'pointer',
@@ -213,7 +213,7 @@ export default function CartDrawer() {
                       style={{
                         width: 28, height: 28,
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontFamily: "'DM Sans', sans-serif",
+                        fontFamily: "var(--font-body)",
                         fontSize: '0.78rem',
                         color: 'var(--text)',
                       }}
@@ -228,7 +228,7 @@ export default function CartDrawer() {
                         border: 'none',
                         width: 40, height: 40,
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontFamily: "'DM Sans', sans-serif",
+                        fontFamily: "var(--font-body)",
                         fontSize: '1rem',
                         color: 'var(--text-muted)',
                         cursor: 'pointer',
@@ -278,7 +278,7 @@ export default function CartDrawer() {
               alignItems: 'baseline',
             }}>
               <span style={{
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontSize: '0.75rem',
                 letterSpacing: '0.2em',
                 textTransform: 'uppercase',
@@ -287,7 +287,7 @@ export default function CartDrawer() {
                 Total estimado
               </span>
               <span style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "var(--font-display)",
                 fontSize: '1.4rem',
                 fontWeight: 700,
                 color: 'var(--color-text)',
@@ -311,7 +311,7 @@ export default function CartDrawer() {
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer',
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontSize: '0.75rem',
                 letterSpacing: '0.14em',
                 textTransform: 'uppercase',

@@ -30,7 +30,7 @@ export default function FinalCta() {
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem" }}>
               <h2
                 style={{
-                  fontFamily: "'Playfair Display', serif",
+                  fontFamily: "var(--font-display)",
                   fontSize: "clamp(2rem, 5vw, 3.2rem)",
                   fontWeight: 700,
                   color: "#ffffff",
@@ -42,7 +42,7 @@ export default function FinalCta() {
               </h2>
               <p
                 style={{
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "var(--font-body)",
                   fontSize: "clamp(1rem, 2.2vw, 1.15rem)",
                   color: "rgba(255,255,255,0.85)",
                   lineHeight: 1.6,
@@ -65,7 +65,7 @@ export default function FinalCta() {
                 minHeight: 48,
                 padding: "0.85rem 2rem",
                 borderRadius: "9999px",
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontSize: "1rem",
                 fontWeight: 600,
                 textDecoration: "none",

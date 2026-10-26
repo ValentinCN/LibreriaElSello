@@ -13,7 +13,7 @@ import NewsletterSignup from './NewsletterSignup'
 const ACCENT  = 'var(--color-gold)'
 
 const linkStyle: CSSProperties = {
-  fontFamily: "'DM Sans', sans-serif",
+  fontFamily: "var(--font-body)",
   fontSize: '0.72rem',
   letterSpacing: '0.18em',
   textTransform: 'uppercase',
@@ -44,7 +44,7 @@ export default function Footer() {
         {/* Left: brand + address */}
         <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.6rem', flexWrap: 'wrap' }}>
           <span style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "var(--font-display)",
             fontSize: '1rem',
             fontWeight: 700,
             color: '#ffffff',
@@ -52,7 +52,7 @@ export default function Footer() {
             Librería <span style={{ color: ACCENT }}>el Sello</span>
           </span>
           <span style={{
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "var(--font-body)",
             fontSize: '0.72rem',
             color: 'rgba(255,255,255,0.85)',
             letterSpacing: '0.06em',
@@ -96,7 +96,7 @@ export default function Footer() {
           </a>
           <span className="hidden md:inline" aria-hidden="true" style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.75rem' }}>·</span>
           <span style={{
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "var(--font-body)",
             fontSize: '0.68rem',
             letterSpacing: '0.24em',
             textTransform: 'uppercase',

@@ -84,7 +84,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
             right: '0.6rem',
             background: '#8a6b09',
             color: '#ffffff',
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "var(--font-body)",
             fontSize: '0.75rem',
             fontWeight: 500,
             letterSpacing: '0.16em',
@@ -101,7 +101,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
             left: '0.6rem',
             background: '#1a3a50',
             color: '#ffffff',
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "var(--font-body)",
             fontSize: '0.75rem',
             fontWeight: 700,
             letterSpacing: '0.16em',
@@ -120,7 +120,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
         flex: 1,
       }}>
         <span style={{
-          fontFamily: "'DM Sans', sans-serif",
+          fontFamily: "var(--font-body)",
           fontSize: '0.75rem',
           letterSpacing: '0.2em',
           textTransform: 'uppercase',
@@ -131,7 +131,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
         </span>
 
         <h3 className="line-clamp-2 md:line-clamp-none" style={{
-          fontFamily: "'Playfair Display', serif",
+          fontFamily: "var(--font-display)",
           fontSize: '1rem',
           fontWeight: 700,
           color: '#2d6490',
@@ -142,7 +142,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
         </h3>
 
         <p className="line-clamp-2 md:line-clamp-none" style={{
-          fontFamily: "'DM Sans', sans-serif",
+          fontFamily: "var(--font-body)",
           fontSize: '0.78rem',
           fontWeight: 300,
           color: 'var(--text-muted)',
@@ -155,7 +155,7 @@ export default function ProductCard({ producto }: { producto: ProductoSupabase }
 
         <div className="flex flex-col gap-2 md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-2">
           <span style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "var(--font-display)",
             fontSize: '1.1rem',
             fontWeight: 700,
             color: '#2d6490',

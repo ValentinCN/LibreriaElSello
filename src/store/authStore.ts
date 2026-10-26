@@ -52,3 +52,14 @@ export const useAuthStore = create<AuthState>((set) => ({
     return () => subscription.unsubscribe()
   },
 }))
+
+// La sesión se inicia recién en el admin (este módulo arrastra Supabase y no
+// va en la carga de la home). Una sola vez por pestaña y sin desuscribir,
+// como cuando corría en App: pasar del login al panel no re-suscribe ni
+// vuelve a mostrar "Cargando...".
+let authStarted = false
+export function ensureAuth() {
+  if (authStarted) return
+  authStarted = true
+  useAuthStore.getState().initAuth()
+}

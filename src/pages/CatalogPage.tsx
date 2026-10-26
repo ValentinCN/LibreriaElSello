@@ -5,7 +5,6 @@ import PageMeta from '../components/PageMeta'
 import Footer from '../components/Footer'
 import ProductCard from '../components/ProductCard'
 import MagneticText from '../components/MagneticText'
-import { getProducts, getCategories } from '../services/products'
 import type { ProductoSupabase, CategoriaSupabase } from '../types/producto'
 import { CATEGORIA_BY_SLUG, alpha, type CategoriaSlug } from '../constants/categories'
 import { WA_URL } from '../config'
@@ -45,6 +44,9 @@ export default function CatalogPage() {
       setLoading(true)
       setError(null)
       try {
+        // Import dinámico: así la precarga de esta página no arrastra Supabase.
+        // El chunk ya suele estar bajado por la precarga en idle (App.tsx).
+        const { getProducts, getCategories } = await import('../services/products')
         const [prods, cats] = await Promise.all([getProducts(), getCategories()])
         if (!dead) { setAllProducts(prods); setCategorias(cats) }
       } catch {
@@ -112,7 +114,7 @@ export default function CatalogPage() {
                 <MagneticText
                   as="h1"
                   style={{
-                    fontFamily: "'Playfair Display', serif",
+                    fontFamily: "var(--font-display)",
                     fontSize: 'clamp(2.4rem, 6vw, 4.5rem)',
                     fontWeight: 700,
                     color: activeCat !== 'todo' ? accentText : 'var(--text)',
@@ -127,7 +129,7 @@ export default function CatalogPage() {
                 {/* Sort + count */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', paddingBottom: '0.4rem' }}>
                   <span style={{
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "var(--font-body)",
                     fontSize: '0.82rem',
                     letterSpacing: '0.16em',
                     color: '#1a3a50',
@@ -146,7 +148,7 @@ export default function CatalogPage() {
                         background: 'var(--surface)',
                         border: '1px solid var(--border)',
                         color: '#1a3a50',
-                        fontFamily: "'DM Sans', sans-serif",
+                        fontFamily: "var(--font-body)",
                         fontSize: '0.8rem',
                         fontWeight: 500,
                         letterSpacing: '0.1em',
@@ -197,7 +199,7 @@ export default function CatalogPage() {
                           border: 'none',
                           borderBottom: active ? `2px solid ${color}` : '2px solid transparent',
                           cursor: 'pointer',
-                          fontFamily: "'DM Sans', sans-serif",
+                          fontFamily: "var(--font-body)",
                           fontSize: '0.8rem',
                           fontWeight: active ? 600 : 400,
                           letterSpacing: '0.18em',
@@ -249,7 +251,7 @@ export default function CatalogPage() {
             ) : error ? (
               <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '5rem 0' }}>
                 <p style={{
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "var(--font-body)",
                   fontSize: '0.9rem',
                   color: 'var(--text-muted)',
                   marginBottom: '1.25rem',
@@ -266,7 +268,7 @@ export default function CatalogPage() {
             ) : filtered.length === 0 ? (
               <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '5rem 0' }}>
                 <p style={{
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "var(--font-body)",
                   fontSize: '0.9rem',
                   color: 'var(--text-muted)',
                 }}>

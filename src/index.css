@@ -1,10 +1,12 @@
 @import "tailwindcss";
 @import "./styles/tokens.css";
+@import "./styles/fonts.css";
 
 /* ── Tailwind v4: custom fonts ──────────────────────────────────── */
+/* --font-sans es también la fuente por defecto del html (preflight). */
 @theme {
-  --font-serif: "Playfair Display", Georgia, serif;
-  --font-sans:  "DM Sans", system-ui, sans-serif;
+  --font-serif: var(--font-display);
+  --font-sans:  var(--font-body);
 }
 
 /* ── Design tokens ──────────────────────────────────────────────── */
@@ -46,6 +48,14 @@ html, body, #root {
      resolver como "auto" por spec, lo que crea un contenedor de scroll
      propio en #root y aparece como una franja de scrollbar fantasma. */
   overflow-x: clip;
+}
+
+/* flow-root: contiene el margen superior del primer hijo (el marginTop de
+   58px del hero). Sin esto el margen colapsaba hacia arriba a través de
+   #root y body, y al montar React todo el body bajaba 58px: un layout
+   shift de 0,07 (todo el CLS de la home). */
+#root {
+  display: flow-root;
 }
 
 body {
@@ -107,7 +117,7 @@ body {
     padding: 0.6rem 1.4rem;
     border: 1.5px solid transparent;
     border-radius: 9999px;
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.95rem;
     font-weight: 600;
     line-height: 1.2;
@@ -188,7 +198,7 @@ body {
 
   /* ── Eyebrow: texto chico arriba de un título. Todo eyebrow nuevo usa esta clase. */
   .eyebrow {
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.34em;

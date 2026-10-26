@@ -15,7 +15,7 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
         alignItems: 'center',
         justifyContent: 'center',
         background: '#f2ecdf',
-        fontFamily: 'DM Sans, sans-serif',
+        fontFamily: 'var(--font-body)',
         color: '#5a8ab0',
         fontSize: '0.95rem',
       }}>
@@ -36,7 +36,7 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
         justifyContent: 'center',
         gap: '1.25rem',
         background: '#f2ecdf',
-        fontFamily: 'DM Sans, sans-serif',
+        fontFamily: 'var(--font-body)',
         padding: '1rem',
         textAlign: 'center',
       }}>
@@ -51,7 +51,7 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
             border: 'none',
             borderRadius: 8,
             padding: '0.6rem 1.4rem',
-            fontFamily: 'DM Sans, sans-serif',
+            fontFamily: 'var(--font-body)',
             fontSize: '0.9rem',
             fontWeight: 600,
             cursor: 'pointer',

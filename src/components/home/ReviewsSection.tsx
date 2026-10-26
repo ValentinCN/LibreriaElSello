@@ -49,7 +49,7 @@ export default function ReviewsSection() {
           // En flex el espacio entre bloques no llega al nombre accesible
           aria-label={`${RATING_TXT} en Google · más de ${REVIEWS_TXT} reseñas`}
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "var(--font-display)",
             fontWeight: 700,
             color: "var(--color-text)",
             display: "flex",
@@ -100,7 +100,7 @@ export default function ReviewsSection() {
               <Stars n={r.estrellas} />
               <blockquote style={{
                 flex: 1,
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "var(--font-display)",
                 fontStyle: "italic",
                 fontSize: "clamp(1.05rem, 1.5vw, 1.1rem)",
                 lineHeight: 1.6,
@@ -109,7 +109,7 @@ export default function ReviewsSection() {
                 {r.texto}
               </blockquote>
               <figcaption style={{
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontSize: "0.9rem",
                 fontWeight: 600,
                 color: "var(--color-primary)",

@@ -132,7 +132,7 @@ function CategoryTile({ meta }: { meta: CategoriaMeta }) {
 
       <div style={{ position: "relative", zIndex: 1 }}>
         <h3 style={{
-          fontFamily: "'Playfair Display', serif",
+          fontFamily: "var(--font-display)",
           fontSize: "1.1rem",
           fontWeight: 700,
           color: hovered ? meta.textColor : "var(--text)",
@@ -142,7 +142,7 @@ function CategoryTile({ meta }: { meta: CategoriaMeta }) {
           {cat}
         </h3>
         <p style={{
-          fontFamily: "'DM Sans', sans-serif",
+          fontFamily: "var(--font-body)",
           fontSize: "0.82rem",
           fontWeight: 300,
           color: "var(--text-muted)",
@@ -153,7 +153,7 @@ function CategoryTile({ meta }: { meta: CategoriaMeta }) {
       </div>
 
       <span style={{
-        fontFamily: "'DM Sans', sans-serif",
+        fontFamily: "var(--font-body)",
         fontSize: "0.75rem",
         letterSpacing: "0.2em",
         textTransform: "uppercase",
@@ -189,7 +189,7 @@ export default function SplashPage() {
               · NUESTRAS CATEGORÍAS ·
             </p>
             <h2 style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "var(--font-display)",
               fontSize: "clamp(1.7rem, 3.5vw, 2.4rem)",
               fontWeight: 700,
               color: "var(--text)",

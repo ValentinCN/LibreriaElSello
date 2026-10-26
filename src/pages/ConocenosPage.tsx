@@ -81,7 +81,7 @@ export default function ConocenosPage() {
             </Reveal>
             <Reveal delay={0.1}>
               <MagneticText as="h1" style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "var(--font-display)",
                 fontSize: "clamp(2.4rem, 6vw, 4.2rem)",
                 fontWeight: 700,
                 color: "var(--text)",
@@ -92,7 +92,7 @@ export default function ConocenosPage() {
             </Reveal>
             <Reveal delay={0.2}>
               <p style={{
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontSize: "1rem",
                 fontWeight: 300,
                 color: "var(--text-muted)",
@@ -144,7 +144,7 @@ export default function ConocenosPage() {
                 </Reveal>
                 <Reveal delay={0.08}>
                   <h2 style={{
-                    fontFamily: "'Playfair Display', serif",
+                    fontFamily: "var(--font-display)",
                     fontSize: "clamp(1.6rem, 4vw, 2.5rem)",
                     fontWeight: 700,
                     color: "var(--text)",
@@ -160,12 +160,12 @@ export default function ConocenosPage() {
                 {/* Fuente: rubros del cartel del local. Nada de historia ni años
                     hasta que el dueño los confirme. */}
                 <Reveal delay={0.14}>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem", fontWeight: 300, color: "var(--text-muted)", lineHeight: 1.82 }}>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.95rem", fontWeight: 300, color: "var(--text-muted)", lineHeight: 1.82 }}>
                     Tenemos artículos escolares, comerciales, técnicos y de arte, regalería e insumos de computación. También atendemos empresas.
                   </p>
                 </Reveal>
                 <Reveal delay={0.2}>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem", fontWeight: 300, color: "var(--text-muted)", lineHeight: 1.82 }}>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.95rem", fontWeight: 300, color: "var(--text-muted)", lineHeight: 1.82 }}>
                     Si no lo ves en el catálogo, preguntá: te asesoramos en el local y por WhatsApp.
                   </p>
                 </Reveal>
@@ -183,7 +183,7 @@ export default function ConocenosPage() {
                   borderRadius: "0 4px 4px 0",
                 }}>
                   <blockquote style={{
-                    fontFamily: "'Playfair Display', serif",
+                    fontFamily: "var(--font-display)",
                     fontSize: "clamp(1.5rem, 3.5vw, 2.3rem)",
                     fontWeight: 700,
                     fontStyle: "italic",
@@ -196,7 +196,7 @@ export default function ConocenosPage() {
                   </blockquote>
                   <figcaption style={{
                     marginTop: "1rem",
-                    fontFamily: "'DM Sans', sans-serif",
+                    fontFamily: "var(--font-body)",
                     fontSize: "0.9rem",
                     fontWeight: 500,
                     color: "var(--text-muted)",
@@ -221,7 +221,7 @@ export default function ConocenosPage() {
                   · Lo que nos hace el sello ·
                 </p>
                 <h2 style={{
-                  fontFamily: "'Playfair Display', serif",
+                  fontFamily: "var(--font-display)",
                   fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)",
                   fontWeight: 700,
                   color: "var(--text)",
@@ -250,7 +250,7 @@ export default function ConocenosPage() {
                     >
                       <Icon size={32} weight="regular" aria-hidden="true" style={{ color: "var(--color-primary)", flexShrink: 0 }} />
                       <h3 style={{
-                        fontFamily: "'Playfair Display', serif",
+                        fontFamily: "var(--font-display)",
                         fontSize: "1.05rem",
                         fontWeight: 700,
                         color: "var(--text)",
@@ -258,7 +258,7 @@ export default function ConocenosPage() {
                         {titulo}
                       </h3>
                       <p style={{
-                        fontFamily: "'DM Sans', sans-serif",
+                        fontFamily: "var(--font-body)",
                         fontSize: "0.85rem",
                         fontWeight: 300,
                         color: "var(--text-muted)",
@@ -284,7 +284,7 @@ export default function ConocenosPage() {
                 · Visitanos ·
               </p>
               <h2 style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "var(--font-display)",
                 fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)",
                 fontWeight: 700,
                 color: "var(--text)",
@@ -330,13 +330,13 @@ export default function ConocenosPage() {
                   height: "100%",
                 }}>
                   <div>
-                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>
+                    <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>
                       Dirección
                     </p>
-                    <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.35rem", fontWeight: 700, color: "var(--text)", lineHeight: 1.15 }}>
+                    <p style={{ fontFamily: "var(--font-display)", fontSize: "1.35rem", fontWeight: 700, color: "var(--text)", lineHeight: 1.15 }}>
                       {DIRECCION}
                     </p>
-                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem", color: "var(--text-muted)", marginTop: "0.25rem" }}>
+                    <p style={{ fontFamily: "var(--font-body)", fontSize: "0.78rem", color: "var(--text-muted)", marginTop: "0.25rem" }}>
                       {CIUDAD}
                     </p>
                   </div>
@@ -344,13 +344,13 @@ export default function ConocenosPage() {
                   <div style={{ width: "100%", height: 1, background: "var(--border)" }} />
 
                   <div>
-                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>
+                    <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: "0.4rem" }}>
                       Horario
                     </p>
-                    <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", fontWeight: 700, color: "var(--text)", lineHeight: 1.2 }}>
+                    <p style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: 700, color: "var(--text)", lineHeight: 1.2 }}>
                       Lunes a Sábado
                     </p>
-                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1rem", color: "var(--color-gold-text)", fontWeight: 500, marginTop: "0.2rem" }}>
+                    <p style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "var(--color-gold-text)", fontWeight: 500, marginTop: "0.2rem" }}>
                       9 a 20hs
                     </p>
                   </div>
@@ -392,10 +392,10 @@ export default function ConocenosPage() {
                   <p className="eyebrow">
                     · Seguinos ·
                   </p>
-                  <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)", fontWeight: 700, color: "var(--text)" }}>
+                  <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)", fontWeight: 700, color: "var(--text)" }}>
                     Estamos en las redes
                   </h2>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.93rem", fontWeight: 300, color: "var(--text-muted)", lineHeight: 1.7 }}>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.93rem", fontWeight: 300, color: "var(--text-muted)", lineHeight: 1.7 }}>
                     Novedades y productos en Instagram. Consultas por WhatsApp.
                   </p>
                 </div>

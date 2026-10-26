@@ -120,7 +120,7 @@ export default function Navbar() {
         >
           <LogoMark size={42} />
           <span className="hidden md:inline-block" style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "var(--font-display)",
             fontSize: '1rem',
             fontWeight: 700,
             color: 'var(--text)',
@@ -154,7 +154,7 @@ export default function Navbar() {
                     maxLift={4}
                     radius={55}
                     style={{
-                      fontFamily: "'DM Sans', sans-serif",
+                      fontFamily: "var(--font-body)",
                       fontSize: '0.78rem',
                       fontWeight: isActive ? 600 : 400,
                       letterSpacing: '0.16em',
@@ -205,7 +205,7 @@ export default function Navbar() {
                 background: ACCENT,
                 color: '#ffffff',
                 fontSize: '0.48rem',
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontWeight: 700,
                 display: 'flex',
                 alignItems: 'center',
@@ -289,7 +289,7 @@ export default function Navbar() {
                   minHeight: 44,
                   padding: '0.6rem 0.5rem',
                   textDecoration: 'none',
-                  fontFamily: "'DM Sans', sans-serif",
+                  fontFamily: "var(--font-body)",
                   fontSize: '0.9rem',
                   fontWeight: isActive ? 600 : 400,
                   letterSpacing: '0.1em',
@@ -317,7 +317,7 @@ export default function Navbar() {
                 padding: '0.75rem 1rem',
                 background: PRIMARY,
                 color: '#ffffff',
-                fontFamily: "'DM Sans', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontSize: '0.85rem',
                 fontWeight: 600,
                 letterSpacing: '0.04em',

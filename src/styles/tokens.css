@@ -17,4 +17,9 @@
 
   /* Variante oscura del dorado: sobre --color-bg da >= 4.5:1 (AA) */
   --color-gold-text: #806008;
+
+  /* Tipografía: única fuente de verdad. Todo font-family usa estos dos
+     (las caras y los fallbacks con métricas están en fonts.css). */
+  --font-display: 'Playfair Display', 'Playfair Display Fallback', Georgia, serif;
+  --font-body:    'DM Sans', 'DM Sans Fallback', Arial, sans-serif;
 }
