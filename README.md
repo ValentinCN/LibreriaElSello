@@ -124,12 +124,16 @@ SEO scores 66 because the site is intentionally `noindex` until the owner approv
   </tr>
 </table>
 
-| | |
-|---|---|
-| ![Catalog on desktop: category tabs and a four-column grid of real products with prices](docs/screenshots/catalog-desktop.png) | ![Envíos page on desktop: headline "Sin carritos. Con personas." and the four steps to order](docs/screenshots/envios-desktop.png) |
-| Catalog | How to order (Envíos) |
-| ![Conócenos page on desktop: shop logo, "Conocé el Sello" headline and a short description of the shop](docs/screenshots/conocenos-desktop.png) | ![Social share preview image for Librería el Sello](docs/screenshots/share-preview.png) |
-| About the shop (Conócenos) | Share preview (Open Graph image) |
+<table>
+  <tr>
+    <td align="center" width="50%"><img src="docs/screenshots/catalog-desktop.png" alt="Catalog on desktop: category tabs and a four-column grid of real products with prices"><br>Catalog</td>
+    <td align="center" width="50%"><img src="docs/screenshots/envios-desktop.png" alt="Envíos page on desktop: headline &quot;Sin carritos. Con personas.&quot; and the four steps to order"><br>How to order (Envíos)</td>
+  </tr>
+  <tr>
+    <td align="center" width="50%"><img src="docs/screenshots/conocenos-desktop.png" alt="Conócenos page on desktop: shop logo, &quot;Conocé el Sello&quot; headline and a short description of the shop"><br>About the shop (Conócenos)</td>
+    <td align="center" width="50%"><img src="docs/screenshots/share-preview.png" alt="Social share preview image for Librería el Sello"><br>Share preview (Open Graph image)</td>
+  </tr>
+</table>
 
 ![Admin panel on desktop: product table with featured, in stock and archive controls, and the subscriber export button](docs/screenshots/admin-desktop.png)
 
