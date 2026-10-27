@@ -19,6 +19,12 @@ The site has `noindex` until the owner approves it.
 ### Storefront
 
 - Catalog by category, with the category kept in the URL (`/catalogo?cat=escolar`).
+- Search inside the catalog: runs on the products already loaded, ignores accents ("epica" finds "Épica"), needs every word to match, works within the active category and keeps the query in the URL (`/catalogo?q=cuaderno`).
+
+  ![Catalog on desktop filtered by the search "cuaderno": one product, the counter reads "1 producto" and the search box shows the term with a clear button](docs/screenshots/catalogo-busqueda.png)
+- When a search finds nothing, the page offers to ask the shop on WhatsApp, with the search term already in the message.
+
+  ![Catalog on desktop with no results for "calculadora cientifica": message "No encontramos «calculadora cientifica»" and a "Preguntar por WhatsApp" button](docs/screenshots/catalogo-sin-resultados.png)
 - List builder: customers add products and quantities, and the site composes the WhatsApp message for them.
 - Out-of-stock products stay visible (greyed out, marked "Agotado") with a "Consultar" action that asks about availability, instead of disappearing from the catalog.
 - Real Google reviews, an FAQ and a store info strip (pickup address, hours, delivery area).
@@ -119,14 +125,14 @@ SEO scores 66 because the site is intentionally `noindex` until the owner approv
 <table>
   <tr>
     <td align="center" width="33%"><img src="docs/screenshots/home-mobile.png" alt="Home page on a phone: headline, catalog and WhatsApp buttons, and the store info strip" width="260"><br>Home (mobile)</td>
-    <td align="center" width="33%"><img src="docs/screenshots/catalog-mobile.png" alt="Catalog on a phone: category tabs and a two-column grid of product cards with price, add button and Consultar" width="260"><br>Catalog (mobile)</td>
+    <td align="center" width="33%"><img src="docs/screenshots/catalogo-mobile.png" alt="Catalog on a phone searching &quot;cuaderno&quot;: full-width search box above the category tabs and one matching product card" width="260"><br>Catalog (mobile)</td>
     <td align="center" width="33%"><img src="docs/screenshots/admin-mobile.png" alt="Admin panel on a phone: product list as cards with featured, in stock and archive controls" width="260"><br>Admin (mobile)</td>
   </tr>
 </table>
 
 <table>
   <tr>
-    <td align="center" width="50%"><img src="docs/screenshots/catalog-desktop.png" alt="Catalog on desktop: category tabs and a four-column grid of real products with prices"><br>Catalog</td>
+    <td align="center" width="50%"><img src="docs/screenshots/catalogo-busqueda.png" alt="Catalog on desktop filtered by the search &quot;cuaderno&quot;: category tabs, search box on the right and one matching product"><br>Catalog with search</td>
     <td align="center" width="50%"><img src="docs/screenshots/envios-desktop.png" alt="Envíos page on desktop: headline &quot;Sin carritos. Con personas.&quot; and the four steps to order"><br>How to order (Envíos)</td>
   </tr>
   <tr>
