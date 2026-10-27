@@ -5,6 +5,9 @@ import PageMeta from '../components/PageMeta'
 import Footer from '../components/Footer'
 import ProductCard from '../components/ProductCard'
 import MagneticText from '../components/MagneticText'
+import CatalogSearch from '../components/catalog/CatalogSearch'
+import { OtrasCategorias, SinResultados } from '../components/catalog/SearchEmptyState'
+import { normalizar, terminosDe, coincide } from '../utils/search'
 import type { ProductoSupabase, CategoriaSupabase } from '../types/producto'
 import { CATEGORIA_BY_SLUG, alpha, type CategoriaSlug } from '../constants/categories'
 import { WA_URL } from '../config'
@@ -58,17 +61,53 @@ export default function CatalogPage() {
     return () => { dead = true }
   }, [tick])
 
+  const query    = params.get('q') ?? ''
+  const termino  = query.trim()
+  const terminos = useMemo(() => terminosDe(query), [query])
+
+  // Texto normalizado por producto: nombre + descripción + nombre de categoría.
+  const indice = useMemo(() => {
+    const nombreCat = new Map(categorias.map(c => [c.slug, c.nombre]))
+    return new Map(allProducts.map(p => [
+      p.id,
+      normalizar(`${p.nombre} ${p.descripcion ?? ''} ${nombreCat.get(p.categoria) ?? ''}`),
+    ]))
+  }, [allProducts, categorias])
+
+  // Coincidencias en todas las categorías (para el aviso "hay N en otras").
+  const matches = useMemo(
+    () => terminos.length === 0
+      ? allProducts
+      : allProducts.filter(p => coincide(indice.get(p.id) ?? '', terminos)),
+    [allProducts, indice, terminos],
+  )
+
   const filtered = useMemo(() => {
-    let list = activeCat === 'todo' ? allProducts : allProducts.filter(p => p.categoria === activeCat)
+    let list = activeCat === 'todo' ? matches : matches.filter(p => p.categoria === activeCat)
     if (sort === 'titulo')        list = [...list].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'))
     else if (sort === 'precio-asc')  list = [...list].sort((a, b) => (a.precio ?? 0) - (b.precio ?? 0))
     else if (sort === 'precio-desc') list = [...list].sort((a, b) => (b.precio ?? 0) - (a.precio ?? 0))
     return list
-  }, [activeCat, sort, allProducts])
+  }, [activeCat, sort, matches])
 
+  // Cambia ?cat= sin perder ?q= (push: las pestañas siguen en el historial).
   const setFilter = (slug: string) => {
-    if (slug === 'todo') setParams({})
-    else setParams({ cat: slug })
+    setParams(prev => {
+      const next = new URLSearchParams(prev)
+      if (slug === 'todo') next.delete('cat')
+      else next.set('cat', slug)
+      return next
+    })
+  }
+
+  // ?q= con replace: escribir no llena el historial.
+  const setQuery = (value: string) => {
+    setParams(prev => {
+      const next = new URLSearchParams(prev)
+      if (value) next.set('q', value)
+      else next.delete('q')
+      return next
+    }, { replace: true })
   }
 
   return (
@@ -176,57 +215,67 @@ export default function CatalogPage() {
                 </div>
               </div>
 
-              {/* Category tabs */}
-              <div style={{ position: 'relative' }}>
-                <div
-                  className="no-scrollbar flex flex-nowrap overflow-x-auto snap-x snap-mandatory md:flex-wrap md:overflow-visible"
-                  style={{ gap: 0, marginBottom: '-1px' }}
-                >
-                  {(['todo', ...categorias.map(c => c.slug)]).map(slug => {
-                    const cat    = categorias.find(c => c.slug === slug)
-                    const active = slug === activeCat
-                    const meta   = slug !== 'todo' ? CATEGORIA_BY_SLUG[slug as CategoriaSlug] : undefined
-                    const color     = meta?.color ?? PRIMARY
-                    const textColor = meta?.textColor ?? PRIMARY
-                    const label  = slug === 'todo' ? 'Todo' : (cat?.nombre ?? slug)
-                    return (
-                      <button
-                        key={slug}
-                        onClick={() => setFilter(slug)}
-                        className="snap-start"
-                        style={{
-                          background: 'none',
-                          border: 'none',
-                          borderBottom: active ? `2px solid ${color}` : '2px solid transparent',
-                          cursor: 'pointer',
-                          fontFamily: "var(--font-body)",
-                          fontSize: '0.8rem',
-                          fontWeight: active ? 600 : 400,
-                          letterSpacing: '0.18em',
-                          textTransform: 'uppercase',
-                          color: active ? textColor : 'var(--text-muted)',
-                          padding: '1rem 1rem',
-                          transition: 'all 0.2s',
-                          marginBottom: '-2px',
-                          flexShrink: 0,
-                          whiteSpace: 'nowrap',
-                        }}
-                      >
-                        {label}
-                      </button>
-                    )
-                  })}
-                </div>
-                <div
-                  className="md:hidden"
-                  style={{
-                    position: 'absolute',
-                    top: 0, right: 0, bottom: '2px',
-                    width: '2rem',
-                    background: 'linear-gradient(to right, transparent, var(--bg))',
-                    pointerEvents: 'none',
-                  }}
+              {/* Buscador + pestañas: hasta 1023px el buscador va arriba a lo ancho;
+                  desde lg (1024), a la derecha de las pestañas. */}
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-6">
+                <CatalogSearch
+                  value={query}
+                  onChange={setQuery}
+                  className="w-full lg:order-2 lg:w-64 lg:shrink-0"
                 />
+
+                {/* Category tabs */}
+                <div className="min-w-0 lg:order-1 lg:flex-1" style={{ position: 'relative' }}>
+                  <div
+                    className="no-scrollbar flex flex-nowrap overflow-x-auto snap-x snap-mandatory lg:flex-wrap lg:overflow-visible"
+                    style={{ gap: 0, marginBottom: '-1px' }}
+                  >
+                    {(['todo', ...categorias.map(c => c.slug)]).map(slug => {
+                      const cat    = categorias.find(c => c.slug === slug)
+                      const active = slug === activeCat
+                      const meta   = slug !== 'todo' ? CATEGORIA_BY_SLUG[slug as CategoriaSlug] : undefined
+                      const color     = meta?.color ?? PRIMARY
+                      const textColor = meta?.textColor ?? PRIMARY
+                      const label  = slug === 'todo' ? 'Todo' : (cat?.nombre ?? slug)
+                      return (
+                        <button
+                          key={slug}
+                          onClick={() => setFilter(slug)}
+                          className="snap-start"
+                          style={{
+                            background: 'none',
+                            border: 'none',
+                            borderBottom: active ? `2px solid ${color}` : '2px solid transparent',
+                            cursor: 'pointer',
+                            fontFamily: "var(--font-body)",
+                            fontSize: '0.8rem',
+                            fontWeight: active ? 600 : 400,
+                            letterSpacing: '0.18em',
+                            textTransform: 'uppercase',
+                            color: active ? textColor : 'var(--text-muted)',
+                            padding: '1rem 1rem',
+                            transition: 'all 0.2s',
+                            marginBottom: '-2px',
+                            flexShrink: 0,
+                            whiteSpace: 'nowrap',
+                          }}
+                        >
+                          {label}
+                        </button>
+                      )
+                    })}
+                  </div>
+                  <div
+                    className="lg:hidden"
+                    style={{
+                      position: 'absolute',
+                      top: 0, right: 0, bottom: '2px',
+                      width: '2rem',
+                      background: 'linear-gradient(to right, transparent, var(--bg))',
+                      pointerEvents: 'none',
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </header>
@@ -265,6 +314,14 @@ export default function CatalogPage() {
                   Reintentar
                 </button>
               </div>
+            ) : terminos.length > 0 && matches.length === 0 ? (
+              <SinResultados termino={termino} />
+            ) : terminos.length > 0 && filtered.length === 0 ? (
+              <OtrasCategorias
+                categoria={activeCatLabel}
+                cantidad={matches.length}
+                onVerTodas={() => setFilter('todo')}
+              />
             ) : filtered.length === 0 ? (
               <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '5rem 0' }}>
                 <p style={{

@@ -217,8 +217,61 @@ body {
   }
   .card-hover:hover .card-arrow { transform: translateX(4px); }
 
+  /* ── Buscador del catálogo ────────────────────────────────────────
+     Borde a ~3:1 sobre el beige (no-texto AA); foco en primario. */
+  .catalog-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .catalog-search input {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.55rem 2.75rem 0.55rem 2.6rem;
+    background: #ffffff;
+    border: 1px solid color-mix(in srgb, var(--color-text) 55%, transparent);
+    border-radius: 9999px;
+    font-family: var(--font-body);
+    font-size: 1rem; /* < 16px hace zoom en iOS al enfocar */
+    color: var(--color-text);
+    outline: none;
+    transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out;
+  }
+  .catalog-search input::placeholder { color: var(--text-muted); opacity: 1; }
+  .catalog-search input::-webkit-search-cancel-button { appearance: none; -webkit-appearance: none; }
+  .catalog-search input:focus-visible,
+  .catalog-search input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 1px var(--color-primary);
+  }
+  .catalog-search-icon {
+    position: absolute;
+    left: 0.95rem;
+    color: var(--color-text);
+    pointer-events: none;
+  }
+  .catalog-search-clear {
+    position: absolute;
+    right: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: none;
+    border: none;
+    border-radius: 9999px;
+    color: var(--color-text);
+    cursor: pointer;
+  }
+  .catalog-search-clear:focus { outline: none; }
+  .catalog-search-clear:focus-visible {
+    outline: 2px solid var(--color-text);
+    outline-offset: -4px;
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .btn, .card-hover, .card-arrow { transition: none; }
+    .btn, .card-hover, .card-arrow, .catalog-search input { transition: none; }
     .card-hover:hover, .card-hover:hover .card-arrow { transform: none; }
   }
 }
