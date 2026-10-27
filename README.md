@@ -120,12 +120,7 @@ SEO scores 66 because the site is intentionally `noindex` until the owner approv
   <tr>
     <td align="center" width="33%"><img src="docs/screenshots/home-mobile.png" alt="Home page on a phone: headline, catalog and WhatsApp buttons, and the store info strip" width="260"><br>Home (mobile)</td>
     <td align="center" width="33%"><img src="docs/screenshots/catalog-mobile.png" alt="Catalog on a phone: category tabs and a two-column grid of product cards with price, add button and Consultar" width="260"><br>Catalog (mobile)</td>
-    <td align="center" width="33%">
-      <!-- TODO: admin-mobile.png pending (needs a logged-in session). Then replace this comment with:
-      <img src="docs/screenshots/admin-mobile.png" alt="Admin panel on a phone: product list as cards with featured, in stock and archive controls" width="260"><br>Admin (mobile)
-      -->
-      <em>TODO: admin screenshot (mobile) pending</em>
-    </td>
+    <td align="center" width="33%"><img src="docs/screenshots/admin-mobile.png" alt="Admin panel on a phone: product list as cards with featured, in stock and archive controls" width="260"><br>Admin (mobile)</td>
   </tr>
 </table>
 
@@ -136,10 +131,7 @@ SEO scores 66 because the site is intentionally `noindex` until the owner approv
 | ![Conócenos page on desktop: shop logo, "Conocé el Sello" headline and a short description of the shop](docs/screenshots/conocenos-desktop.png) | ![Social share preview image for Librería el Sello](docs/screenshots/share-preview.png) |
 | About the shop (Conócenos) | Share preview (Open Graph image) |
 
-<!-- TODO: admin-desktop.png pending (needs a logged-in session). Then add:
 ![Admin panel on desktop: product table with featured, in stock and archive controls, and the subscriber export button](docs/screenshots/admin-desktop.png)
--->
-> TODO: admin screenshot (desktop) pending.
 
 ## Run locally
 
@@ -216,7 +208,11 @@ src/
 
 ## Author
 
-**Valentín Campos** — Full-stack developer, Quilmes, Buenos Aires.
+**Valentín Campos Nualart** — Full-stack developer, Quilmes, Buenos Aires.
 
-- LinkedIn: TODO
-- Portfolio: TODO
+- LinkedIn: https://www.linkedin.com/in/valentin-campos-nualart-2b6362206/
+- GitHub: https://github.com/ValentinCN
+
+## How it was built
+
+AI-assisted development is part of my workflow. I used Claude Code to implement and refactor the code, while I directed the work: I defined the architecture, the phases and the acceptance criteria for each change, reviewed every diff, ran the SQL and Row Level Security tests myself, and verified each phase in the browser at 375, 768 and 1280 px before committing.
